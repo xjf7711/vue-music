@@ -164,7 +164,7 @@ module.exports = {
       //   target: "/"
       // },
       // proxy all requests starting with /api to jsonplaceholder
-      "api/getDiscList": {
+      "/api/getDiscList": {
         // target: 'http://192.168.0.57:8081',  // 你接口的域名 设置你调用的接口域名和端口号 别忘了加http
         // target: 'http://192.168.0.16:8080',
         // target: 'http://192.168.0.17:8088',

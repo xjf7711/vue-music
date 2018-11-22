@@ -20,8 +20,8 @@ service.interceptors.request.use(
     //     host: "c.y.qq.com"
     // },
     console.log("service.interceptions.request.use config is ", config);
-    config.headers["Referer"] = "https://c.y.qq.com";
-    config.headers["Host"] = "c.y.qq.com";
+    // config.headers["referer"] = "https://c.y.qq.com";
+    // config.headers["host"] = "c.y.qq.com";
     return config;
   },
   error => {

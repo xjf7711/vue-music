@@ -10,7 +10,8 @@ export function getRecommend() {
   const data = Object.assign({}, commonParams, {
     platform: "h5",
     uin: 0,
-    needNewCode: 1
+    needNewCode: 1,
+    _: 1542893454334
   });
 
   return jsonp(url, data, options);
