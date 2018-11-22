@@ -23,8 +23,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-import Scroll from "../base/scroll/scroll";
-import Loading from "../base/loading/loading";
+import Scroll from "components/scroll/scroll";
+import Loading from "components/loading/loading";
 import { getTopList } from "api/rank";
 import { ERR_OK } from "api/config";
 import { playlistMixin } from "assets/js/mixin";

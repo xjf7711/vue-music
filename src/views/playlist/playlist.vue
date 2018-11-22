@@ -43,8 +43,8 @@
 <script type="text/ecmascript-6">
 import { mapActions } from "vuex";
 import { playMode } from "assets/js/config";
-import Scroll from "../base/scroll/scroll";
-import Confirm from "../base/confirm/confirm";
+import Scroll from "components/scroll/scroll";
+import Confirm from "components/confirm/confirm";
 import AddSong from "../add-song/add-song";
 import { playerMixin } from "assets/js/mixin";
 

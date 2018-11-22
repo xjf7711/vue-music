@@ -26,9 +26,9 @@
 </template>
 
 <script type="text/ecmascript-6">
-import Scroll from "../base/scroll/scroll";
-import Loading from "../base/loading/loading";
-import NoResult from "../base/no-result/no-result";
+import Scroll from "components/scroll/scroll";
+import Loading from "components/loading/loading";
+import NoResult from "components/no-result/no-result";
 import { search } from "api/search";
 import { ERR_OK } from "api/config";
 import { createSong } from "assets/js/song";

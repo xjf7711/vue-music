@@ -27,9 +27,9 @@
 </template>
 
 <script>
-import Scroll from "../base/scroll/scroll";
-import Loading from "../base/loading/loading";
-import SongList from "../base/song-list/song-list";
+import Scroll from "components/scroll/scroll";
+import Loading from "components/loading/loading";
+import SongList from "components/song-list/song-list";
 import { prefixStyle } from "assets/js/dom";
 import { playlistMixin } from "assets/js/mixin";
 import { mapActions } from "vuex";

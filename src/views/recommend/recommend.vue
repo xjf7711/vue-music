@@ -36,9 +36,9 @@
 </template>
 
 <script type="text/ecmascript-6">
-import Slider from "../base/slider/slider";
-import Loading from "../base/loading/loading";
-import Scroll from "../base/scroll/scroll";
+import Slider from "components/slider/slider";
+import Loading from "components/loading/loading";
+import Scroll from "components/scroll/scroll";
 import { getDiscList, getRecommend } from "api/recommend";
 import { playlistMixin } from "assets/js/mixin";
 import { ERR_OK } from "api/config";

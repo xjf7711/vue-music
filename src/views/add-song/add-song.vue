@@ -41,12 +41,12 @@
 </template>
 
 <script type="text/ecmascript-6">
-import SearchBox from "../base/search-box/search-box";
-import SongList from "../base/song-list/song-list";
-import SearchList from "../base/search-list/search-list";
-import Scroll from "../base/scroll/scroll";
-import Switches from "../base/switches/switches";
-import TopTip from "../base/top-tip/top-tip";
+import SearchBox from "components/search-box/search-box";
+import SongList from "components/song-list/song-list";
+import SearchList from "components/search-list/search-list";
+import Scroll from "components/scroll/scroll";
+import Switches from "components/switches/switches";
+import TopTip from "components/top-tip/top-tip";
 import Suggest from "../suggest/suggest";
 import { searchMixin } from "assets/js/mixin";
 import { mapGetters, mapActions } from "vuex";

@@ -31,10 +31,10 @@
 </template>
 
 <script type="text/ecmascript-6">
-import Switches from "../base/switches/switches";
-import Scroll from "../base/scroll/scroll";
-import SongList from "../base/song-list/song-list";
-import NoResult from "../base/no-result/no-result";
+import Switches from "components/switches/switches";
+import Scroll from "components/scroll/scroll";
+import SongList from "components/song-list/song-list";
+import NoResult from "components/no-result/no-result";
 import Song from "assets/js/song";
 import { mapGetters, mapActions } from "vuex";
 import { playlistMixin } from "assets/js/mixin";

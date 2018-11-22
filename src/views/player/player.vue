@@ -105,11 +105,11 @@
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import animations from "create-keyframe-animation";
 import { prefixStyle } from "assets/js/dom";
-import ProgressBar from "../base/progress-bar/progress-bar";
-import ProgressCircle from "../base/progress-circle/progress-circle";
+import ProgressBar from "components/progress-bar/progress-bar";
+import ProgressCircle from "components/progress-circle/progress-circle";
 import { playMode } from "assets/js/config";
 import Lyric from "lyric-parser";
-import Scroll from "../base/scroll/scroll";
+import Scroll from "components/scroll/scroll";
 import { playerMixin } from "assets/js/mixin";
 import Playlist from "../playlist/playlist";
 

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import ListView from "../base/listview/listview";
+import ListView from "components/listview/listview";
 import { getSingerList } from "api/singer";
 import { ERR_OK } from "api/config";
 import Singer from "assets/js/singer";

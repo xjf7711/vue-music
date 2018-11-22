@@ -36,10 +36,10 @@
 </template>
 
 <script type="text/ecmascript-6">
-import SearchBox from "../base/search-box/search-box";
-import SearchList from "../base/search-list/search-list";
-import Scroll from "../base/scroll/scroll";
-import Confirm from "../base/confirm/confirm";
+import SearchBox from "components/search-box/search-box";
+import SearchList from "components/search-list/search-list";
+import Scroll from "components/scroll/scroll";
+import Confirm from "components/confirm/confirm";
 import Suggest from "../suggest/suggest";
 import { getHotKey } from "api/search";
 import { ERR_OK } from "api/config";
