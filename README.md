@@ -140,9 +140,18 @@
 ```
 
 ## 项目截图
+![image](https://raw.githubusercontent.com/xjf7711/vue-music/master/public/shotcut/1.png)
+
+![image](https://raw.githubusercontent.com/xjf7711/vue-music/master/public/shotcut/2.png)
+
+![image](https://raw.githubusercontent.com/xjf7711/vue-music/master/public/shotcut/3.png)
+
+![image](https://raw.githubusercontent.com/xjf7711/vue-music/master/public/shotcut/4.png)
+
+![image](https://raw.githubusercontent.com/xjf7711/vue-music/master/public/shotcut/5.png)
 
 
-### 安装与运行
+## 安装与运行
 
 ```
 git clone https://github.com/xjf7711/vue-music.git
@@ -156,4 +165,18 @@ npm run serve //服务端运行 访问 http://localhost:1111
 npm run build 项目打包 
 
 感兴趣的童鞋可以来个star
+```
 
+## 修改记录
+
+```
+1、目录结构修改
+2、axios请求和api修改
+3、stylus改为sass
+```
+
+### 计划
+
+```
+1、jsonp方式改为axios。开发环境用代理，打包用baseURL.
+```
