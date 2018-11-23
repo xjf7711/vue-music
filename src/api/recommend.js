@@ -1,7 +1,7 @@
 import jsonp from "../assets/js/jsonp";
 import request from "../assets/js/request";
 import { commonParams, options } from "./config";
-import axios from "axios";
+// import axios from "axios";
 
 export function getRecommend() {
   const data = Object.assign({}, commonParams, {
@@ -104,7 +104,7 @@ export function getSongList(disstid) {
     url,
     method: "get",
     params: data
-  })
+  });
 }
 
 // apiRoutes.get('/getSongList', function (req, res) {

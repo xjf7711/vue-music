@@ -1,4 +1,4 @@
-import { commonParams, options } from "./config";
+import { commonParams } from "./config";
 // import jsonp from "../assets/js/jsonp";
 // import axios from "axios";
 import request from "../assets/js/request";
@@ -14,10 +14,10 @@ export function getLyric(id) {
     platform: "h5",
     uin: 0,
     format: "jsonp",
-    // hostUin: 0,
+    hostUin: 0,
     needNewCode: 1,
-    // categoryId: 10000000,
-    // pcachetime: +new Date(),
+    categoryId: 10000000,
+    pcachetime: +new Date(),
     musicid: id,
     songtype: 0,
     _: 1542894664411
