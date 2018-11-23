@@ -102,7 +102,7 @@ export default {
 };
 </script>
 
-<style lang="sass" rel="stylesheet/sass">
+<style lang="sass">
   @import "~assets/styles/variable"
   @import "~assets/styles/mixin"
 

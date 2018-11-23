@@ -457,7 +457,7 @@ export default {
 };
 </script>
 
-<style scoped lang="sass" rel="stylesheet/sass">
+<style scoped lang="sass">
   @import "src/assets/styles/variable"
   @import "src/assets/styles/mixin"
 

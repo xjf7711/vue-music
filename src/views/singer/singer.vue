@@ -101,7 +101,7 @@ export default {
 };
 </script>
 
-<style scoped lang="sass" rel="stylesheet/sass">
+<style scoped lang="sass">
   .singer
     position: fixed
     top: 88px

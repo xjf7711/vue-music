@@ -17,11 +17,13 @@ service.interceptors.request.use(
     // }
     // headers: {
     //   referer: "https://c.y.qq.com/",
-    //     host: "c.y.qq.com"
+    //   host: "c.y.qq.com"
     // },
     console.log("service.interceptions.request.use config is ", config);
-    // config.headers["referer"] = "https://c.y.qq.com";
-    // config.headers["host"] = "c.y.qq.com";
+    if (process.env.NODE_ENV === "production") {
+      config.headers["referer"] = "https://c.y.qq.com";
+      config.headers["host"] = "c.y.qq.com";
+    }
     return config;
   },
   error => {

@@ -58,7 +58,7 @@ export default {
 };
 </script>
 
-<style scoped lang="sass" rel="stylesheet/sass">
+<style scoped lang="sass">
   .slide-enter-active, .slide-leave-active
     transition: all 0.3s
 

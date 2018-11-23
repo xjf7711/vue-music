@@ -130,7 +130,7 @@ export default {
 };
 </script>
 
-<style scoped lang="sass" rel="stylesheet/sass">
+<style scoped lang="sass">
   @import "~assets/styles/variable"
 
   .slider

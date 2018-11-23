@@ -1,13 +1,13 @@
 import { commonParams, options } from "./config";
-import jsonp from "../assets/js/jsonp";
+// import jsonp from "../assets/js/jsonp";
 // import axios from "axios";
-// import request from "../assets/js/request";
+import request from "../assets/js/request";
 export function getLyric(id) {
   console.log("getLyric begins. id is " + id);
-  const url = "https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric.fcg";
-  //  process.env.NODE_ENV === "production"
-  //    ? "https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric.fcg"
-  //    : "/api/lyric";
+  const url = // "https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric.fcg";
+    process.env.NODE_ENV === "production"
+      ? "https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric.fcg"
+      : "/api/lyric";
 
   const data = Object.assign({}, commonParams, {
     // songmid: mid,
@@ -32,10 +32,10 @@ export function getLyric(id) {
   //     console.log("getLyric axios res is ", res)
   //     return Promise.resolve(res.data);
   //   });
-  // return request({
-  //   url,
-  //   method: "get",
-  //   params: data
-  // });
-  return jsonp(url, data, options);
+  return request({
+    url,
+    method: "get",
+    params: data
+  });
+  // return jsonp(url, data, options);
 }

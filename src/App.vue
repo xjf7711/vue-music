@@ -9,7 +9,7 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-import MHeader from "./views/m-header/m-header";
+import MHeader from "./views/m-header/MHeader";
 import Player from "./views/player/player";
 import Tab from "./views/tab/tab";
 
@@ -22,5 +22,5 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "./assets/styles/index.sass";
+/*@import "./assets/styles/index.sass";*/
 </style>
