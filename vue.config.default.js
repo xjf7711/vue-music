@@ -162,7 +162,7 @@ module.exports = {
         changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
         pathRewrite: {
           // '^/fsy': ''
-          "^/api/getDiscList": "/" // 这里理解成用'/ledger'代替target里面的地址，后面组件中我们掉接口时直接用ledger代替
+          "^/api/getDiscList": "" // 这里理解成用'/ledger'代替target里面的地址，后面组件中我们掉接口时直接用ledger代替
           // 比如我要调用'http://192.168.0.57:8081/ledger/add'，直接写'/ledger/add'即可
         },
         headers: {

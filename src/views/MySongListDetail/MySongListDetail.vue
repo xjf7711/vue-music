@@ -34,8 +34,9 @@ export default {
       }
 
       getSongList(this.songlist.dissid).then(res => {
+        console.log("getSongList res is ", res);
         if (res.code === 0) {
-          // console.log(res.cdlist[0].songlist)
+          console.log(res.cdlist[0].songlist);
           this.songs = this._formatSongs(res.cdlist[0].songlist);
         }
       });

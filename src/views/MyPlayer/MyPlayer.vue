@@ -1,5 +1,4 @@
 <!-- 播放器组件 -->
-
 <template>
   <div v-show="playlist.length > 0" class="my-player">
     <!-- 正常的播放器 -->
@@ -11,7 +10,7 @@
       <div v-show="fullScreen" class="normal-player">
         <!-- 背景图 -->
         <div class="background">
-          <img :src="currentSong.img" width="100%" height="100%">
+          <img :src="currentSong.img" width="100%" height="100%"/>
         </div>
 
         <!-- 顶部 -->
@@ -34,7 +33,7 @@
           <div class="middle-l" ref="middleRef">
             <div ref="cdRef" class="cd-wrapper">
               <div :class="playing ? 'play' : 'play pause'" class="cd">
-                <img :src="currentSong.img" class="image">
+                <img :src="currentSong.img" class="image"/>
               </div>
             </div>
 
@@ -103,7 +102,7 @@
     <transition name="mini">
       <div @click="open" v-show="!fullScreen" class="mini-player">
         <div class="icon">
-          <img :class="playing ? 'play' : 'play pause'" :src="currentSong.img" width="40" height="40">
+          <img :class="playing ? 'play' : 'play pause'" :src="currentSong.img" width="40" height="40" alt="icon"/>
         </div>
 
         <div class="text">
@@ -147,6 +146,7 @@ import MyScroll from "components/MyScroll/MyScroll";
 import Lyric from "lyric-parser"; // QQ音乐 歌词解析 https://github.com/ustbhuangyi/lyric-parser
 
 export default {
+  props: {},
   components: {
     MyProgressBar,
     MyProgressCircle,
@@ -171,7 +171,37 @@ export default {
       showList: false
     };
   },
-  props: {},
+  computed: {
+    ...mapGetters([
+      "fullScreen",
+      "playlist",
+      "currentSong",
+      "playing",
+      "currentIndex",
+      "currentSong",
+      "mode",
+      "sequenceList",
+      "favoriteList"
+    ]),
+    // props down，播放进度
+    percent() {
+      return this.currentTime / this.currentSong.duration;
+    },
+    // 播放模式对应图标字体
+    iconMode() {
+      let cls = "";
+      if (this.mode === 0) {
+        cls = "icon-sequence";
+      } else if (this.mode === 1) {
+        cls = "icon-loop";
+      } else if (this.mode === 2) {
+        cls = "icon-random";
+      } else {
+        cls = "";
+      }
+      return cls;
+    }
+  },
   watch: {
     // 监控当前歌曲
     currentSong(newVal, oldVal) {
@@ -213,6 +243,12 @@ export default {
       return myTime.format(value);
     }
   },
+  created() {
+    // 维护一个滑动状态对象
+    this.touch = {};
+  },
+  mounted() {},
+  destroyed() {},
   methods: {
     ...mapMutations({
       setfullScreen: "SET_FULL_SCREEN",
@@ -443,9 +479,9 @@ export default {
       this.currentSong
         .getLyric()
         .then(lyric => {
-          console.log("this.currentSong.getLyric().then lyric is ", lyric);
+          // console.log("this.currentSong.getLyric().then lyric is ", lyric);
           if (this.currentSong.lyric !== lyric) {
-            console.log("not same. ");
+            // console.log("not same. ");
             return;
           }
           // console.log("lyric is same");
@@ -564,44 +600,7 @@ export default {
       this.$refs.middleRef.style["webkitTransition-duration"] = "300ms";
       this.$refs.middleRef.style["transition-duration"] = "300ms";
     }
-  },
-  computed: {
-    ...mapGetters([
-      "fullScreen",
-      "playlist",
-      "currentSong",
-      "playing",
-      "currentIndex",
-      "currentSong",
-      "mode",
-      "sequenceList",
-      "favoriteList"
-    ]),
-    // props down，播放进度
-    percent() {
-      return this.currentTime / this.currentSong.duration;
-    },
-    // 播放模式对应图标字体
-    iconMode() {
-      let cls = "";
-      if (this.mode === 0) {
-        cls = "icon-sequence";
-      } else if (this.mode === 1) {
-        cls = "icon-loop";
-      } else if (this.mode === 2) {
-        cls = "icon-random";
-      } else {
-        cls = "";
-      }
-      return cls;
-    }
-  },
-  created() {
-    // 维护一个滑动状态对象
-    this.touch = {};
-  },
-  mounted() {},
-  destroyed() {}
+  }
 };
 </script>
 

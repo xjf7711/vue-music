@@ -152,3 +152,11 @@ export const myStore = {
 export const myHTTP = {};
 
 export const myOthers = {};
+
+export function parseJsonp(res) {
+  let num1 = res.indexOf("(");
+  let num2 = res.indexOf(")");
+  return JSON.parse(res.substring(num1 + 1, num2));
+  // console.log(typeof(resultData))
+  // console.log(resultData)
+}

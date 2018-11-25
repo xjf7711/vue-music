@@ -1,21 +1,6 @@
 import { getLyric } from "@/api/song.js";
 import Base64 from "js-base64";
 
-// 处理 musicData.singer 数组，使其变为一个字符串
-export function filterSinger(singer) {
-  let result = [];
-
-  if (!singer) {
-    return "";
-  }
-
-  singer.forEach(item => {
-    result.push(item.name);
-  });
-
-  return result.join(" / ");
-}
-
 export class SingerSong {
   constructor({ id, mid, singer, name, album, duration, img, url }) {
     this.id = id;
@@ -37,15 +22,9 @@ export class SingerSong {
       getLyric(this.id).then(res => {
         // console.log("getLyric(this.id) res is ", JSON.stringify(res));
         const resultData = _parseJsonp(res);
-        // let num1 = res.indexOf("(");
-        // let num2 = res.indexOf(")");
-        // let resultData = JSON.parse(res.substring(num1 + 1, num2));
-        // console.log(typeof(resultData))
-        // console.log(resultData)
         // console.log("resultData.retcode is ", typeof resultData.retcode);
         if (resultData.retcode === 0) {
           this.lyric = Base64.Base64.decode(resultData.lyric);
-          // this.lyric = resultData.lyric;
           // console.log("this.lyric is ", this.lyric);
           resolve(this.lyric);
         } else {
@@ -86,4 +65,19 @@ export function createSingerSong(musicData) {
     //   }.m4a` +
     //   `?guid=5184045268&vkey=C5414C050409CCE3C059876DAE9ED8D0F4B8E8531A4F2E59620FCD624F8A75F00EAF9EB0E9D09A44B24FCFF6EA390F7A08AE523687BBD39D&uin=0&fromtag=66` // vkey要匹配
   });
+}
+
+// 处理 musicData.singer 数组，使其变为一个字符串
+function filterSinger(singer) {
+  let result = [];
+
+  if (!singer) {
+    return "";
+  }
+
+  singer.forEach(item => {
+    result.push(item.name);
+  });
+
+  return result.join(" / ");
 }
