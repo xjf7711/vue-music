@@ -18,6 +18,9 @@ const HOT_NAME = "热门";
 
 export default {
   mixins: [playlistMixin],
+  components: {
+    ListView
+  },
   data() {
     return {
       singers: []
@@ -94,14 +97,13 @@ export default {
     ...mapMutations({
       setSinger: "SET_SINGER"
     })
-  },
-  components: {
-    ListView
   }
 };
 </script>
 
 <style scoped lang="sass">
+  @import '~assets/styles/variable.sass';
+  @import '~assets/styles/mixin.sass';
   .singer
     position: fixed
     top: 88px

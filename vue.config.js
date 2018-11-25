@@ -1,4 +1,4 @@
-const axios = require("axios");
+// const axios = require("axios");
 
 const path = require("path");
 function resolve(dir) {
@@ -166,20 +166,29 @@ module.exports = {
       //   target: "/"
       // },
       // proxy all requests starting with /api to jsonplaceholder
+      "/api/getRecommend/": {
+        target:
+          "https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg",
+        // secure: false,
+        changeOrigin: true,
+        pathRewrite: {
+          "^/api/getReCommend/": "/"
+        }
+      },
       "/api/getDiscList": {
         // target: 'http://192.168.0.57:8081',  // 你接口的域名 设置你调用的接口域名和端口号 别忘了加http
         target: "https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg",
-        secure: true, // 如果是https接口，需要配置这个参数
+        // secure: true, // 如果是https接口，需要配置这个参数
         changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
         pathRewrite: {
           // '^/fsy': ''
           "^/api/getDiscList": "/" // 这里理解成用'/ledger'代替target里面的地址，后面组件中我们掉接口时直接用ledger代替
           // 比如我要调用'http://192.168.0.57:8081/ledger/add'，直接写'/ledger/add'即可
-        },
+        }
         // headers: {
         //   Referer: "https://c.y.qq.com/",
         //   host: "c.y.qq.com"
-        // },
+        // }
         // bypass: function(req, res, proxyOptions) {
         //   // console.log("bypass res is ", res);
         //   // console.log("proxyOptions is ", proxyOptions)
@@ -189,9 +198,9 @@ module.exports = {
         // 正式环境： 接口地址 /api/**                         前端页面地址
         // 开发环境： 接口地址 http://www.xxx.com/api/**       前端页面地址  http://localhost:8080
       },
-      "/api/lyric": {
+      "/api/getLyric": {
         // target: 'http://192.168.0.57:8081',  // 你接口的域名 设置你调用的接口域名和端口号 别忘了加http
-        target: "https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg",
+        target: "https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric.fcg",
         secure: true, // 如果是https接口，需要配置这个参数
         changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
         // request: {
@@ -201,46 +210,46 @@ module.exports = {
         // },
         pathRewrite: {
           // '^/fsy': ''
-          "^/api/lyric": "/" // 这里理解成用'/ledger'代替target里面的地址，后面组件中我们掉接口时直接用ledger代替
+          "^/api/getLyric": "" // 这里理解成用'/ledger'代替target里面的地址，后面组件中我们掉接口时直接用ledger代替
           // 比如我要调用'http://192.168.0.57:8081/ledger/add'，直接写'/ledger/add'即可
         },
         headers: {
-          Referer: "https://c.y.qq.com/",
-          host: "c.y.qq.com"
+          referer: "https://y.qq.com/"
+          // host: "c.y.qq.com"
         }
         // 正式环境： 接口地址 /api/**                         前端页面地址
         // 开发环境： 接口地址 http://www.xxx.com/api/**       前端页面地址  http://localhost:8080
       }
-    },
-    before: app => {
-      console.log("app is ", app);
-      // 由于请求的referer和host不同，所以前端不能拿到数据，需要后端做一个代理
-      // 后端向有数据的服务端发送请求，拿到数据，然后前端在向自己的服务器请求那数据
-      // 这里使用axios实现ajax请求：axios是一个基于promise的HTTP库，可以用于浏览器和node.js
-      // 在浏览器创建XMLHttpRequest对象，从node.js创建http请求
-      // app.get("/api/getDiscList", (req, res) => {
-      //   //这里的路径是给前端发送请求的url
-      //   const url =
-      //     "https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg";
-      //   // axios发送get请求，可以自己配置config
-      //   axios
-      //     .get(url, {
-      //       headers: {
-      //         referer: "https://c.y.qq.com/",
-      //         host: "c.y.qq.com"
-      //       },
-      //       //  params是即将与请求一起发送的url参数，无格式对象/URLSearchParams对象
-      //       params: req.quest
-      //     })
-      //     .then(response => {
-      //       res.json(response.data); //返回数据
-      //     })
-      //     .catch(error => {
-      //       console.log(error);
-      //     });
-      // });
-      // # ...其他原来的代码
     }
+    // before: app => {
+    //   console.log("app is ", app);
+    //   // 由于请求的referer和host不同，所以前端不能拿到数据，需要后端做一个代理
+    //   // 后端向有数据的服务端发送请求，拿到数据，然后前端在向自己的服务器请求那数据
+    //   // 这里使用axios实现ajax请求：axios是一个基于promise的HTTP库，可以用于浏览器和node.js
+    //   // 在浏览器创建XMLHttpRequest对象，从node.js创建http请求
+    //   // app.get("/api/getDiscList", (req, res) => {
+    //   //   //这里的路径是给前端发送请求的url
+    //   //   const url =
+    //   //     "https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg";
+    //   //   // axios发送get请求，可以自己配置config
+    //   //   axios
+    //   //     .get(url, {
+    //   //       headers: {
+    //   //         referer: "https://c.y.qq.com/",
+    //   //         host: "c.y.qq.com"
+    //   //       },
+    //   //       //  params是即将与请求一起发送的url参数，无格式对象/URLSearchParams对象
+    //   //       params: req.quest
+    //   //     })
+    //   //     .then(response => {
+    //   //       res.json(response.data); //返回数据
+    //   //     })
+    //   //     .catch(error => {
+    //   //       console.log(error);
+    //   //     });
+    //   // });
+    //   // # ...其他原来的代码
+    // }
   },
   // 第三方插件配置
   pluginOptions: {

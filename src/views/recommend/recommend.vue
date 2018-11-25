@@ -2,15 +2,17 @@
   <div class="recommend" ref="recommend">
     <scroll ref="scroll" class="recommend-content" :data="discList">
       <div>
+        <!-- 轮播图，当请求到 recommends 时才渲染 -->
         <div v-if="recommends.length" class="slider-wrapper" ref="sliderWrapper">
           <slider>
             <div v-for="(item,index) in recommends" :key="index">
               <a :href="item.linkUrl">
-                <img class="needsclick" @load="loadImage" :src="item.picUrl">
+                <img class="needsclick" @load="loadImage" :src="item.picUrl"/>
               </a>
             </div>
           </slider>
         </div>
+        <!-- 歌单推荐列表 -->
         <div class="recommend-list">
           <h1 class="list-title">热门歌单推荐</h1>
           <ul>
@@ -27,15 +29,17 @@
           </ul>
         </div>
       </div>
+
+      <!-- loading 组件 -->
       <div class="loading-container" v-show="!discList.length">
         <loading></loading>
       </div>
     </scroll>
-    <router-view></router-view>
+    <router-view/>
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
 import Slider from "components/slider/slider";
 import Loading from "components/loading/loading";
 import Scroll from "components/scroll/scroll";
@@ -46,32 +50,47 @@ import { mapMutations } from "vuex";
 
 export default {
   mixins: [playlistMixin],
+  components: {
+    Slider,
+    Loading,
+    Scroll
+  },
   data() {
     return {
+      checkloaded: false,
       recommends: [],
       discList: []
     };
   },
   created() {
     this._getRecommend();
-
-    this._getDiscList();
+    setTimeout(() => {
+      this._getDiscList();
+    }, 1000);
   },
   methods: {
+    ...mapMutations({
+      setDisc: "SET_DISC"
+    }),
+    // 当有迷你播放器时，调整滚动底部距离
     handlePlaylist(playlist) {
       this.$refs.recommend.style.bottom = playlist.length > 0 ? "60px" : "";
       this.$refs.scroll.refresh();
     },
+    // 当首次获取到图片时，Better-scroll 重新计算
     loadImage() {
       if (!this.checkloaded) {
-        this.checkloaded = true;
         this.$refs.scroll.refresh();
+        this.checkloaded = true;
       }
     },
+    // 子路由跳转
     selectItem(item) {
       this.$router.push({
         path: `/recommend/${item.dissid}`
       });
+      // 写入 vuex
+      // console.log(item)
       this.setDisc(item);
     },
     _getRecommend() {
@@ -89,22 +108,14 @@ export default {
           this.discList = res.data.list;
         }
       });
-    },
-    ...mapMutations({
-      setDisc: "SET_DISC"
-    })
-  },
-  components: {
-    Slider,
-    Loading,
-    Scroll
+    }
   }
 };
 </script>
 
 <style scoped lang="sass">
   @import "~assets/styles/variable"
-
+  @import "~assets/styles/mixin"
   .recommend
     position: fixed
     width: 100%

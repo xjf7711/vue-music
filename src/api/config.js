@@ -8,7 +8,7 @@ export const commonParams = {
 
 export const options = {
   param: "jsonpCallback",
-  prefix: "tan"
+  prefix: "getPlaylist"
 };
 
 // 基于jsonp方库，设置自定义的cbname

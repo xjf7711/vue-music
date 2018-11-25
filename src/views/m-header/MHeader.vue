@@ -38,6 +38,7 @@ export default {};
       font-size: $font-size-large
     .mine
       position: absolute
+      z-index: 1000
       top: 0
       right: 0
       .icon-mine

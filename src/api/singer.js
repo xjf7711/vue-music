@@ -1,36 +1,80 @@
-import jsonp from "assets/js/jsonp";
-import { commonParams, options } from "./config";
+// import jsonp from "assets/js/jsonp";
+// import { commonParams, options } from "./config";
+//
+// export function getSingerList() {
+//   const url = "https://c.y.qq.com/v8/fcg-bin/v8.fcg";
+//
+//   const data = Object.assign({}, commonParams, {
+//     channel: "singer",
+//     page: "list",
+//     key: "all_all_all",
+//     pagesize: 100,
+//     pagenum: 1,
+//     hostUin: 0,
+//     needNewCode: 0,
+//     platform: "yqq"
+//   });
+//
+//   return jsonp(url, data, options);
+// }
+//
+// export function getSingerDetail(singerId) {
+//   const url = "https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg";
+//
+//   const data = Object.assign({}, commonParams, {
+//     hostUin: 0,
+//     needNewCode: 0,
+//     platform: "yqq",
+//     order: "listen",
+//     begin: 0,
+//     num: 80,
+//     songstatus: 1,
+//     singermid: singerId
+//   });
+//
+//   return jsonp(url, data, options);
+// }
+import jsonp from "@/common/js/jsonp";
+import { commonParams, opts } from "@/api/common-query.js";
 
+/**
+ * jsonp 抓取歌手页数据
+ * 接口：https://c.y.qq.com/v8/fcg-bin/v8.fcg
+ */
 export function getSingerList() {
-  const url = "https://c.y.qq.com/v8/fcg-bin/v8.fcg";
-
-  const data = Object.assign({}, commonParams, {
+  let url = "https://c.y.qq.com/v8/fcg-bin/v8.fcg";
+  let data = Object.assign({}, commonParams, {
     channel: "singer",
     page: "list",
     key: "all_all_all",
     pagesize: 100,
     pagenum: 1,
+    g_tk: 1576475597,
     hostUin: 0,
-    needNewCode: 0,
-    platform: "yqq"
+    platform: "yqq",
+    needNewCode: 0
   });
-
-  return jsonp(url, data, options);
+  return jsonp(url, data, opts);
 }
 
-export function getSingerDetail(singerId) {
-  const url = "https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg";
-
-  const data = Object.assign({}, commonParams, {
+/**
+ * jsonp 抓取歌手详情页数据
+ * 出现页面：https://y.qq.com/portal/singer_list.html
+ * 接口：https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg
+ * singermid:002J4UUk29y8BY
+ */
+export function getSingerDetail(singermid) {
+  let url = "https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg";
+  let data = Object.assign({}, commonParams, {
+    g_tk: 1576475597,
     hostUin: 0,
-    needNewCode: 0,
     platform: "yqq",
+    needNewCode: 0,
     order: "listen",
     begin: 0,
-    num: 80,
+    num: 100,
     songstatus: 1,
-    singermid: singerId
+    singermid: singermid
   });
-
-  return jsonp(url, data, options);
+  return jsonp(url, data, opts);
 }

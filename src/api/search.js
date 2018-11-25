@@ -1,38 +1,84 @@
-import jsonp from "assets/js/jsonp";
-import { commonParams, options } from "./config";
+// import jsonp from "assets/js/jsonp";
+// import { commonParams, options } from "./config";
+//
+// export function getHotKey() {
+//   const url = "https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg";
+//
+//   const data = Object.assign({}, commonParams, {
+//     uin: 0,
+//     needNewCode: 1,
+//     platform: "h5"
+//   });
+//
+//   return jsonp(url, data, options);
+// }
+//
+// export function search(query, page, zhida, perpage) {
+//   const url = "https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp";
+//
+//   const data = Object.assign({}, commonParams, {
+//     w: query,
+//     p: page,
+//     perpage,
+//     n: perpage,
+//     catZhida: zhida ? 1 : 0,
+//     zhidaqu: 1,
+//     t: 0,
+//     flag: 1,
+//     ie: "utf-8",
+//     sem: 1,
+//     aggr: 0,
+//     remoteplace: "txt.mqq.all",
+//     uin: 0,
+//     needNewCode: 1,
+//     platform: "h5"
+//   });
+//
+//   return jsonp(url, data, options);
+// }
+import jsonp from "@/common/js/jsonp";
+import { commonParams, opts } from "@/api/common-query.js";
 
+/**
+ * jsonp 抓取热门搜索数据
+ * 接口：https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg
+ * 提供方：https://m.y.qq.com/#search
+ */
 export function getHotKey() {
-  const url = "https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg";
-
-  const data = Object.assign({}, commonParams, {
+  let url = "https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg";
+  let data = Object.assign({}, commonParams, {
     uin: 0,
-    needNewCode: 1,
-    platform: "h5"
+    format: "json",
+    platform: "h5",
+    needNewCode: 1
   });
-
-  return jsonp(url, data, options);
+  return jsonp(url, data, opts);
 }
 
-export function search(query, page, zhida, perpage) {
-  const url = "https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp";
-
-  const data = Object.assign({}, commonParams, {
+/**
+ * jsonp 抓取搜索检索数据
+ * 接口：https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp
+ * 提供方：https://m.y.qq.com/#search
+ */
+export function search(query, page, perpage, zhida) {
+  let url = "https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp";
+  let data = Object.assign({}, commonParams, {
     w: query,
     p: page,
-    perpage,
     n: perpage,
-    catZhida: zhida ? 1 : 0,
+    perpage,
     zhidaqu: 1,
+    catZhida: zhida ? 1 : 0,
     t: 0,
     flag: 1,
     ie: "utf-8",
     sem: 1,
     aggr: 0,
-    remoteplace: "txt.mqq.all",
     uin: 0,
+    platform: "h5",
+    uid: 0,
     needNewCode: 1,
-    platform: "h5"
+    remoteplace: "txt.mqq.all"
   });
-
-  return jsonp(url, data, options);
+  return jsonp(url, data, opts);
 }

@@ -5,6 +5,7 @@
           :data="data"
           class="listview"
           ref="listview">
+    <!-- 左侧歌手列表 -->
     <ul>
       <li v-for="(group,index) in data" :key="index" class="list-group" ref="listGroup">
         <h2 class="list-group-title">{{group.title}}</h2>
@@ -16,6 +17,7 @@
         </uL>
       </li>
     </ul>
+    <!-- 右侧字母列表 -->
     <div class="list-shortcut" @touchstart.stop.prevent="onShortcutTouchStart" @touchmove.stop.prevent="onShortcutTouchMove"
          @touchend.stop>
       <ul>
@@ -71,6 +73,7 @@ export default {
     };
   },
   created() {
+    console.log("listview created. ");
     this.probeType = 3;
     this.listenScroll = true;
     this.touch = {};

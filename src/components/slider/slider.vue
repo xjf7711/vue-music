@@ -1,9 +1,10 @@
+<!-- better-scroll 轮播图组件 -->
 <template>
   <div class="slider" ref="slider">
     <div class="slider-group" ref="sliderGroup">
-      <slot>
-      </slot>
+      <slot/>
     </div>
+    <!-- 轮播点 -->
     <div class="dots">
       <span class="dot" :class="{active: currentPageIndex === index }"
             v-for="(item, index) in dots" :key="index"></span>
@@ -11,24 +12,26 @@
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
 import { addClass } from "assets/js/dom";
 import BScroll from "better-scroll";
 
 export default {
   name: "slider",
   props: {
+    // 是否循环播放
     loop: {
       type: Boolean,
       default: true
     },
+    // 是否自动播放
     autoPlay: {
       type: Boolean,
       default: true
     },
     interval: {
       type: Number,
-      default: 4000
+      default: 3000
     }
   },
   data() {
@@ -46,15 +49,14 @@ export default {
       if (this.autoPlay) {
         this._play();
       }
+      window.addEventListener("resize", () => {
+        if (!this.slider) {
+          return;
+        }
+        this._setSliderWidth(true);
+        this.slider.refresh();
+      });
     }, 20);
-
-    window.addEventListener("resize", () => {
-      if (!this.slider) {
-        return;
-      }
-      this._setSliderWidth(true);
-      this.slider.refresh();
-    });
   },
   activated() {
     if (this.autoPlay) {
@@ -68,11 +70,17 @@ export default {
     clearTimeout(this.timer);
   },
   methods: {
+    // 轮播图(sliderGroup)宽度
     _setSliderWidth(isResize) {
+      // 拿到传过来的图片
       this.children = this.$refs.sliderGroup.children;
+      // console.log(this.children) // (5) [div, div, div, div, div]
 
+      // 拿到父元素（slider）宽度
       let width = 0;
       let sliderWidth = this.$refs.slider.clientWidth;
+
+      // 动态添加 class、width
       for (let i = 0; i < this.children.length; i++) {
         let child = this.children[i];
         addClass(child, "slider-item");
@@ -85,6 +93,7 @@ export default {
       }
       this.$refs.sliderGroup.style.width = width + "px";
     },
+    // 初始化轮播图
     _initSlider() {
       this.slider = new BScroll(this.$refs.slider, {
         scrollX: true,
@@ -98,25 +107,30 @@ export default {
 
       this.slider.on("scrollEnd", () => {
         let pageIndex = this.slider.getCurrentPage().pageX;
+        // 循环模式下 -1
         if (this.loop) {
           pageIndex -= 1;
         }
         this.currentPageIndex = pageIndex;
 
+        // 重置自动轮播定时器
         if (this.autoPlay) {
+          clearTimeout(this.timer);
           this._play();
         }
       });
 
-      this.slider.on("beforeScrollStart", () => {
-        if (this.autoPlay) {
-          clearTimeout(this.timer);
-        }
-      });
+      // this.slider.on("beforeScrollStart", () => {
+      //   if (this.autoPlay) {
+      //     clearTimeout(this.timer);
+      //   }
+      // });
     },
+    // 初始化轮播点
     _initDots() {
       this.dots = new Array(this.children.length);
     },
+    // 自动播放
     _play() {
       let pageIndex = this.currentPageIndex + 1;
       if (this.loop) {
@@ -132,7 +146,7 @@ export default {
 
 <style scoped lang="sass">
   @import "~assets/styles/variable"
-
+  @import '~assets/styles/mixin.sass';
   .slider
     min-height: 1px
     .slider-group

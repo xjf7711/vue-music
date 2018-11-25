@@ -27,6 +27,9 @@ export default {
       default: false
     }
   },
+  created() {
+    console.log("song-list created. ");
+  },
   methods: {
     selectItem(item, index) {
       this.$emit("select", item, index);

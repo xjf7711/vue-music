@@ -148,6 +148,7 @@ export default {
     ...mapGetters(["currentIndex", "fullScreen", "playing"])
   },
   created() {
+    console.log("player created. ");
     this.touch = {};
   },
   methods: {
@@ -483,7 +484,7 @@ export default {
         position: relative
         margin-bottom: 25px
         .back
-          position absolute
+          position: absolute
           top: 0
           left: 6px
           z-index: 50
