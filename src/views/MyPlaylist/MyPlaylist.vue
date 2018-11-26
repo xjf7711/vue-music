@@ -1,5 +1,4 @@
 <!-- 迷你播放器 播放列表 组件 -->
-
 <template>
   <transition name="list-fade">
     <div class="my-playlist" @click="hide" v-show="showFlag">
@@ -20,13 +19,10 @@
           <transition-group name="list" tag="ul">
             <li :key="item.id" class="item" ref="listRef" v-for="(item, index) in sequenceList" @click="selectItem(item, index)">
               <i class="current" :class="getCurrentIcon(item)"></i>
-
               <span class="text">{{ item.name }}</span>
-
               <span @click.stop="toggleFavoriteCls(item)" class="like">
                 <i :class="getFavoriteCls(item)"></i>
               </span>
-
               <span @click.stop="deleteOne(item)" class="delete">
                 <i class="icon-delete"></i>
               </span>
@@ -47,7 +43,11 @@
       </div>
 
       <!-- 清空弹窗 -->
-      <my-confirm ref="confirmRef" @confirm="confirm" @cancel="cancel"></my-confirm>
+      <my-confirm ref="confirmRef"
+                  text="是否清空播放列表"
+                  confirmBtnText="清空"
+                  @confirm="confirm"
+                  @cancel="cancel"></my-confirm>
 
       <my-add-song ref="addSongRef"></my-add-song>
     </div>
@@ -55,13 +55,16 @@
 </template>
 
 <script>
-import MyScroll from "components/MyScroll/MyScroll";
-import MyConfirm from "components/MyConfirm/MyConfirm";
+import { mapMutations, mapActions } from "vuex";
+import MyScroll from "src/components/MyScroll/MyScroll";
+import MyConfirm from "src/components/MyConfirm/MyConfirm";
 import MyAddSong from "src/views/MyAddSong/MyAddSong";
-import { mapGetters, mapMutations, mapActions } from "vuex";
-import { myArray } from "@/common/js/myutils.js";
+// import { myArray } from "src/common/js/myutils.js";
+import { playMode } from "src/common/js/config";
+import { playerMixin } from "src/common/js/mixin";
 
 export default {
+  mixins: [playerMixin],
   components: {
     MyScroll,
     MyConfirm,
@@ -73,7 +76,49 @@ export default {
       refreshDelay: 100
     };
   },
-  props: {},
+  // 若要实现更复杂的数据变换，你应该使用计算属性
+  computed: {
+    // ...mapGetters([
+    //   "sequenceList",
+    //   "currentSong",
+    //   "mode",
+    //   "playlist",
+    //   "favoriteList"
+    // ]),
+    // 播放模式对应图标字体
+    // iconMode() {
+    //   // let cls = "";
+    //   // if (this.mode === 0) {
+    //   //   cls = "icon-sequence";
+    //   // } else if (this.mode === 1) {
+    //   //   cls = "icon-loop";
+    //   // } else if (this.mode === 2) {
+    //   //   cls = "icon-random";
+    //   // } else {
+    //   //   cls = "";
+    //   // }
+    //   // return cls;
+    // },
+    // 播放模式文案
+    modeText() {
+      return this.mode === playMode.sequence
+        ? "顺序播放"
+        : this.mode === playMode.random
+          ? "随机播放"
+          : "单曲循环";
+      // let mode = "";
+      // if (this.mode === 0) {
+      //   mode = "顺序播放";
+      // } else if (this.mode === 1) {
+      //   mode = "单曲循环";
+      // } else if (this.mode === 2) {
+      //   mode = "随机播放";
+      // } else {
+      //   mode = "";
+      // }
+      // return mode;
+    }
+  },
   watch: {
     // 切歌后滚动至第一个
     currentSong(newVal, oldVal) {
@@ -85,43 +130,45 @@ export default {
         return;
       }
 
-      this.scrollToCurrent(newVal);
+      setTimeout(() => {
+        this.scrollToCurrent(newVal);
+      }, 20);
     }
   },
   methods: {
     ...mapMutations({
-      setMode: "SET_MODE",
-      setCurrentIndex: "SET_CURRENT_INDEX",
-      setPlayingState: "SET_PLAYING_STATE",
-      setPlayList: "SET_PLAYLIST"
+      setMode: "SET_MODE"
+      // setCurrentIndex: "SET_CURRENT_INDEX",
+      // setPlayingState: "SET_PLAYING_STATE",
+      // setPlayList: "SET_PLAYLIST"
     }),
     ...mapActions([
       "deleteSong",
-      "deleteSongList",
-      "savefavoriteList",
-      "delfavoriteList"
+      "deleteSongList"
+      // "savefavoriteList",
+      // "delfavoriteList"
     ]),
-    toggleFavoriteCls(song) {
-      if (this._isFavorite(song)) {
-        this.delfavoriteList(song);
-      } else {
-        this.savefavoriteList(song);
-      }
-    },
-    getFavoriteCls(song) {
-      if (this._isFavorite(song)) {
-        return "icon-favorite";
-      } else {
-        return "icon-not-favorite";
-      }
-    },
-    _isFavorite(song) {
-      let index = this.favoriteList.findIndex(item => {
-        return song.id === item.id;
-      });
-
-      return index > -1;
-    },
+    // toggleFavoriteCls(song) {
+    //   if (this._isFavorite(song)) {
+    //     this.delfavoriteList(song);
+    //   } else {
+    //     this.savefavoriteList(song);
+    //   }
+    // },
+    // getFavoriteCls(song) {
+    //   if (this._isFavorite(song)) {
+    //     return "icon-favorite";
+    //   } else {
+    //     return "icon-not-favorite";
+    //   }
+    // },
+    // _isFavorite(song) {
+    //   let index = this.favoriteList.findIndex(item => {
+    //     return song.id === item.id;
+    //   });
+    //
+    //   return index > -1;
+    // },
     show() {
       this.showFlag = true;
 
@@ -145,7 +192,7 @@ export default {
     // 切歌
     selectItem(item, index) {
       // 随机播放
-      if (this.mode === 2) {
+      if (this.mode === playMode.random) {
         index = this.playlist.findIndex(song => {
           return song.id === item.id;
         });
@@ -177,78 +224,36 @@ export default {
     // confirm 清空对话框
     confirm() {
       this.deleteSongList();
+      this.hide(); // add
     },
     cancel() {
-      return;
+      return false;
     },
     // 改变播放模式，实质是修改 playlist
-    changeMode() {
-      let mode = (this.mode + 1) % 3;
-      this.setMode(mode);
-
-      let newList = null;
-      if (mode === 2) {
-        // 随机播放
-        newList = myArray.shuffle(this.sequenceList);
-      } else {
-        // 顺序播放、单曲循环
-        newList = this.sequenceList;
-      }
-
-      // 调整当前歌曲的索引
-      let index = newList.findIndex(item => {
-        return item.id === this.currentSong.id;
-      });
-      this.setCurrentIndex(index);
-      this.setPlayList(newList);
-    },
+    // changeMode() {
+    //   let mode = (this.mode + 1) % 3;
+    //   this.setMode(mode);
+    //
+    //   let newList = null;
+    //   if (mode === 2) {
+    //     // 随机播放
+    //     newList = myArray.shuffle(this.sequenceList);
+    //   } else {
+    //     // 顺序播放、单曲循环
+    //     newList = this.sequenceList;
+    //   }
+    //
+    //   // 调整当前歌曲的索引
+    //   let index = newList.findIndex(item => {
+    //     return item.id === this.currentSong.id;
+    //   });
+    //   this.setCurrentIndex(index);
+    //   this.setPlayList(newList);
+    // },
     showAddSong() {
       this.$refs.addSongRef.show();
     }
-  },
-  // 过滤器设计目的就是用于简单的文本转换
-  filters: {},
-  // 若要实现更复杂的数据变换，你应该使用计算属性
-  computed: {
-    ...mapGetters([
-      "sequenceList",
-      "currentSong",
-      "mode",
-      "playlist",
-      "favoriteList"
-    ]),
-    // 播放模式对应图标字体
-    iconMode() {
-      let cls = "";
-      if (this.mode === 0) {
-        cls = "icon-sequence";
-      } else if (this.mode === 1) {
-        cls = "icon-loop";
-      } else if (this.mode === 2) {
-        cls = "icon-random";
-      } else {
-        cls = "";
-      }
-      return cls;
-    },
-    // 播放模式文案
-    modeText() {
-      let mode = "";
-      if (this.mode === 0) {
-        mode = "顺序播放";
-      } else if (this.mode === 1) {
-        mode = "单曲循环";
-      } else if (this.mode === 2) {
-        mode = "随机播放";
-      } else {
-        mode = "";
-      }
-      return mode;
-    }
-  },
-  created() {},
-  mounted() {},
-  destroyed() {}
+  }
 };
 </script>
 

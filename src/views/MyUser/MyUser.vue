@@ -1,12 +1,10 @@
 <!-- 个人中心 组件 -->
-
 <template>
   <transition name="slide">
     <div class="my-user">
       <div class="back" @click="back">
         <i class="icon-back"></i>
       </div>
-
       <div class="switches-wrapper">
         <my-switches @switch="switchItem" :switches="switches" :currentIndex="currentIndex"></my-switches>
       </div>
@@ -34,20 +32,20 @@
       </div>
 
       <div class="no-result-wrapper" v-show="noResult">
-        <my-no-result></my-no-result>
+        <my-no-result :title="noResultDesc"></my-no-result>
       </div>
     </div>
   </transition>
 </template>
 
 <script>
-import MySwitches from "components/MySwitches/MySwitches";
-import MyScroll from "components/MyScroll/MyScroll";
-import MySongList from "components/MySongList/MySongList";
-import MyNoResult from "components/MyNoResult/MyNoResult";
 import { mapActions, mapGetters } from "vuex";
-import { SingerSong } from "@/common/js/SingerSongClass.js";
-import { playlistMixin } from "@/common/js/mixin.js";
+import MySwitches from "src/components/MySwitches/MySwitches";
+import MyScroll from "src/components/MyScroll/MyScroll";
+import MySongList from "src/components/MySongList/MySongList";
+import MyNoResult from "src/components/MyNoResult/MyNoResult";
+import { SingerSong } from "src/common/js/SingerSongClass.js";
+import { playlistMixin } from "src/common/js/mixin.js";
 
 export default {
   mixins: [playlistMixin],
@@ -63,14 +61,33 @@ export default {
       currentIndex: 0
     };
   },
-  props: {},
-  watch: {},
+  // 若要实现更复杂的数据变换，你应该使用计算属性
+  computed: {
+    ...mapGetters(["playHistory", "favoriteList"]),
+    noResult() {
+      if (this.currentIndex === 0) {
+        return !this.favoriteList.length;
+      }
+      if (this.currentIndex === 1) {
+        return !this.playHistory.length;
+      }
+    },
+    // todo
+    noResultDesc() {
+      if (this.currentIndex === 0) {
+        return "暂无收藏歌曲";
+      } else {
+        return "你还没有听过歌曲";
+      }
+    }
+  },
   methods: {
     ...mapActions([
-      "savefavoriteList",
-      "delfavoriteList",
       "insertSong",
-      "randomPlay"
+      "randomPlay",
+
+      "savefavoriteList",
+      "delfavoriteList"
     ]),
     toggleFavoriteCls(song) {
       if (this._isFavorite(song)) {
@@ -117,30 +134,13 @@ export default {
       this.$refs.favoriteRef && this.$refs.favoriteRef.refresh();
       this.$refs.playListRef && this.$refs.playListRef.refresh();
     }
-  },
-  // 过滤器设计目的就是用于简单的文本转换
-  filters: {},
-  // 若要实现更复杂的数据变换，你应该使用计算属性
-  computed: {
-    ...mapGetters(["playHistory", "favoriteList"]),
-    noResult() {
-      if (this.currentIndex === 0) {
-        return !this.favoriteList.length;
-      }
-      if (this.currentIndex === 1) {
-        return !this.playHistory.length;
-      }
-    }
-  },
-  created() {},
-  mounted() {},
-  destroyed() {}
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+/*@import "~@/common/scss/mymixin.scss";*/
 
 .my-user {
   position: fixed;

@@ -3,44 +3,27 @@
 <template>
   <div class="my-search-box">
     <i class="icon-search"></i>
-    <input type="text" class="box" ref="queryRef" v-model="query" :placeholder="placeholder">
+    <input type="text" class="box" ref="queryRef"
+           v-model="query" :placeholder="placeholder"/>
     <i class="icon-dismiss" v-show="query" @click="clearQuery"></i>
   </div>
 </template>
 
 <script>
-import { myDOM } from "@/common/js/myutils.js";
-
+import { myDOM } from "src/common/js/myutils.js";
+// import { debounce } from "assets/js/util";
 export default {
-  components: {},
-  data() {
-    return {
-      query: ""
-    };
-  },
   props: {
     placeholder: {
       type: String,
       default: "搜索歌曲、歌手"
     }
   },
-  watch: {},
-  filters: {},
-  methods: {
-    // 给父亲用的，让输入框失去焦点，避免滚动搜索结果时移动端键盘遮挡
-    blur() {
-      this.$refs.queryRef.blur();
-    },
-    // 给父亲用的，传进搜索框的值
-    // this.$refs.searchBoxRef.getQuery(k)
-    getQuery(k) {
-      this.query = k;
-    },
-    clearQuery() {
-      this.query = "";
-    }
+  data() {
+    return {
+      query: ""
+    };
   },
-  computed: {},
   created() {
     // 节流
     this.$watch(
@@ -50,14 +33,26 @@ export default {
       }, 300)
     );
   },
-  mounted() {},
-  destroyed() {}
+  methods: {
+    // 给父组件用的，让输入框失去焦点，避免滚动搜索结果时移动端键盘遮挡
+    blur() {
+      this.$refs.queryRef.blur();
+    },
+    // 给父组件用的，传进搜索框的值
+    // this.$refs.searchBoxRef.getQuery(k)
+    getQuery(k) {
+      this.query = k;
+    },
+    clearQuery() {
+      this.query = "";
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+@import "~src/common/scss/const.scss";
+/*@import "~@/common/scss/mymixin.scss";*/
 
 .my-search-box {
   display: flex;

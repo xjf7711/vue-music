@@ -1,30 +1,18 @@
 <!-- loading 组件 -->
-
 <template>
   <div class="my-loading">
-    <img src="./loading.gif" height="24" width="24">
+    <img src="./loading.gif" height="24" width="24" alt=""/>
     <p class="desc">{{ title }}</p>
   </div>
 </template>
 
 <script>
 export default {
-  components: {},
-  data() {
-    return {};
-  },
   props: {
     title: {
       type: String,
       default: "玩命加载中..."
     }
-  },
-  watch: {},
-  methods: {},
-  created() {},
-  mounted() {},
-  destroyed() {
-    // 良好的习惯：销毁定时器
   }
 };
 </script>

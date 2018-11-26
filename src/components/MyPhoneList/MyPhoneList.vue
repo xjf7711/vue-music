@@ -1,5 +1,4 @@
 <!-- 类电话簿组件 -->
-
 <template>
   <my-scroll ref="scrollRef"
              :data="data"
@@ -13,7 +12,7 @@
         <h2 class="list-group-title">{{ group.title }}</h2>
         <ul>
           <li v-for="(item,index) in group.items" :key="index" @click="selectItem(item)" class="list-group-item">
-            <img v-lazy="item.avatar" class="avatar">
+            <img v-lazy="item.avatar" class="avatar" alt="avatar" src=""/>
             <span class="name">{{ item.name }}</span>
           </li>
         </ul>
@@ -21,8 +20,9 @@
     </ul>
 
     <!-- 右侧字母列表 -->
-    <div @touchstart="onShortcutTouchstart"
+    <div @touchstart.stop.prevent="onShortcutTouchstart"
          @touchmove.stop.prevent="onShortcutTouchmove"
+         @touchend.stop
          class="list-shortcut">
       <ul>
         <li
@@ -59,6 +59,12 @@ export default {
     MyScroll,
     MyLoading
   },
+  props: {
+    data: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {
       scrollY: -1,
@@ -67,10 +73,20 @@ export default {
       diff: -1
     };
   },
-  props: {
-    data: {
-      type: Array,
-      default: () => []
+  computed: {
+    // 快速入口排列数组
+    shortcut() {
+      return this.data.map(group => {
+        return group.title.substr(0, 1);
+      });
+    },
+    fixedTitle() {
+      if (this.scrollY > 0) {
+        return "";
+      }
+      return this.data[this.currentIndex]
+        ? this.data[this.currentIndex].title
+        : "";
     }
   },
   watch: {
@@ -114,6 +130,13 @@ export default {
       this.$refs.fixedTitleRef.style.transform = `translate3d(0, ${fixedTop}px, 0)`;
     }
   },
+  created() {
+    // console.log("MyPoneList created. ");
+    this.touch = {};
+    this.listenScroll = true;
+    this.leftListHeight = [];
+    this.probeType = 3; // better-scroll 滚动组件 不截留
+  },
   methods: {
     // 对父亲提供的刷新 better-scroll 方法
     refresh() {
@@ -138,14 +161,14 @@ export default {
     },
     // 滑动右侧，左侧联动，与左侧共享 touch 对象
     onShortcutTouchmove(e) {
-      let nowTouch = e.touches[0];
+      const nowTouch = e.touches[0];
       this.touch.y2 = nowTouch.pageY;
 
       // 两次 touch y轴偏移
-      let offset = Math.floor(
+      const offset = Math.floor(
         (this.touch.y2 - this.touch.y1) / RIGHT_ONEWORD_HEIGHT
       );
-      let nowIndex = Number(this.touch.nowIndex) + offset;
+      const nowIndex = Number(this.touch.nowIndex) + offset;
 
       this._scrollTo(nowIndex);
     },
@@ -156,7 +179,7 @@ export default {
       // console.log(index)
 
       // 超出范围不能点击和拖动
-      if (!index) {
+      if (!index && index !== 0) {
         return;
       }
       if (index < 0) {
@@ -165,7 +188,8 @@ export default {
         index = this.leftListHeight.length - 2;
       }
 
-      this.currentIndex = Number(index);
+      this.scrollY = -this.listHeight[index]; // ????
+      // this.currentIndex = Number(index);
       this.$refs.scrollRef.scrollToElement(this.$refs.leftRef[index], 0);
     },
     // 计算 leftListHeight 的高度
@@ -182,37 +206,13 @@ export default {
       }
       // console.log(this.leftListHeight) // (24) [0, 760, 1030, 1370, 1780, 1910, 2110, 2450, 2720, 3060, 3190, 3950, 4430, 4700, 4900, 5100, 5370, 5570, 5980, 6460, 7010, 7560, 7900, 9010]
     }
-  },
-  computed: {
-    // 快速入口排列数组
-    shortcut() {
-      return this.data.map(group => {
-        return group.title.substr(0, 1);
-      });
-    },
-    fixedTitle() {
-      if (this.scrollY > 0) {
-        return "";
-      }
-      return this.data[this.currentIndex]
-        ? this.data[this.currentIndex].title
-        : "";
-    }
-  },
-  created() {
-    this.touch = {};
-    this.listenScroll = true;
-    this.leftListHeight = [];
-    this.probeType = 3; // better-scroll 滚动组件 不截留
-  },
-  mounted() {},
-  destroyed() {}
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+/*@import "~@/common/scss/mymixin.scss";*/
 
 .my-phone-list {
   position: relative;
@@ -257,7 +257,7 @@ export default {
     border-radius: 10px;
     text-align: center;
     background: $color-background-d;
-    font-family: Helvetica;
+    font-family: Helvetica, serif;
     .item {
       padding: 3px;
       line-height: 1;

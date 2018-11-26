@@ -21,7 +21,7 @@ attachFastClick.attach(document.body);
 // 图片懒加载
 import VueLazyload from "vue-lazyload";
 Vue.use(VueLazyload, {
-  loading: require("assets/image/default.png")
+  loading: require("src/common/img/default.png")
 });
 
 // /* eslint-disable no-new */ vue-cli2时用到

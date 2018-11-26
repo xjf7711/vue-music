@@ -1,5 +1,4 @@
 <!-- 搜索建议页列表组件 -->
-
 <template>
   <my-scroll class="my-suggest-list"
              ref="scrollRef"
@@ -29,12 +28,13 @@
 </template>
 
 <script>
-import MyScroll from "components/MyScroll/MyScroll";
-import MyLoading from "components/MyLoading/MyLoading";
-import MyNoResult from "components/MyNoResult/MyNoResult";
-import { search } from "@/api/search.js";
-import { createSingerSong } from "@/common/js/SingerSongClass.js";
-import { Singer } from "@/common/js/SingerClass.js";
+import MyScroll from "src/components/MyScroll/MyScroll";
+import MyLoading from "src/components/MyLoading/MyLoading";
+import MyNoResult from "src/components/MyNoResult/MyNoResult";
+import { search } from "src/api/search.js";
+import { ERR_OK } from "src/api/config";
+import { createSingerSong } from "src/common/js/SingerSongClass.js";
+import { Singer } from "src/common/js/SingerClass.js";
 import { mapMutations, mapActions } from "vuex";
 
 const TYPE_SINGER = "singer";
@@ -44,6 +44,18 @@ export default {
     MyScroll,
     MyLoading,
     MyNoResult
+  },
+  props: {
+    // 接受的检索值
+    query: {
+      type: String,
+      default: ""
+    },
+    // 是否显示歌手
+    zhida: {
+      type: Boolean,
+      default: true
+    }
   },
   data() {
     return {
@@ -59,18 +71,6 @@ export default {
       pullup: true
     };
   },
-  props: {
-    // 接受的检索值
-    query: {
-      type: String,
-      default: ""
-    },
-    // 是否显示歌手
-    zhida: {
-      type: Boolean,
-      default: true
-    }
-  },
   watch: {
     query(newVal) {
       if (newVal) {
@@ -78,7 +78,6 @@ export default {
       }
     }
   },
-  filters: {},
   methods: {
     // vuex
     ...mapMutations({
@@ -91,7 +90,7 @@ export default {
       this.$refs.scrollRef.scrollTo(0, 0);
 
       search(this.query, this.page, this.perpage, this.zhida).then(res => {
-        if (res.code === 0) {
+        if (ERR_OK === res.code) {
           // console.log(res.data)
           // console.log(this._formatSearch(res.data))
           this.result = this._formatSearch(res.data);
@@ -117,13 +116,11 @@ export default {
     // 格式化歌手信息
     _normalizeSongs(list) {
       let ret = [];
-
       list.forEach(item => {
         if (item.songid && item.albummid) {
           ret.push(createSingerSong(item));
         }
       });
-
       return ret;
     },
     // 获取 icon class 图标样式
@@ -145,10 +142,9 @@ export default {
       if (!this.hasMore) {
         return;
       }
-
       this.page++;
       search(this.query, this.page, this.perpage, this.zhida).then(res => {
-        if (res.code === 0) {
+        if (ERR_OK === res.code) {
           this.result = this.result.concat(this._formatSearch(res.data));
           this._checkMore(res.data);
         }
@@ -188,15 +184,11 @@ export default {
     beforeScroll() {
       this.$emit("beforeScroll");
     },
-    // 给父亲用
+    // 给父组件用
     refresh() {
       this.$refs.scrollRef.refresh();
     }
-  },
-  computed: {},
-  created() {},
-  mounted() {},
-  destroyed() {}
+  }
 };
 </script>
 

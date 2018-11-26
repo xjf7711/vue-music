@@ -1,5 +1,4 @@
 <!-- better-scroll 轮播图组件 -->
-
 <template>
   <div class="my-slider" ref="slider">
     <div class="slider-group" ref="sliderGroup">
@@ -7,23 +6,17 @@
     </div>
     <!-- 轮播点 -->
     <div class="dots">
-      <span v-for="(dot, index) in dots" :key="index" :class="{ active: currentDotsIndex === index }" class="dot"></span>
+      <span v-for="(dot, index) in dots" :key="index"
+            :class="{ active: currentDotsIndex === index }" class="dot"></span>
     </div>
   </div>
 </template>
 
 <script>
 import BScroll from "better-scroll";
-import { myDOM } from "@/common/js/myutils.js";
+import { myDOM } from "src/common/js/myutils.js";
 
 export default {
-  components: {},
-  data() {
-    return {
-      dots: [],
-      currentDotsIndex: 0
-    };
-  },
   props: {
     // 是否循环播放
     loop: {
@@ -41,17 +34,56 @@ export default {
       default: 3000
     }
   },
+  data() {
+    return {
+      dots: [],
+      currentDotsIndex: 0
+    };
+  },
+  mounted() {
+    setTimeout(() => {
+      this._setSliderWidth();
+      this._initDots();
+      this._initSlider();
+
+      if (this.autoPlay) {
+        this._initPlay();
+      }
+
+      // 当窗口尺寸改变时，重新计算轮播宽度
+      window.addEventListener("resize", () => {
+        if (!this.slider) {
+          return;
+        }
+        this._setSliderWidth(true);
+        this.slider.refresh();
+      });
+    }, 20);
+  },
+  activated() {
+    if (this.autoPlay) {
+      this._play();
+    }
+  },
+  deactivated() {
+    clearTimeout(this.timer);
+  },
+  // beforeDestroy() {
+  //   clearTimeout(this.timer);
+  // },
+  destroyed() {
+    // 良好的习惯：销毁定时器
+    clearTimeout(this.timer);
+  },
   methods: {
     // 轮播图(sliderGroup)宽度
     _setSliderWidth(isResize) {
       // 拿到传过来的图片
       this.children = this.$refs.sliderGroup.children;
       // console.log(this.children) // (5) [div, div, div, div, div]
-
       // 拿到父元素（slider）宽度
       let width = 0;
       let sliderWidth = this.$refs.slider.clientWidth;
-
       // 动态添加 class、width
       for (let i = 0; i < this.children.length; i++) {
         let child = this.children[i];
@@ -60,11 +92,9 @@ export default {
         child.style.width = sliderWidth + "px";
         width += sliderWidth;
       }
-
       if (this.loop && !isResize) {
         width += 2 * sliderWidth;
       }
-
       this.$refs.sliderGroup.style.width = width + "px";
     },
     // 初始化轮播图
@@ -92,6 +122,12 @@ export default {
           clearTimeout(this.timer);
           this._initPlay();
         }
+
+        // this.slider.on("beforeScrollStart", () => { // ??
+        //   if (this.autoPlay) {
+        //     clearTimeout(this.timer);
+        //   }
+        // });
       });
     },
     // 初始化轮播点
@@ -108,31 +144,6 @@ export default {
         this.slider.goToPage(nextIndex, 0, 400);
       }, this.delay);
     }
-  },
-  created() {},
-  mounted() {
-    setTimeout(() => {
-      this._setSliderWidth();
-      this._initDots();
-      this._initSlider();
-
-      if (this.autoPlay) {
-        this._initPlay();
-      }
-
-      // 当窗口尺寸改变时，重新计算轮播宽度
-      window.addEventListener("resize", () => {
-        if (!this.slider) {
-          return;
-        }
-        this._setSliderWidth(true);
-        this.slider.refresh();
-      });
-    }, 20);
-  },
-  destroyed() {
-    // 良好的习惯：销毁定时器
-    clearTimeout(this.timer);
   }
 };
 </script>

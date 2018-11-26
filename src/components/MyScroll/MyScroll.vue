@@ -1,5 +1,4 @@
 <!-- better-scroll 滚动组件 -->
-
 <template>
   <div ref="wrapper" class="my-scroll">
     <slot></slot>
@@ -10,10 +9,6 @@
 import BScroll from "better-scroll";
 
 export default {
-  components: {},
-  data() {
-    return {};
-  },
   props: {
     // 传入的数据
     data: {
@@ -56,17 +51,20 @@ export default {
       }, this.refreshDelay);
     }
   },
+  mounted() {
+    setTimeout(() => {
+      this._initScroll();
+    }, 20);
+  },
   methods: {
     _initScroll() {
       if (!this.$refs.wrapper) {
         return;
       }
-
       this.scroll = new BScroll(this.$refs.wrapper, {
         probeType: this.probeType,
         click: this.click
       });
-
       // 派发监听滚动位置事件
       if (this.listenScroll) {
         let me = this;
@@ -75,7 +73,6 @@ export default {
           me.$emit("scroll", pos);
         });
       }
-
       // 派发上拉刷新时间
       if (this.pullup) {
         this.scroll.on("scrollEnd", () => {
@@ -85,7 +82,6 @@ export default {
           }
         });
       }
-
       // 滚动前是否触发事件
       if (this.beforeScroll) {
         this.scroll.on("beforeScrollStart", () => {
@@ -108,15 +104,6 @@ export default {
     scrollToElement() {
       this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments);
     }
-  },
-  created() {},
-  mounted() {
-    setTimeout(() => {
-      this._initScroll();
-    }, 20);
   }
 };
 </script>
-
-<style lang="scss" scoped>
-</style>

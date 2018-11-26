@@ -1,9 +1,4 @@
 /*
-* @Author: bxm09
-* @Date:   2017-08-01 10:45:26
-* @Last Modified by:   bxm09
-* @Last Modified time: 2017-08-09 16:57:07
-*
 * import { myDOM } from '@/common/js/myutils.js'
 * 使用本对象中的方法时，使用 this。this.hasClass(el, className)
 * 使用本库其他对象中的方法时，直接调用。myNumber.getRandom(0, i)
@@ -73,6 +68,38 @@ export const myDOM = {
     };
   }
 };
+
+let elementStyle = document.createElement("div").style;
+
+let vendor = (() => {
+  let transformNames = {
+    webkit: "webkitTransform",
+    Moz: "MozTransform",
+    O: "OTransform",
+    ms: "msTransform",
+    standard: "transform"
+  };
+
+  for (let key in transformNames) {
+    if (elementStyle[transformNames[key]] !== undefined) {
+      return key;
+    }
+  }
+
+  return false;
+})();
+
+export function prefixStyle(style) {
+  if (vendor === false) {
+    return false;
+  }
+
+  if (vendor === "standard") {
+    return style;
+  }
+
+  return vendor + style.charAt(0).toUpperCase() + style.substr(1);
+}
 
 export const myTime = {
   /**
@@ -153,6 +180,7 @@ export const myHTTP = {};
 
 export const myOthers = {};
 
+// add by xjf 2018/11/24
 export function parseJsonp(res) {
   let num1 = res.indexOf("(");
   let num2 = res.indexOf(")");

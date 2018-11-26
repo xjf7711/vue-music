@@ -10,7 +10,7 @@
       <div v-show="fullScreen" class="normal-player">
         <!-- 背景图 -->
         <div class="background">
-          <img :src="currentSong.img" width="100%" height="100%"/>
+          <img :src="currentSong.img" width="100%" height="100%" alt=""/>
         </div>
 
         <!-- 顶部 -->
@@ -20,8 +20,8 @@
             <i class="icon-back"></i>
           </div>
 
-          <p v-html="currentSong.name" class="title"></p>
-          <p v-html="currentSong.singer" class="subtitle"></p>
+          <h1 v-html="currentSong.name" class="title"></h1>
+          <h2 v-html="currentSong.singer" class="subtitle"></h2>
         </div>
 
         <!-- 中部 -->
@@ -33,7 +33,7 @@
           <div class="middle-l" ref="middleRef">
             <div ref="cdRef" class="cd-wrapper">
               <div :class="playing ? 'play' : 'play pause'" class="cd">
-                <img :src="currentSong.img" class="image"/>
+                <img :src="currentSong.img" class="image" alt=""/>
               </div>
             </div>
 
@@ -131,20 +131,24 @@
            @error="error"
            @timeupdate="timeupdate"
            @ended="ended"
-           :src="currentSong.url">Your browser does not support the audio element.</audio>
+           :src="currentSong.url">
+      Your browser does not support the audio element.</audio>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from "vuex";
 import animations from "create-keyframe-animation";
-import { myTime, myArray } from "@/common/js/myutils.js";
-import MyProgressBar from "components/MyProgressBar/MyProgressBar";
-import MyProgressCircle from "components/MyProgressCircle/MyProgressCircle";
-import MyPlaylist from "src/views/MyPlaylist/MyPlaylist";
-import MyScroll from "components/MyScroll/MyScroll";
 import Lyric from "lyric-parser"; // QQ音乐 歌词解析 https://github.com/ustbhuangyi/lyric-parser
 
+import { mapGetters, mapMutations, mapActions } from "vuex";
+import { myTime, myArray, prefixStyle } from "src/common/js/myutils.js";
+import MyProgressBar from "src/components/MyProgressBar/MyProgressBar";
+import MyProgressCircle from "src/components/MyProgressCircle/MyProgressCircle";
+import MyPlaylist from "src/views/MyPlaylist/MyPlaylist";
+import MyScroll from "src/components/MyScroll/MyScroll";
+// 样式兼容性
+const transform = prefixStyle("transform");
+const transitionDuration = prefixStyle("transitionDuration");
 export default {
   props: {},
   components: {
@@ -173,11 +177,11 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "fullScreen",
-      "playlist",
-      "currentSong",
-      "playing",
       "currentIndex",
+      "fullScreen",
+      "playing",
+
+      "playlist",
       "currentSong",
       "mode",
       "sequenceList",
@@ -206,21 +210,17 @@ export default {
     // 监控当前歌曲
     currentSong(newVal, oldVal) {
       // console.log(this.currentSong)
-
       // 播放列表没有歌曲就退出
       if (!newVal.id) {
         return;
       }
-
       if (newVal.id === oldVal.id) {
         return;
       }
-
       // 切歌时，停止当前歌词
       if (this.currentLyric) {
         this.currentLyric.stop();
       }
-
       // DOM 更新了
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
@@ -236,6 +236,14 @@ export default {
         newVal ? audio.play() : audio.pause();
       });
     }
+    // add later mapMutations setfullScreen
+    // fullScreen(newVal) {
+    //   if (newVal) {
+    //     setTimeout(() => {
+    //       this.$refs.lyricList.refresh();
+    //     }, 20);
+    //   }
+    // }
   },
   filters: {
     format: function(value) {
@@ -244,11 +252,10 @@ export default {
     }
   },
   created() {
+    // console.log("player created. ");
     // 维护一个滑动状态对象
     this.touch = {};
   },
-  mounted() {},
-  destroyed() {},
   methods: {
     ...mapMutations({
       setfullScreen: "SET_FULL_SCREEN",
@@ -449,17 +456,18 @@ export default {
 
       this.$refs.cdRef.style.transition = `all 0.4s ease`;
       this.$refs.cdRef.style[
-        "transform"
+        transform // "transform"
       ] = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
-      this.$refs.cdRef.style[
-        "webkitTransform"
-      ] = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
+      // this.$refs.cdRef.style[
+      //   "webkitTransform"
+      // ] = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
 
       this.$refs.cdRef.addEventListener("transitionend", done);
     },
     afterLeave() {
-      this.$refs.cdRef.style["transform"] = "";
-      this.$refs.cdRef.style["webkitTransform"] = "";
+      this.$refs.cdRef.style[transform] = "";
+      // this.$refs.cdRef.style["transform"] = "";
+      // this.$refs.cdRef.style["webkitTransform"] = "";
       this.$refs.cdRef.style.transition = "";
     },
     _getPosAndScale() {
@@ -529,8 +537,8 @@ export default {
       }
 
       // 滑动的差值
-      let deltaX = e.touches[0].pageX - this.touch.startX;
-      let deltaY = e.touches[0].pageY - this.touch.startY;
+      const deltaX = e.touches[0].pageX - this.touch.startX;
+      const deltaY = e.touches[0].pageY - this.touch.startY;
 
       // 纵向滚动 return
       if (Math.abs(deltaX) < Math.abs(deltaY)) {
@@ -546,25 +554,27 @@ export default {
       this.touch.percent = Math.abs(offsetWidth / window.innerWidth);
       // console.log(this.touch.percent)
 
+      // this.$refs.lyricList.$el.style[
+      //   "webkitTransform"
+      // ] = `translate3d(${offsetWidth}px, 0, 0)`;
       this.$refs.lyricList.$el.style[
-        "webkitTransform"
-      ] = `translate3d(${offsetWidth}px, 0, 0)`;
-      this.$refs.lyricList.$el.style[
-        "transform"
+        transform // "transform"
       ] = `translate3d(${offsetWidth}px, 0, 0)`;
       // 过渡效果坚持 0ms
-      this.$refs.lyricList.$el.style["webkitTransition-duration"] = 0;
-      this.$refs.lyricList.$el.style["transition-duration"] = 0;
+      this.$refs.lyricList.$el.style[transitionDuration] = 0;
+      // this.$refs.lyricList.$el.style["webkitTransition-duration"] = 0;
+      // this.$refs.lyricList.$el.style["transition-duration"] = 0;
       // 背景模糊
       this.$refs.middleRef.style.opacity = 1 - this.touch.percent;
-      this.$refs.middleRef.style["webkitTransition-duration"] = 0;
-      this.$refs.middleRef.style["transition-duration"] = 0;
+      this.$refs.middleRef.style[transitionDuration] = 0;
+      // this.$refs.middleRef.style["webkitTransition-duration"] = 0;
+      // this.$refs.middleRef.style["transition-duration"] = 0;
     },
     middleTouchend() {
       let offsetWidth = null;
       let opacity = null;
 
-      if (this.currentDot === "cd") {
+      if ("cd" === this.currentDot) {
         // 左滑
         if (this.touch.percent > 0.1) {
           offsetWidth = -window.innerWidth;
@@ -590,15 +600,17 @@ export default {
         "webkitTransform"
       ] = `translate3d(${offsetWidth}px, 0, 0)`;
       this.$refs.lyricList.$el.style[
-        "transform"
+        transform // "transform"
       ] = `translate3d(${offsetWidth}px, 0, 0)`;
       // 过渡效果坚持 300ms
-      this.$refs.lyricList.$el.style["webkitTransition-duration"] = "300ms";
-      this.$refs.lyricList.$el.style["transition-duration"] = "300ms";
+      this.$refs.lyricList.$el.style[transitionDuration] = "300ms";
+      // this.$refs.lyricList.$el.style["webkitTransition-duration"] = "300ms";
+      // this.$refs.lyricList.$el.style["transition-duration"] = "300ms";
       // 背景模糊
       this.$refs.middleRef.style.opacity = opacity;
-      this.$refs.middleRef.style["webkitTransition-duration"] = "300ms";
-      this.$refs.middleRef.style["transition-duration"] = "300ms";
+      this.$refs.middleRef.style[transitionDuration] = "300ms";
+      // this.$refs.middleRef.style["webkitTransition-duration"] = "300ms";
+      // this.$refs.middleRef.style["transition-duration"] = "300ms";
     }
   }
 };

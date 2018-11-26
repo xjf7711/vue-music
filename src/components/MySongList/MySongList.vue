@@ -1,16 +1,16 @@
 <!-- 歌曲列表组件 -->
-
 <template>
   <div class="my-song-list">
     <ul>
-      <li @click="selectItem(item, index)" v-for="(item, index) in songs" :key="index" class="item">
+      <li @click="selectItem(item, index)"
+          v-for="(item, index) in songs" :key="index" class="item">
         <!-- 排行奖杯图片 -->
         <div class="rank" v-show="rank">
           <span class="icon" :class="getRankCls(index)">{{ getRankTxt(index) }}</span>
         </div>
 
         <div class="content">
-          <p class="name">{{ item.name }}</p>
+          <h2 class="name">{{ item.name }}</h2>
           <p class="desc">{{ getDesc(item) }}</p>
         </div>
       </li>
@@ -20,10 +20,6 @@
 
 <script>
 export default {
-  components: {},
-  data() {
-    return {};
-  },
   props: {
     songs: {
       type: Array,
@@ -35,38 +31,39 @@ export default {
       default: false
     }
   },
-  watch: {},
+  created() {
+    // console.log("song-list created. ");
+  },
   methods: {
     getDesc(item) {
       return `${item.singer} - ${item.album}`;
     },
-    // 对父亲说：我需要这些数据
+    // 对父组件说：我需要这些数据
     selectItem(item, index) {
       this.$emit("select", item, index);
     },
     // 排行奖杯图片
     getRankCls(index) {
-      if (index === 0) {
-        return "icon0";
-      } else if (index === 1) {
-        return "icon1";
-      } else if (index === 2) {
-        return "icon2";
+      // if (index === 0) {
+      //   return "icon0";
+      // } else if (index === 1) {
+      //   return "icon1";
+      // } else if (index === 2) {
+      //   return "icon2";
+      if (index <= 2) {
+        return `icon icon${index}`;
       } else {
         return "text";
       }
     },
     // 排行奖杯文案
     getRankTxt(index) {
+      // if (index > 2)
       if (index > 0) {
         return index + 1;
       }
     }
-  },
-  computed: {},
-  created() {},
-  mounted() {},
-  destroyed() {}
+  }
 };
 </script>
 

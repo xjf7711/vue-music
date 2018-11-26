@@ -7,8 +7,8 @@ const SEARCH_KEY = "__search__";
  * 插入新元素到 arr[0] 并删除重复值，可控制数组最大长度
  * @param  {[type]} arr   要插入到哪个数组
  * @param  {[type]} val   要插入的值
- * @param  {fn} compareFn 比较函数
- * @param  {num} maxLen   数组最大长度
+ * @param  {function(*): boolean} compareFn 比较函数
+ * @param  {number} maxLen   数组最大长度
  * @return {[type]}           [description]
  */
 function insertArr(arr, val, compareFn, maxLen = 15) {

@@ -1,21 +1,21 @@
 <!-- 歌手页组件 -->
-
 <template>
   <div class="my-singer" ref="singerRef">
     <my-phone-list ref="listRef" :data="singers" @select="selectSinger"></my-phone-list>
-    <router-view></router-view>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import { getSingerList } from "@/api/singer.js";
-import { createSinger } from "@/common/js/SingerClass.js";
-import MyPhoneList from "components/MyPhoneList/MyPhoneList";
 import { mapMutations } from "vuex";
-import { playlistMixin } from "@/common/js/mixin.js";
+import { getSingerList } from "src/api/singer.js";
+import { ERR_OK } from "src/api/config";
+import { createSinger } from "src/common/js/SingerClass.js";
+import { playlistMixin } from "src/common/js/mixin.js";
+import MyPhoneList from "src/components/MyPhoneList/MyPhoneList";
 
 const HOT_TITLE = "热门";
-const HTO_NUM = 10;
+const HOT_NUM = 10;
 
 export default {
   mixins: [playlistMixin],
@@ -27,13 +27,13 @@ export default {
       singers: []
     };
   },
-  props: {},
-  watch: {},
+  created() {
+    this._getSingerList();
+  },
   methods: {
     // 当有迷你播放器时，调整滚动底部距离
     handlePlaylist(playlist) {
-      let bottom = playlist.length > 0 ? "60px" : "";
-      this.$refs.singerRef.style.bottom = bottom;
+      this.$refs.singerRef.style.bottom = playlist.length > 0 ? "60px" : "";
       this.$refs.listRef.refresh();
     },
     // 子路由分配
@@ -41,13 +41,12 @@ export default {
       this.$router.push({
         path: `/singer/${singer.id}`
       });
-
       this.setSinger(singer);
     },
     // 获取歌手列表数据
     _getSingerList() {
       getSingerList().then(res => {
-        if (res.code === 0) {
+        if (ERR_OK === res.code) {
           // console.log(res.data.list)
           // console.log(this._formatSingers(res.data.list))
           this.singers = this._formatSingers(res.data.list);
@@ -67,7 +66,7 @@ export default {
       // 填充歌手数据
       list.forEach((item, index) => {
         // 填充热门歌手数据
-        if (index < HTO_NUM) {
+        if (index < HOT_NUM) {
           map.hot.items.push(createSinger(item));
         }
 
@@ -84,7 +83,7 @@ export default {
         map[key].items.push(createSinger(item));
       });
 
-      // 得到有序列表
+      // 为了得到有序列表，我们需要处理 map
       let hot = [];
       let others = [];
 
@@ -108,12 +107,7 @@ export default {
     ...mapMutations({
       setSinger: "SET_SINGER"
     })
-  },
-  created() {
-    this._getSingerList();
-  },
-  mounted() {},
-  destroyed() {}
+  }
 };
 </script>
 

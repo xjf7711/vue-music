@@ -1,11 +1,10 @@
 <!-- 排行页组件 -->
-
 <template>
   <div class="my-rank" ref="rankRef">
     <!-- 排行榜数据 -->
-    <my-scroll class="toplist" ref="scrollRef" :data="toplist">
+    <my-scroll class="toplist" ref="scrollRef" :data="topList">
       <ul>
-        <li class="item" v-for="(item,index) in toplist" :key="index" @click="selectItem(item)">
+        <li class="item" v-for="(item,index) in topList" :key="index" @click="selectItem(item)">
           <!-- 左图 -->
           <div class="icon">
             <img width="100" height="100" v-lazy="item.picUrl" @load="loadImg">
@@ -24,21 +23,23 @@
       </ul>
 
       <!-- loading 组件 -->
-      <div v-show="!toplist.length" class="loading-container">
+      <div v-show="!topList.length" class="loading-container">
         <my-loading></my-loading>
       </div>
     </my-scroll>
 
-    <router-view></router-view>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import MyLoading from "components/MyLoading/MyLoading";
-import MyScroll from "components/MyScroll/MyScroll";
-import { getRankList } from "@/api/rank.js";
-import { playlistMixin } from "@/common/js/mixin.js";
 import { mapMutations } from "vuex";
+import { getRankList } from "src/api/rank.js";
+import { ERR_OK } from "src/api/config";
+import { playlistMixin } from "src/common/js/mixin.js";
+
+import MyLoading from "src/components/MyLoading/MyLoading";
+import MyScroll from "src/components/MyScroll/MyScroll";
 
 export default {
   mixins: [playlistMixin],
@@ -48,12 +49,19 @@ export default {
   },
   data() {
     return {
-      toplist: []
+      topList: []
     };
   },
-  props: {},
-  watch: {},
-  filters: {},
+  created() {
+    this._getRankList();
+  },
+  watch: {
+    topList() {
+      setTimeout(() => {
+        this.$Lazyload.lazyLoadHandler();
+      }, 20);
+    }
+  },
   methods: {
     ...mapMutations({
       setRankList: "SET_RANKLIST"
@@ -62,15 +70,13 @@ export default {
       this.$router.push({
         path: `/rank/${item.id}`
       });
-
       // console.log(item)
       // 写入 vuex
       this.setRankList(item);
     },
     // 当有迷你播放器时，调整滚动底部距离
     handlePlaylist(playlist) {
-      let bottom = playlist.length > 0 ? "60px" : "";
-      this.$refs.rankRef.style.bottom = bottom;
+      this.$refs.rankRef.style.bottom = playlist.length > 0 ? "60px" : "";
       this.$refs.scrollRef.refresh();
     },
     // 当首次获取到图片时，Better-scroll 重新计算
@@ -82,19 +88,13 @@ export default {
     },
     _getRankList() {
       getRankList().then(res => {
-        if (res.code === 0) {
+        if (ERR_OK === res.code) {
           // console.log(res)
-          this.toplist = res.data.topList;
+          this.topList = res.data.topList;
         }
       });
     }
-  },
-  computed: {},
-  created() {
-    this._getRankList();
-  },
-  mounted() {},
-  destroyed() {}
+  }
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @touchmove.prevent>
     <my-header></my-header>
     <my-tab></my-tab>
     <keep-alive>
@@ -22,29 +22,3 @@ export default {
   }
 };
 </script>
-<!--<template>-->
-  <!--<div id="app" @touchmove.prevent>-->
-    <!--<m-header></m-header>-->
-    <!--<tab></tab>-->
-    <!--<keep-alive>-->
-      <!--<router-view></router-view>-->
-    <!--</keep-alive>-->
-    <!--<player></player>-->
-  <!--</div>-->
-<!--</template>-->
-<!--<script type="text/ecmascript-6">-->
-<!--import MHeader from "./views/m-header/MHeader";-->
-<!--import Player from "./views/player/player";-->
-<!--import Tab from "./views/tab/tab";-->
-
-<!--export default {-->
-  <!--components: {-->
-    <!--MHeader,-->
-    <!--Tab,-->
-    <!--Player-->
-  <!--}-->
-<!--};-->
-<!--</script>-->
-<!--<style lang="scss">-->
-<!--/*@import "./assets/styles/index.sass";*/-->
-<!--</style>-->

@@ -1,5 +1,4 @@
 <!-- 进度条组件 -->
-
 <template>
   <div ref="barRef" @click.stop="progressClick" class="my-progress-bar">
     <div class="bar-inner">
@@ -8,10 +7,10 @@
 
        <!-- 小球 -->
       <div ref="btnRef"
+           class="progress-btn-wrapper"
            @touchstart.prevent="progressTouchstart"
            @touchmove.prevent="progressTouchmove"
-           @touchend="progressTouchend"
-           class="progress-btn-wrapper">
+           @touchend="progressTouchend">
         <div class="progress-btn"></div>
       </div>
     </div>
@@ -19,13 +18,12 @@
 </template>
 
 <script>
+import { prefixStyle } from "src/common/js/myutils";
+
 const BTN_WIDTH = 16;
+const transform = prefixStyle("transform");
 
 export default {
-  components: {},
-  data() {
-    return {};
-  },
   props: {
     // 当前播放进度 [0, 1]
     percent: {
@@ -45,15 +43,19 @@ export default {
       }
     }
   },
+  created() {
+    // 共享 touch 状态
+    this.touch = {};
+  },
   methods: {
     // 点击进度条改变播放进度
     progressClick(e) {
       // 返回一个矩形对象，包含四个属性：left、top、right和bottom。分别表示元素各边与页面上边和左边的距离。
       let rectLeft = this.$refs.barRef.getBoundingClientRect().left;
       let offsetWidth = e.pageX - rectLeft;
-
-      // this._move(e.offsetX) // 这样的话，点小球的时候数据不对，弃
       this._move(offsetWidth);
+      // 这里当我们点击 progressBtn 的时候，e.offsetX 获取不对
+      // this._move(e.offsetX)
       this._percentChange();
     },
     // 拖动小球改变播放进度，小球滑动开始位置
@@ -69,9 +71,9 @@ export default {
       if (!this.touch.init) return;
 
       // 滑动的差值
-      let deltaX = e.touches[0].pageX - this.touch.startX;
+      const deltaX = e.touches[0].pageX - this.touch.startX;
       // 进度条的差值，大于0，小于总长度
-      let offsetWidth = Math.min(
+      const offsetWidth = Math.min(
         this.$refs.barRef.clientWidth - BTN_WIDTH,
         Math.max(0, this.touch.left + deltaX)
       );
@@ -86,12 +88,15 @@ export default {
     // 进度条前进 + 小球前进
     _move(offsetWidth) {
       this.$refs.progressRef.style.width = `${offsetWidth}px`;
-      this.$refs.btnRef.style[
-        "webkitTransform"
-      ] = `translate3d(${offsetWidth}px, 0, 0)`;
-      this.$refs.btnRef.style[
-        "transform"
-      ] = `translate3d(${offsetWidth}px, 0, 0)`;
+      this.$refs.progressBtn.style[
+        transform
+      ] = `translate3d(${offsetWidth}px,0,0)`;
+      // this.$refs.btnRef.style[
+      //   "webkitTransform"
+      // ] = `translate3d(${offsetWidth}px, 0, 0)`;
+      // this.$refs.btnRef.style[
+      //   "transform"
+      // ] = `translate3d(${offsetWidth}px, 0, 0)`;
     },
     // events up,改变 props percent,不能(也不应该)直接在子组件中改变 props
     _percentChange() {
@@ -100,20 +105,13 @@ export default {
 
       this.$emit("percentChange", newPercent);
     }
-  },
-  computed: {},
-  created() {
-    // 共享 touch 状态
-    this.touch = {};
-  },
-  mounted() {},
-  destroyed() {}
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+/*@import "~@/common/scss/mymixin.scss";*/
 
 .my-progress-bar {
   height: 30px;

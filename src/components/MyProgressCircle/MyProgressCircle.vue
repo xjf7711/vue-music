@@ -6,8 +6,8 @@ http://www.runoob.com/svg/svg-example.html
 <template>
   <div class="my-progress-circle">
     <svg :width="radius" :height="radius" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
-      <circle class="progress-background" cx="50" cy="50" r="50" fill="transparent"/>
-      <circle class="progress-bar" cx="50" cy="50" r="50" fill="transparent" :stroke-dasharray="dasharray" :stroke-dashoffset="dashoffset"/>
+      <circle class="progress-background" cx="50" cy="50" r="50" fill="transparent"></circle>
+      <circle class="progress-bar" cx="50" cy="50" r="50" fill="transparent" :stroke-dasharray="dasharray" :stroke-dashoffset="dashoffset"></circle>
     </svg>
 
     <slot></slot>
@@ -16,12 +16,6 @@ http://www.runoob.com/svg/svg-example.html
 
 <script>
 export default {
-  components: {},
-  data() {
-    return {
-      dasharray: Math.PI * 100
-    };
-  },
   props: {
     percent: {
       type: Number,
@@ -29,26 +23,25 @@ export default {
     },
     radius: {
       type: Number,
-      default: 32
+      default: 32 // 100
     }
   },
-  watch: {},
-  filters: {},
-  methods: {},
+  data() {
+    return {
+      dasharray: Math.PI * 100
+    };
+  },
   computed: {
     dashoffset() {
       return (1 - this.percent) * this.dasharray;
     }
-  },
-  created() {},
-  mounted() {},
-  destroyed() {}
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+/*@import "~@/common/scss/mymixin.scss";*/
 
 .my-progress-circle {
   position: relative;

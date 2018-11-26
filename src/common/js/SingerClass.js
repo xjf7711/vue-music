@@ -1,5 +1,4 @@
 // 歌手信息类
-
 export class Singer {
   // 传入一个对象
   constructor({ id, name }) {

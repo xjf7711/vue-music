@@ -1,5 +1,4 @@
 <!-- confirm 确认对话框 组件 -->
-
 <template>
   <transition name="confirm-fade">
     <div class="my-confirm" v-show="showFlag" @click.stop>
@@ -19,13 +18,6 @@
 
 <script>
 export default {
-  components: {},
-  data() {
-    return {
-      // 显示
-      showFlag: false
-    };
-  },
   props: {
     // 描述性文字
     text: {
@@ -41,7 +33,12 @@ export default {
       default: "确定"
     }
   },
-  watch: {},
+  data() {
+    return {
+      // 显示
+      showFlag: false
+    };
+  },
   methods: {
     // 对外提供，显示对话框
     show() {
@@ -59,20 +56,13 @@ export default {
       this.showFlag = false;
       this.$emit("cancel");
     }
-  },
-  // 过滤器设计目的就是用于简单的文本转换
-  filters: {},
-  // 若要实现更复杂的数据变换，你应该使用计算属性
-  computed: {},
-  created() {},
-  mounted() {},
-  destroyed() {}
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+/*@import "~@/common/scss/mymixin.scss";*/
 
 .my-confirm {
   position: fixed;

@@ -1,5 +1,4 @@
 <!-- 推荐页组件 -->
-
 <template>
   <div class="my-recommend" ref="recommendRef">
     <!-- better-scroll 滚动组件，当请求到 lists 时才渲染 -->
@@ -39,17 +38,18 @@
       </div>
     </my-scroll>
 
-    <router-view></router-view>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import { getList, getRecommend } from "@/api/recommend.js";
+import { getList, getRecommend } from "src/api/recommend.js";
 import MySlider from "components/MySlider/MySlider";
-import MyScroll from "components/MyScroll/MyScroll";
-import MyLoading from "components/MyLoading/MyLoading";
-import { playlistMixin } from "@/common/js/mixin.js";
+import MyScroll from "src/components/MyScroll/MyScroll";
+import MyLoading from "src/components/MyLoading/MyLoading";
+import { playlistMixin } from "src/common/js/mixin.js";
 import { mapMutations } from "vuex";
+import { ERR_OK } from "src/api/config";
 
 export default {
   mixins: [playlistMixin],
@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setSonglist: "SET_SONGLIST"
+      setSonglist: "SET_SONGLIST" // "SET_DISC"
     }),
     // 子路由跳转
     selectItem(item) {
@@ -92,16 +92,16 @@ export default {
     // 获取轮播图数据
     _getRecommend() {
       getRecommend().then(res => {
-        if (res.code === 0) {
+        if (res.code === ERR_OK) {
           // console.log(res)
           this.recommends = res.data.slider;
         }
       });
     },
-    // 获取歌单列表数据
+    // 获取歌单列表数据 _getDiscList
     _getList() {
       getList().then(res => {
-        if (res && res.code === 0) {
+        if (res && res.code === ERR_OK) {
           // console.log(res)
           this.lists = res.data.list;
         }

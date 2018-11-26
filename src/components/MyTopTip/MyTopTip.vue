@@ -1,5 +1,4 @@
 <!-- 顶部提示 组件 -->
-
 <template>
   <transition name="drop">
     <div class="my-top-tip" v-show="showFlag" @click.stop="hide">
@@ -10,12 +9,6 @@
 
 <script>
 export default {
-  components: {},
-  data() {
-    return {
-      showFlag: false
-    };
-  },
   props: {
     // 延迟关闭时间
     delay: {
@@ -23,13 +16,15 @@ export default {
       default: 2000
     }
   },
-  watch: {},
+  data() {
+    return {
+      showFlag: false
+    };
+  },
   methods: {
     show() {
       this.showFlag = true;
-
       clearTimeout(this.timer);
-
       // delay 秒自动关闭
       this.timer = setTimeout(() => {
         this.showFlag = false;
@@ -38,20 +33,13 @@ export default {
     hide() {
       this.showFlag = false;
     }
-  },
-  // 过滤器设计目的就是用于简单的文本转换
-  filters: {},
-  // 若要实现更复杂的数据变换，你应该使用计算属性
-  computed: {},
-  created() {},
-  mounted() {},
-  destroyed() {}
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+/*@import "~@/common/scss/mymixin.scss";*/
 
 .my-top-tip {
   position: fixed;

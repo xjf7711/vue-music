@@ -1,7 +1,7 @@
 <template>
   <div class="my-header">
     <div class="icon"></div>
-    <h1 class="text">Chicken Music</h1>
+    <h1 class="text">Music</h1>
 
     <!-- 个人中心 -->
     <router-link to="/user" class="mine" tag="div">
@@ -9,14 +9,6 @@
     </router-link>
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {};
-  }
-};
-</script>
 
 <style lang="scss" scoped>
 @import "~@/common/scss/const.scss";

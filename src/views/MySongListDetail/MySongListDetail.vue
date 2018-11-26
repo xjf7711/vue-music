@@ -1,16 +1,20 @@
 <!-- 推荐页：歌单详情组件 -->
-
 <template>
   <transition name="slide">
-    <my-music-list class="my-song-list-detail" :songs="songs" :title="title" :bg-image="bgImage"></my-music-list>
+    <my-music-list
+            class="my-song-list-detail"
+            :songs="songs"
+            :title="title"
+            :bg-image="bgImage">
+    </my-music-list>
   </transition>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import MyMusicList from "src/views/MyMusicList/MyMusicList";
-import { getSongList } from "@/api/recommend.js";
-import { createSingerSong } from "@/common/js/SingerSongClass.js";
+import { getSongList } from "src/api/recommend.js";
+import { createSingerSong } from "src/common/js/SingerSongClass.js";
 
 export default {
   components: {
@@ -21,9 +25,23 @@ export default {
       songs: []
     };
   },
-  props: {},
-  watch: {},
-  filters: {},
+  computed: {
+    // vuex, 使用对象展开运算符将 getters 混入 computed 对象中
+    ...mapGetters(["songlist"]),
+    // 传入子组件
+    title() {
+      return this.songlist.dissname;
+      // return this.singer.name;
+    },
+    // 传入子组件
+    bgImage() {
+      return this.songlist.imgurl;
+      // return this.singer.avatar;
+    }
+  },
+  created() {
+    this._getSongList();
+  },
   methods: {
     // 获取歌单数据
     _getSongList() {
@@ -53,24 +71,7 @@ export default {
 
       return result;
     }
-  },
-  computed: {
-    // vuex, 使用对象展开运算符将 getters 混入 computed 对象中
-    ...mapGetters(["songlist"]),
-    // 传入子组件
-    title() {
-      return this.songlist.dissname;
-    },
-    // 传入子组件
-    bgImage() {
-      return this.songlist.imgurl;
-    }
-  },
-  created() {
-    this._getSongList();
-  },
-  mounted() {},
-  destroyed() {}
+  }
 };
 </script>
 

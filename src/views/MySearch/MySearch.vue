@@ -1,5 +1,4 @@
 <!-- 搜索页组件 -->
-
 <template>
   <div class="my-search">
     <!-- 搜索框 -->
@@ -8,12 +7,12 @@
     </div>
 
     <div class="shortcut-wrapper" v-show="!query" ref="shortcutRef">
-      <my-scroll class="shortcut" ref="scrollRef" :data="scrollData" :refreshDelay="refreshDelay">
+      <my-scroll class="shortcut" ref="scrollRef"
+                 :data="scrollData" :refreshDelay="refreshDelay">
         <div>
           <!-- 热门搜索 -->
           <div class="hot-key">
             <h1 class="title">热门搜索</h1>
-
             <!-- <div class="item special">{{ hotkey.special_key }}</div> -->
             <ul>
               <li class="item" v-for="(item,index) in hotkey" :key="index" @click="addQuery(item.k)">
@@ -26,7 +25,6 @@
           <div class="search-history" v-show="searchHistory.length">
             <h1 class="title">
               <span class="text">搜索历史</span>
-
               <span class="clear" @click="showConfirm">
                 <i class="icon-clear"></i>
               </span>
@@ -48,21 +46,23 @@
     </div>
 
     <!-- 清空弹窗 -->
-    <my-confirm ref="confirmRef" @confirm="confirm" @cancel="cancel"></my-confirm>
+    <my-confirm ref="confirmRef"
+                text="是否清空所有搜索历史" confirmBtnText="清空"
+                @confirm="confirm" @cancel="cancel"></my-confirm>
 
-    <router-view></router-view>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import MySearchBox from "components/MySearchBox/MySearchBox";
-import MySuggestList from "src/views/MySuggestList/MySuggestList";
-import MySearchList from "components/MySearchList/MySearchList";
-import MyConfirm from "components/MyConfirm/MyConfirm";
-import MyScroll from "components/MyScroll/MyScroll";
-import { getHotKey } from "@/api/search.js";
 import { mapActions, mapGetters } from "vuex";
-import { playlistMixin } from "@/common/js/mixin.js";
+import { getHotKey } from "src/api/search.js";
+import { playlistMixin } from "src/common/js/mixin.js";
+import MySuggestList from "src/views/MySuggestList/MySuggestList";
+import MySearchBox from "src/components/MySearchBox/MySearchBox";
+import MySearchList from "src/components/MySearchList/MySearchList";
+import MyConfirm from "src/components/MyConfirm/MyConfirm";
+import MyScroll from "src/components/MyScroll/MyScroll";
 
 export default {
   mixins: [playlistMixin],

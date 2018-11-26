@@ -1,4 +1,6 @@
-import { getLyric } from "@/api/song.js";
+import { getLyric } from "src/api/song.js";
+import { ERR_OK } from "src/api/config";
+import { parseJsonp } from "./myutils";
 import Base64 from "js-base64";
 
 export class SingerSong {
@@ -21,9 +23,9 @@ export class SingerSong {
     return new Promise((resolve, reject) => {
       getLyric(this.id).then(res => {
         // console.log("getLyric(this.id) res is ", JSON.stringify(res));
-        const resultData = _parseJsonp(res);
+        const resultData = parseJsonp(res);
         // console.log("resultData.retcode is ", typeof resultData.retcode);
-        if (resultData.retcode === 0) {
+        if (ERR_OK === resultData.retcode) {
           this.lyric = Base64.Base64.decode(resultData.lyric);
           // console.log("this.lyric is ", this.lyric);
           resolve(this.lyric);
@@ -34,13 +36,7 @@ export class SingerSong {
     });
   }
 }
-function _parseJsonp(res) {
-  let num1 = res.indexOf("(");
-  let num2 = res.indexOf(")");
-  return JSON.parse(res.substring(num1 + 1, num2));
-  // console.log(typeof(resultData))
-  // console.log(resultData)
-}
+
 export function createSingerSong(musicData) {
   return new SingerSong({
     id: musicData.songid,

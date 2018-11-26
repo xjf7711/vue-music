@@ -1,5 +1,4 @@
 <!-- 无返回数据组件 -->
-
 <template>
   <div class="my-no-sesult">
     <div class="no-result-icon"></div>
@@ -9,29 +8,18 @@
 
 <script>
 export default {
-  components: {},
-  data() {
-    return {};
-  },
   props: {
     title: {
       type: String,
       default: "抱歉，暂无数据"
     }
-  },
-  watch: {},
-  filters: {},
-  methods: {},
-  computed: {},
-  created() {},
-  mounted() {},
-  destroyed() {}
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+@import "~src/common/scss/const.scss";
+@import "~src/common/scss/mymixin.scss";
 
 .my-no-sesult {
   text-align: center;
