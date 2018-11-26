@@ -45,11 +45,11 @@
 </template>
 
 <script>
-import MySongList from "components/MySongList/MySongList";
-import MyScroll from "components/MyScroll/MyScroll";
-import MyLoading from "components/MyLoading/MyLoading";
+import MySongList from "src/components/MySongList/MySongList";
+import MyScroll from "src/components/MyScroll/MyScroll";
+import MyLoading from "src/components/MyLoading/MyLoading";
 import { mapActions } from "vuex";
-import { playlistMixin } from "@/common/js/mixin.js";
+import { playlistMixin } from "src/common/js/mixin.js";
 
 const TRANSFORMY_RESERVED = 40;
 

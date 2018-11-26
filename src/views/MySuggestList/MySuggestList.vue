@@ -28,14 +28,15 @@
 </template>
 
 <script>
+import { mapMutations, mapActions } from "vuex";
 import MyScroll from "src/components/MyScroll/MyScroll";
 import MyLoading from "src/components/MyLoading/MyLoading";
 import MyNoResult from "src/components/MyNoResult/MyNoResult";
 import { search } from "src/api/search.js";
 import { ERR_OK } from "src/api/config";
+// import { parseJsonp } from "src/common/js/myutils";
 import { createSingerSong } from "src/common/js/SingerSongClass.js";
 import { Singer } from "src/common/js/SingerClass.js";
-import { mapMutations, mapActions } from "vuex";
 
 const TYPE_SINGER = "singer";
 
@@ -90,9 +91,10 @@ export default {
       this.$refs.scrollRef.scrollTo(0, 0);
 
       search(this.query, this.page, this.perpage, this.zhida).then(res => {
+        console.log("search res is ", res);
         if (ERR_OK === res.code) {
-          // console.log(res.data)
-          // console.log(this._formatSearch(res.data))
+          console.log(res.data);
+          console.log(this._formatSearch(res.data));
           this.result = this._formatSearch(res.data);
           this._checkMore(res.data);
         }

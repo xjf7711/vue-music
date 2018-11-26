@@ -10,7 +10,7 @@
         </div>
 
         <div class="content">
-          <h2 class="name">{{ item.name }}</h2>
+          <h4 class="name">{{ item.name }}</h4>
           <p class="desc">{{ getDesc(item) }}</p>
         </div>
       </li>

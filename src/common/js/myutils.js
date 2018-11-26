@@ -183,7 +183,7 @@ export const myOthers = {};
 // add by xjf 2018/11/24
 export function parseJsonp(res) {
   let num1 = res.indexOf("(");
-  let num2 = res.indexOf(")");
+  let num2 = res.lastIndexOf(")");
   return JSON.parse(res.substring(num1 + 1, num2));
   // console.log(typeof(resultData))
   // console.log(resultData)

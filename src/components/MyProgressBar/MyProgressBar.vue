@@ -88,9 +88,7 @@ export default {
     // 进度条前进 + 小球前进
     _move(offsetWidth) {
       this.$refs.progressRef.style.width = `${offsetWidth}px`;
-      this.$refs.progressBtn.style[
-        transform
-      ] = `translate3d(${offsetWidth}px,0,0)`;
+      this.$refs.btnRef.style[transform] = `translate3d(${offsetWidth}px,0,0)`;
       // this.$refs.btnRef.style[
       //   "webkitTransform"
       // ] = `translate3d(${offsetWidth}px, 0, 0)`;

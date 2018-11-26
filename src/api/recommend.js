@@ -40,7 +40,10 @@ export function getRecommend() {
  * axios 结合 proxy 代理后端请求
  */
 export function getList() {
-  const url = "/api/getList";
+  const url =
+    process.env.NODE_ENV === "production"
+      ? "https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg"
+      : "/api/getList";
   let data = Object.assign({}, commonParams, {
     rnd: Math.random(),
     hostUin: 0,

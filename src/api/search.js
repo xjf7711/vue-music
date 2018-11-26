@@ -1,6 +1,8 @@
 import jsonp from "@/common/js/jsonp";
 // import { commonParams, options } from "@/api/common-query.js";
 import { commonParams, options } from "./config";
+import axios from "axios";
+import { parseJsonp } from "src/common/js/myutils";
 
 /**
  * jsonp 抓取热门搜索数据
@@ -22,9 +24,14 @@ export function getHotKey() {
  * jsonp 抓取搜索检索数据
  * 接口：https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp
  * 提供方：https://m.y.qq.com/#search
+ * add by xjf 2018/11/26 接口已禁止跨域访问。
+ * 改为proxy代理
  */
 export function search(query, page, perpage, zhida) {
-  let url = "https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp";
+  let url =
+    process.env.NODE_ENV === "production"
+      ? "https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp"
+      : "/api/search";
   let data = Object.assign({}, commonParams, {
     w: query,
     p: page,
@@ -43,5 +50,16 @@ export function search(query, page, perpage, zhida) {
     needNewCode: 1,
     remoteplace: "txt.mqq.all"
   });
-  return jsonp(url, data, options);
+  // return jsonp(url, data, options);
+  return axios
+    .get(url, {
+      params: data
+    })
+    .then(function(response) {
+      console.log("api search response.data is ", typeof response.data);
+      return Promise.resolve(parseJsonp(response.data));
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
 }
