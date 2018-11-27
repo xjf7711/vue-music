@@ -1,8 +1,9 @@
-import jsonp from "@/common/js/jsonp";
-import axios from "axios";
+import jsonp from "src/assets/js/jsonp";
+// import axios from "axios";
+import request from "src/assets/js/request";
 // import { commonParams, options } from "src/api/common-query.js";
 import { commonParams, options } from "./config.js";
-import { parseJsonp } from "../common/js/myutils";
+import { parseJsonp } from "src/assets/js/myutils";
 
 /**
  * jsonp 抓取推荐页轮播图数据
@@ -40,10 +41,12 @@ export function getRecommend() {
  * axios 结合 proxy 代理后端请求
  */
 export function getList() {
+  console.log("getList begins. ");
   const url =
     process.env.NODE_ENV === "production"
       ? "https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg"
       : "/api/getList";
+  // console.log("api recommend getList url is " + url);
   let data = Object.assign({}, commonParams, {
     rnd: Math.random(),
     hostUin: 0,
@@ -55,11 +58,18 @@ export function getList() {
     sin: 0,
     ein: 29
   });
-  return axios
-    .get(url, {
-      params: data
-    })
+  console.log("api recommend getList data is ", data);
+  // return axios
+  //   .get(url, {
+  //     params: data
+  //   })
+  return request({
+    method: "get",
+    url,
+    params: data
+  })
     .then(function(response) {
+      console.log("api recommend getList response is ", response);
       return Promise.resolve(response.data);
     })
     .catch(function(error) {
@@ -96,10 +106,15 @@ export function getSongList(disstid) {
     hostUin: 0,
     needNewCode: 0
   });
-  return axios
-    .get(url, {
-      params: data
-    })
+  // return axios
+  //   .get(url, {
+  //     params: data
+  //   })
+  return request({
+    method: "get",
+    url,
+    params: data
+  })
     .then(function(response) {
       return Promise.resolve(parseJsonp(response.data));
     })

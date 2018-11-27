@@ -1,5 +1,4 @@
 <!-- 歌单列表组件 -->
-
 <template>
   <div class="my-music-list">
     <!-- 返回按钮 -->
@@ -27,13 +26,16 @@
     <div ref="bgLayerRef" class="bg-layer"></div>
 
     <my-scroll class="list"
-               @scroll="scroll"
                ref="scrollRef"
+               @scroll="scroll"
                :data="songs"
                :probe-type="probeType"
                :listen-scroll="listenScroll">
       <div class="song-list-wrapper">
-        <my-song-list @select="selectItem" :songs="songs" :rank="rank"></my-song-list>
+        <my-song-list
+                @select="selectItem"
+                :songs="songs"
+                :rank="rank"></my-song-list>
       </div>
 
       <!-- loading 组件 -->
@@ -45,13 +47,16 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import { playlistMixin } from "src/assets/js/mixin.js";
+import { prefixStyle } from "src/assets/js/myutils";
 import MySongList from "src/components/MySongList/MySongList";
 import MyScroll from "src/components/MyScroll/MyScroll";
 import MyLoading from "src/components/MyLoading/MyLoading";
-import { mapActions } from "vuex";
-import { playlistMixin } from "src/common/js/mixin.js";
 
 const TRANSFORMY_RESERVED = 40;
+const transform = prefixStyle("transform");
+const backdrop = prefixStyle("backdrop-filter");
 
 export default {
   mixins: [playlistMixin],
@@ -59,12 +64,6 @@ export default {
     MySongList,
     MyScroll,
     MyLoading
-  },
-  data() {
-    return {
-      // 推层上移的距离
-      scrollY: 0
-    };
   },
   props: {
     // 背景图
@@ -86,19 +85,30 @@ export default {
       default: false
     }
   },
+  data() {
+    return {
+      // 推层上移的距离
+      scrollY: 0
+    };
+  },
+  computed: {
+    bgStyle() {
+      return `background-image:url(${this.bgImage})`;
+    }
+  },
   watch: {
     // 推层动画逻辑
     scrollY(newVal) {
-      let minscrollY = -this.bgImageHeight + TRANSFORMY_RESERVED;
-      let moveY = Math.max(minscrollY, newVal);
+      let minScrollY = -this.bgImageHeight + TRANSFORMY_RESERVED;
+      let moveY = Math.max(minScrollY, newVal);
       let zIndex = 0;
-
-      this.$refs.bgLayerRef.style[
-        "transform"
-      ] = `translate3d(0 ,${moveY}px, 0)`;
-      this.$refs.bgLayerRef.style[
-        "webkitTransform"
-      ] = `translate3d(0 ,${moveY}px, 0)`;
+      this.$refs.bgLayerRef.style[transform] = `translate3d(0 ,${moveY}px, 0)`;
+      // this.$refs.bgLayerRef.style[
+      //   "transform"
+      // ] = `translate3d(0 ,${moveY}px, 0)`;
+      // this.$refs.bgLayerRef.style[
+      //   "webkitTransform"
+      // ] = `translate3d(0 ,${moveY}px, 0)`;
 
       // 下拉放大、上拉模糊
       let scale = 1;
@@ -108,16 +118,18 @@ export default {
       if (newVal > 0) {
         zIndex = 10;
         scale = 1 + formula;
-        this.$refs.bgImageRef.style["transform"] = `scale(${scale})`;
-        this.$refs.bgImageRef.style["webkitTransform"] = `scale(${scale})`;
+        this.$refs.bgImageRef.style[transform] = `scale(${scale})`;
+        // this.$refs.bgImageRef.style["transform"] = `scale(${scale})`;
+        // this.$refs.bgImageRef.style["webkitTransform"] = `scale(${scale})`;
       } else {
         blur = Math.min(20 * formula, 20);
-        this.$refs.filterRef.style["backdrop-filter"] = `blur(${blur}px)`;
-        this.$refs.filterRef.style["webkitBackdrop-filter"] = `blur(${blur}px)`;
+        this.$refs.filterRef.style[backdrop] = `blur(${blur}px)`;
+        // this.$refs.filterRef.style["backdrop-filter"] = `blur(${blur}px)`;
+        // this.$refs.filterRef.style["webkitBackdrop-filter"] = `blur(${blur}px)`;
       }
 
       // 不推到顶，留一部分
-      if (newVal < minscrollY) {
+      if (newVal < minScrollY) {
         zIndex = 10;
         this.$refs.bgImageRef.style.paddingTop = 0;
         this.$refs.bgImageRef.style.height = `${TRANSFORMY_RESERVED}px`;
@@ -132,12 +144,24 @@ export default {
       this.$refs.bgImageRef.style.zIndex = zIndex;
     }
   },
+  created() {
+    this.probeType = 3;
+    this.listenScroll = true;
+  },
+  mounted() {
+    this.bgImageHeight = this.$refs.bgImageRef.clientHeight;
+    // console.log(this.bgImageHeight) // 290
+
+    // 滚动区域的初始 top，$el 为 DOM 元素
+    this.$refs.scrollRef.$el.style.top = `${
+      this.$refs.bgImageRef.clientHeight
+    }px`;
+  },
   methods: {
     ...mapActions(["selectPlay", "randomPlay"]),
     // 当有迷你播放器时，调整滚动底部距离
     handlePlaylist(playlist) {
-      let bottom = playlist.length > 0 ? "60px" : "";
-      this.$refs.scrollRef.$el.style.bottom = bottom;
+      this.$refs.scrollRef.$el.style.bottom = playlist.length > 0 ? "60px" : "";
       this.$refs.scrollRef.refresh();
     },
     // 返回按钮
@@ -162,32 +186,13 @@ export default {
         list: this.songs
       });
     }
-  },
-  computed: {
-    bgStyle() {
-      return `background-image:url(${this.bgImage})`;
-    }
-  },
-  created() {
-    this.probeType = 3;
-    this.listenScroll = true;
-  },
-  mounted() {
-    this.bgImageHeight = this.$refs.bgImageRef.clientHeight;
-    // console.log(this.bgImageHeight) // 290
-
-    // 滚动区域的初始 top，$el 为 DOM 元素
-    this.$refs.scrollRef.$el.style.top = `${
-      this.$refs.bgImageRef.clientHeight
-    }px`;
-  },
-  destroyed() {}
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+@import "~src/assets/styles/scss/const.scss";
+@import "~src/assets/styles/scss/mymixin.scss";
 
 .my-music-list {
   position: fixed;

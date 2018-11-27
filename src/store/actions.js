@@ -141,7 +141,7 @@
 // 封装复杂的 mutations
 
 import * as types from "./mutations-type.js";
-import { myArray } from "@/common/js/myutils.js";
+import { myArray } from "src/assets/js/myutils.js";
 import {
   localSave,
   localDel,
@@ -149,7 +149,7 @@ import {
   savePlay,
   saveFavorite,
   delFavorite
-} from "@/common/js/store.js";
+} from "src/assets/js/store.js";
 
 function findIndex(list, song) {
   return list.findIndex(item => {
@@ -262,6 +262,7 @@ export const deleteSong = function({ commit, state }, song) {
 
 /**
  * 保存搜索历史
+ * @param commit
  * @param  {[type]} query          搜索关键词
  */
 export const saveHistory = function({ commit }, query) {
@@ -270,6 +271,7 @@ export const saveHistory = function({ commit }, query) {
 
 /**
  * 删除单个搜索历史
+ * @param commit
  * @param  {[type]} query          搜索关键词
  */
 export const delHistory = function({ commit }, query) {
@@ -278,7 +280,6 @@ export const delHistory = function({ commit }, query) {
 
 /**
  * 删除全部搜索历史
- * @param  {[type]} query          搜索关键词
  */
 export const clearHistory = function({ commit }) {
   commit(types.SET_SEARCHHISTORY, localClear());

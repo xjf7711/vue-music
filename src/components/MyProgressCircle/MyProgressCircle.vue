@@ -40,8 +40,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
-/*@import "~@/common/scss/mymixin.scss";*/
+@import "~src/assets/styles/scss/const.scss";
+/*@import "~src/assets/styles/scss/mymixin.scss";*/
 
 .my-progress-circle {
   position: relative;

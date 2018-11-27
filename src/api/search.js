@@ -1,8 +1,9 @@
-import jsonp from "@/common/js/jsonp";
+import jsonp from "src/assets/js/jsonp";
 // import { commonParams, options } from "@/api/common-query.js";
 import { commonParams, options } from "./config";
-import axios from "axios";
-import { parseJsonp } from "src/common/js/myutils";
+// import axios from "axios";
+import request from "src/assets/js/request";
+import { parseJsonp } from "src/assets/js/myutils";
 
 /**
  * jsonp 抓取热门搜索数据
@@ -51,10 +52,15 @@ export function search(query, page, perpage, zhida) {
     remoteplace: "txt.mqq.all"
   });
   // return jsonp(url, data, options);
-  return axios
-    .get(url, {
-      params: data
-    })
+  // return axios
+  //   .get(url, {
+  //     params: data
+  //   })
+  return request({
+    method: "get",
+    url,
+    params: data
+  })
     .then(function(response) {
       console.log("api search response.data is ", typeof response.data);
       return Promise.resolve(parseJsonp(response.data));

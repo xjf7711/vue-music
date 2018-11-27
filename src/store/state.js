@@ -21,7 +21,11 @@
  * 单一状态树
  * vuex 操作顺序：state.js -> mutations-type.js -> mutations.js -> getters.js
  */
-import { getStorage, getPlayStorage, getFavorite } from "@/common/js/store.js";
+import {
+  getStorage,
+  getPlayStorage,
+  getFavorite
+} from "src/assets/js/store.js";
 
 const playMode = {
   sequence: 0, // 顺序播放

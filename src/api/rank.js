@@ -1,4 +1,4 @@
-import jsonp from "@/common/js/jsonp";
+import jsonp from "src/assets/js/jsonp";
 // import { commonParams, options } from "./common-query.js";
 import { commonParams, options } from "./config";
 

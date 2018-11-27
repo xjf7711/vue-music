@@ -59,9 +59,9 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 import MyScroll from "src/components/MyScroll/MyScroll";
 import MyConfirm from "src/components/MyConfirm/MyConfirm";
 import MyAddSong from "src/views/MyAddSong/MyAddSong";
-import { myArray } from "src/common/js/myutils.js";
-import { playMode } from "src/common/js/config";
-// import { playerMixin } from "src/common/js/mixin";
+import { myArray } from "src/assets/js/myutils.js";
+import { playMode } from "src/assets/js/config";
+// import { playerMixin } from "src/assets/js/mixin";
 
 export default {
   // mixins: [playerMixin],
@@ -258,8 +258,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+@import "~src/assets/styles/scss/const.scss";
+@import "~src/assets/styles/scss/mymixin.scss";
 
 .my-playlist {
   position: fixed;

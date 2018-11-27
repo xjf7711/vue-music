@@ -36,7 +36,7 @@
 import { mapMutations } from "vuex";
 import { getRankList } from "src/api/rank.js";
 import { ERR_OK } from "src/api/config";
-import { playlistMixin } from "src/common/js/mixin.js";
+import { playlistMixin } from "src/assets/js/mixin.js";
 
 import MyLoading from "src/components/MyLoading/MyLoading";
 import MyScroll from "src/components/MyScroll/MyScroll";
@@ -99,8 +99,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+@import "~src/assets/styles/scss/const.scss";
+@import "~src/assets/styles/scss/mymixin.scss";
 
 .my-rank {
   position: fixed;

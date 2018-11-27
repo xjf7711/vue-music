@@ -18,8 +18,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~src/common/scss/const.scss";
-@import "~src/common/scss/mymixin.scss";
+@import "~src/assets/styles/scss/const.scss";
+@import "~src/assets/styles/scss/mymixin.scss";
 
 .my-no-sesult {
   text-align: center;

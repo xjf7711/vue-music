@@ -1,6 +1,6 @@
 import { getLyric } from "src/api/song.js";
 import { ERR_OK } from "src/api/config";
-import { parseJsonp } from "./myutils";
+// import { parseJsonp } from "./myutils";
 import Base64 from "js-base64";
 
 export class SingerSong {
@@ -22,12 +22,12 @@ export class SingerSong {
 
     return new Promise((resolve, reject) => {
       getLyric(this.id).then(res => {
-        // console.log("getLyric(this.id) res is ", JSON.stringify(res));
-        const resultData = parseJsonp(res);
-        // console.log("resultData.retcode is ", typeof resultData.retcode);
-        if (ERR_OK === resultData.retcode) {
-          this.lyric = Base64.Base64.decode(resultData.lyric);
-          // console.log("this.lyric is ", this.lyric);
+        console.log("getLyric(this.id) res is ", res);
+        // const resultData = parseJsonp(res);
+        console.log("res.retcode is ", typeof res.retcode);
+        if (ERR_OK === res.retcode) {
+          this.lyric = Base64.Base64.decode(res.lyric);
+          console.log("this.lyric is ", this.lyric);
           resolve(this.lyric);
         } else {
           reject("no lyric");

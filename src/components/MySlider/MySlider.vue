@@ -14,7 +14,7 @@
 
 <script>
 import BScroll from "better-scroll";
-import { myDOM } from "src/common/js/myutils.js";
+import { myDOM } from "src/assets/js/myutils.js";
 
 export default {
   props: {
@@ -149,8 +149,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+@import "~src/assets/styles/scss/const.scss";
+@import "~src/assets/styles/scss/mymixin.scss";
 
 .my-slider {
   min-height: 1px;

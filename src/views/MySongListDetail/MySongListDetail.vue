@@ -12,9 +12,10 @@
 
 <script>
 import { mapGetters } from "vuex";
-import MyMusicList from "src/views/MyMusicList/MyMusicList";
 import { getSongList } from "src/api/recommend.js";
-import { createSingerSong } from "src/common/js/SingerSongClass.js";
+import { ERR_OK } from "src/api/config";
+import MyMusicList from "src/views/MyMusicList/MyMusicList";
+import { createSingerSong } from "src/assets/js/SingerSongClass.js";
 
 export default {
   components: {
@@ -53,7 +54,7 @@ export default {
 
       getSongList(this.songlist.dissid).then(res => {
         console.log("getSongList res is ", res);
-        if (res.code === 0) {
+        if (ERR_OK === res.code) {
           console.log(res.cdlist[0].songlist);
           this.songs = this._formatSongs(res.cdlist[0].songlist);
         }
@@ -76,8 +77,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+/*@import "~src/assets/styles/scss/const.scss";*/
+/*@import "~src/assets/styles/scss/mymixin.scss";*/
 
 .my-song-list-detail {
 }

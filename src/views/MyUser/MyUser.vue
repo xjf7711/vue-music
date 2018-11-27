@@ -44,8 +44,8 @@ import MySwitches from "src/components/MySwitches/MySwitches";
 import MyScroll from "src/components/MyScroll/MyScroll";
 import MySongList from "src/components/MySongList/MySongList";
 import MyNoResult from "src/components/MyNoResult/MyNoResult";
-import { SingerSong } from "src/common/js/SingerSongClass.js";
-import { playlistMixin } from "src/common/js/mixin.js";
+import { SingerSong } from "src/assets/js/SingerSongClass.js";
+import { playlistMixin } from "src/assets/js/mixin.js";
 
 export default {
   mixins: [playlistMixin],
@@ -139,8 +139,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
-/*@import "~@/common/scss/mymixin.scss";*/
+@import "~src/assets/styles/scss/const.scss";
+/*@import "~src/assets/styles/scss/mymixin.scss";*/
 
 .my-user {
   position: fixed;

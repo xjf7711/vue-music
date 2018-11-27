@@ -1,6 +1,7 @@
-import axios from "axios";
+// import axios from "axios";
 // import { commonParams } from "@/api/common-query.js";
 import { commonParams } from "./config";
+import request from "src/assets/js/request";
 
 /**
  * axios 抓取歌词数据
@@ -27,20 +28,20 @@ export function getLyric(id) {
     needNewCode: 0
   });
   //   console.log("getLyric data is ", data);
-  return axios
-    .get(url, {
-      params: data
-    })
+  // return axios
+  //   .get(url, {
+  //     params: data
+  //   })
+  return request({
+    method: "get",
+    url,
+    params: data
+  })
     .then(res => {
-      // console.log("getLyric axios res is ", res)
+      console.log("api song.getLyric res is ", res);
       return Promise.resolve(res.data);
     })
     .catch(err => {
       console.log(err);
     });
-  //   return request({
-  //     url,
-  //     method: "get",
-  //     params: data
-  //   });
 }

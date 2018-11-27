@@ -1,5 +1,4 @@
 <!-- 添加歌曲到队列 组件 -->
-
 <template>
   <transition name="slide">
     <div class="my-add-song" v-show="showFlag" @click.stop>
@@ -29,10 +28,16 @@
           </my-scroll>
 
           <!-- 搜索历史 -->
-          <my-scroll class="list-scroll" :refreshDelay="refreshDelay"
-                     ref="searchListRef" v-if="currentIndex === 1" :data="searchHistory">
+          <my-scroll class="list-scroll"
+                     ref="searchListRef"
+                     v-if="currentIndex === 1"
+                     :refreshDelay="refreshDelay"
+                     :data="searchHistory">
             <div class="list-inner">
-              <my-search-list @delete="delHistory" @select="addQuery" :searches="searchHistory"></my-search-list>
+              <my-search-list
+                      @delete="delHistory"
+                      @select="addQuery"
+                      :searches="searchHistory"></my-search-list>
             </div>
           </my-scroll>
         </div>
@@ -53,17 +58,19 @@
 </template>
 
 <script>
-import MySearchBox from "components/MySearchBox/MySearchBox";
-import MyScroll from "components/MyScroll/MyScroll";
-import MySwitches from "components/MySwitches/MySwitches";
-import MySongList from "components/MySongList/MySongList";
-import MyTopTip from "components/MyTopTip/MyTopTip";
-import MySearchList from "components/MySearchList/MySearchList";
-import MySuggestList from "src/views/MySuggestList/MySuggestList";
 import { mapActions, mapGetters } from "vuex";
-import { SingerSong } from "@/common/js/SingerSongClass.js";
+// import { searchMixin } from "src/assets/js/mixin";
+import { SingerSong } from "src/assets/js/SingerSongClass.js";
+import MySearchBox from "src/components/MySearchBox/MySearchBox";
+import MyScroll from "src/components/MyScroll/MyScroll";
+import MySwitches from "src/components/MySwitches/MySwitches";
+import MySongList from "src/components/MySongList/MySongList";
+import MyTopTip from "src/components/MyTopTip/MyTopTip";
+import MySearchList from "src/components/MySearchList/MySearchList";
+import MySuggestList from "src/views/MySuggestList/MySuggestList";
 
 export default {
+  // minxins: [searchMixin],
   components: {
     MySearchBox,
     MySuggestList,
@@ -87,8 +94,10 @@ export default {
       refreshDelay: 100
     };
   },
-  props: {},
-  watch: {},
+  // 若要实现更复杂的数据变换，你应该使用计算属性
+  computed: {
+    ...mapGetters(["searchHistory", "playHistory"])
+  },
   methods: {
     ...mapActions(["saveHistory", "delHistory", "insertSong"]),
     // 保存搜索结果历史到 vuex 和 localstorage 中
@@ -133,22 +142,13 @@ export default {
 
       this.$refs.topTipRef.show();
     }
-  },
-  // 过滤器设计目的就是用于简单的文本转换
-  filters: {},
-  // 若要实现更复杂的数据变换，你应该使用计算属性
-  computed: {
-    ...mapGetters(["searchHistory", "playHistory"])
-  },
-  created() {},
-  mounted() {},
-  destroyed() {}
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+@import "~src/assets/styles/scss/const.scss";
+@import "~src/assets/styles/scss/mymixin.scss";
 
 .my-add-song {
   position: fixed;

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { myDOM } from "src/common/js/myutils.js";
+import { myDOM } from "src/assets/js/myutils.js";
 // import { debounce } from "assets/js/util";
 export default {
   props: {
@@ -51,8 +51,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~src/common/scss/const.scss";
-/*@import "~@/common/scss/mymixin.scss";*/
+@import "~src/assets/styles/scss/const.scss";
+/*@import "~src/assets/styles/scss/mymixin.scss";*/
 
 .my-search-box {
   display: flex;

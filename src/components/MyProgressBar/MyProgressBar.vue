@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { prefixStyle } from "src/common/js/myutils";
+import { prefixStyle } from "src/assets/js/myutils";
 
 const BTN_WIDTH = 16;
 const transform = prefixStyle("transform");
@@ -108,8 +108,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
-/*@import "~@/common/scss/mymixin.scss";*/
+@import "~src/assets/styles/scss/const.scss";
+/*@import "~src/assets/styles/scss/mymixin.scss";*/
 
 .my-progress-bar {
   height: 30px;

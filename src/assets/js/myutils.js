@@ -1,5 +1,5 @@
 /*
-* import { myDOM } from '@/common/js/myutils.js'
+* import { myDOM } from 'src/assets/js/myutils.js'
 * 使用本对象中的方法时，使用 this。this.hasClass(el, className)
 * 使用本库其他对象中的方法时，直接调用。myNumber.getRandom(0, i)
 */

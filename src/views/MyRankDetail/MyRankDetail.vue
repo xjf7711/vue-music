@@ -8,8 +8,9 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { getRankDetail } from "@/api/rank.js";
-import { createSingerSong } from "@/common/js/SingerSongClass.js";
+import { getRankDetail } from "src/api/rank.js";
+import { ERR_OK } from "src/api/config";
+import { createSingerSong } from "src/assets/js/SingerSongClass.js";
 import MyMusicList from "src/views/MyMusicList/MyMusicList";
 
 export default {
@@ -20,38 +21,6 @@ export default {
     return {
       songs: []
     };
-  },
-  props: {},
-  watch: {},
-  filters: {},
-  methods: {
-    // 获取指定排行榜单详情
-    _getRankDetail() {
-      // 禁止直接刷新详情页（获取不到排行 id）
-      if (!this.rankList.id) {
-        this.$router.push("/rank");
-        return;
-      }
-
-      getRankDetail(this.rankList.id).then(res => {
-        if (res.code === 0) {
-          // console.log(res.songlist)
-          this.songs = this._formatSongs(res.songlist);
-        }
-      });
-    },
-    // 重组 res.songlist 数据
-    _formatSongs(list) {
-      let result = [];
-
-      list.forEach(item => {
-        if (item.data.songid && item.data.albummid) {
-          result.push(createSingerSong(item.data));
-        }
-      });
-
-      return result;
-    }
   },
   computed: {
     // vuex, 使用对象展开运算符将 getters 混入 computed 对象中
@@ -70,14 +39,40 @@ export default {
   created() {
     this._getRankDetail();
   },
-  mounted() {},
-  destroyed() {}
+  methods: {
+    // 获取指定排行榜单详情
+    _getRankDetail() {
+      // 禁止直接刷新详情页（获取不到排行 id）
+      if (!this.rankList.id) {
+        this.$router.push("/rank");
+        return;
+      }
+
+      getRankDetail(this.rankList.id).then(res => {
+        if (ERR_OK === res.code) {
+          // console.log(res.songlist)
+          this.songs = this._formatSongs(res.songlist);
+        }
+      });
+    },
+    // 重组 res.songlist 数据
+    _formatSongs(list) {
+      let result = [];
+
+      list.forEach(item => {
+        if (item.data.songid && item.data.albummid) {
+          result.push(createSingerSong(item.data));
+        }
+      });
+      return result;
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+/*@import "~src/assets/styles/scss/const.scss";*/
+/*@import "~src/assets/styles/scss/mymixin.scss";*/
 
 .my-rank-detail {
   // position: fixed;

@@ -47,7 +47,7 @@ import { getList, getRecommend } from "src/api/recommend.js";
 import MySlider from "components/MySlider/MySlider";
 import MyScroll from "src/components/MyScroll/MyScroll";
 import MyLoading from "src/components/MyLoading/MyLoading";
-import { playlistMixin } from "src/common/js/mixin.js";
+import { playlistMixin } from "src/assets/js/mixin.js";
 import { mapMutations } from "vuex";
 import { ERR_OK } from "src/api/config";
 
@@ -92,7 +92,7 @@ export default {
     // 获取轮播图数据
     _getRecommend() {
       getRecommend().then(res => {
-        if (res.code === ERR_OK) {
+        if (ERR_OK === res.code) {
           // console.log(res)
           this.recommends = res.data.slider;
         }
@@ -101,7 +101,8 @@ export default {
     // 获取歌单列表数据 _getDiscList
     _getList() {
       getList().then(res => {
-        if (res && res.code === ERR_OK) {
+        console.log("MyRecommend.vue _getList getList res is ", res);
+        if (res && ERR_OK === res.code) {
           // console.log(res)
           this.lists = res.data.list;
         }
@@ -119,8 +120,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+@import "~src/assets/styles/scss/const.scss";
+@import "~src/assets/styles/scss/mymixin.scss";
 
 .my-recommend {
   position: fixed;

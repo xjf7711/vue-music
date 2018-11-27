@@ -8,8 +8,8 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { getSingerDetail } from "@/api/singer.js";
-import { createSingerSong } from "@/common/js/SingerSongClass.js";
+import { getSingerDetail } from "src/api/singer.js";
+import { createSingerSong } from "src/assets/js/SingerSongClass.js";
 import MyMusicList from "src/views/MyMusicList/MyMusicList";
 
 export default {
@@ -21,8 +21,22 @@ export default {
       songs: []
     };
   },
-  props: {},
-  watch: {},
+  computed: {
+    // vuex, 使用对象展开运算符将 getters 混入 computed 对象中
+    ...mapGetters(["singer"]),
+    // 传入子组件
+    title() {
+      return this.singer.name;
+    },
+    // 传入子组件
+    bgImage() {
+      return this.singer.avatar;
+    }
+  },
+  created() {
+    // console.log(this.singer)
+    this._getSingerDetail();
+  },
   methods: {
     // 获取指定歌手详情
     _getSingerDetail() {
@@ -43,43 +57,22 @@ export default {
     // 重组 res.data.list 数据
     _formatSongs(list) {
       let result = [];
-
       list.forEach(item => {
         // 解构赋值
         let { musicData } = item;
-
         if (musicData.songid && musicData.albummid) {
           result.push(createSingerSong(musicData));
         }
       });
-
       return result;
     }
-  },
-  computed: {
-    // vuex, 使用对象展开运算符将 getters 混入 computed 对象中
-    ...mapGetters(["singer"]),
-    // 传入子组件
-    title() {
-      return this.singer.name;
-    },
-    // 传入子组件
-    bgImage() {
-      return this.singer.avatar;
-    }
-  },
-  created() {
-    // console.log(this.singer)
-    this._getSingerDetail();
-  },
-  mounted() {},
-  destroyed() {}
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+/*@import "~src/assets/styles/scss/const.scss";*/
+/*@import "~src/assets/styles/scss/mymixin.scss";*/
 
 .my-singer-detail {
   // position: fixed;

@@ -17,7 +17,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
+@import "~src/assets/styles/scss/const.scss";
 
 .my-tab {
   display: flex;

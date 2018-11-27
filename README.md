@@ -26,7 +26,7 @@
 所有数据都来自于QQ音乐，抓取自QQ的接口，大部分接口都是JSONP，抓取比较容易，其中一些接口限制了host，
 不能直接抓取，采用的方法是用axios代理，设置header，以此绕过host的限制。 
 
-PS：具体代码请看prod.server.js文件
+PS：具体代码请看vue.config.js文件中dev-serve中proxy.
 
 ```
 
@@ -186,14 +186,14 @@ PS：具体代码请看prod.server.js文件
 
 ```
 通过调用QQ音乐的JSONP接口，获取的数据并不能直接拿来用，需要做进一步的规格化，
-达到我们使用的要求，所以在这方面单独封装了一个class来处理这方面的数据，具体请看src/common/js/song.js。
+达到我们使用的要求，所以在这方面单独封装了一个class来处理这方面的数据，具体请看src/assets/js/song.js。
 
 在请求JSONP的时候，用到了一个JSONP库，这个库代码十分简短，只有几十行，有兴趣的同学可以学习下。
 
 使用时，就是将请求的参数拼接在请求url上，然后调用这个库的jsonp方法。
 
 所以，在此封装了两个函数，一个是将参数拼接在url上，另一个是将库里面的jsonp方法Promise化，
-方便我们使用，具体请查看src/common/js/jsonp.js。
+方便我们使用，具体请查看src/assets/js/jsonp.js。
 
 将请求的数据格式化后再通过Vuex传递，组件间共享，实现歌曲的播放切换等。
 ```

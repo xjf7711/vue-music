@@ -57,15 +57,17 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import { getHotKey } from "src/api/search.js";
-import { playlistMixin } from "src/common/js/mixin.js";
-import MySuggestList from "src/views/MySuggestList/MySuggestList";
+import { ERR_OK } from "src/api/config";
+import { playlistMixin } from "src/assets/js/mixin.js";
+// import { playlistMixin, searchMixin } from "assets/js/mixin";
 import MySearchBox from "src/components/MySearchBox/MySearchBox";
 import MySearchList from "src/components/MySearchList/MySearchList";
 import MyConfirm from "src/components/MyConfirm/MyConfirm";
 import MyScroll from "src/components/MyScroll/MyScroll";
+import MySuggestList from "src/views/MySuggestList/MySuggestList";
 
 export default {
-  mixins: [playlistMixin],
+  mixins: [playlistMixin], // searchMixin
   components: {
     MySearchBox,
     MySuggestList,
@@ -84,7 +86,12 @@ export default {
       refreshDelay: 100
     };
   },
-  props: {},
+  computed: {
+    ...mapGetters(["searchHistory"]),
+    scrollData() {
+      return this.hotkey.concat(this.searchHistory);
+    }
+  },
   watch: {
     // 解决添加歌曲后不能滚动的问题
     query(newVal) {
@@ -95,7 +102,9 @@ export default {
       }
     }
   },
-  filters: {},
+  created() {
+    this._getHotKey();
+  },
   methods: {
     ...mapActions(["saveHistory", "delHistory", "clearHistory"]),
     // 保存搜索结果历史到 vuex 和 localstorage 中
@@ -112,7 +121,7 @@ export default {
       this.clearHistory();
     },
     cancel() {
-      return;
+      return false;
     },
     // 当检索值改变时
     onQueryChange(query) {
@@ -124,7 +133,7 @@ export default {
     // 获取热搜索数据
     _getHotKey() {
       getHotKey().then(res => {
-        if (res.code === 0) {
+        if (ERR_OK === res.code) {
           // console.log(res.data.hotkey)
           this.hotkey = res.data.hotkey.slice(0, 10);
         }
@@ -144,24 +153,13 @@ export default {
       this.$refs.resultRef.style.bottom = bottom;
       this.$refs.suggestRef.refresh();
     }
-  },
-  computed: {
-    ...mapGetters(["searchHistory"]),
-    scrollData() {
-      return this.hotkey.concat(this.searchHistory);
-    }
-  },
-  created() {
-    this._getHotKey();
-  },
-  mounted() {},
-  destroyed() {}
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+@import "~src/assets/styles/scss/const.scss";
+@import "~src/assets/styles/scss/mymixin.scss";
 
 .my-search {
   .search-box-wrapper {

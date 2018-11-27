@@ -49,7 +49,7 @@
 <script>
 import MyScroll from "src/components/MyScroll/MyScroll";
 import MyLoading from "src/components/MyLoading/MyLoading";
-import { myDOM } from "src/common/js/myutils.js";
+import { myDOM } from "src/assets/js/myutils.js";
 
 const RIGHT_ONEWORD_HEIGHT = 18;
 const TITLE_HEIGHT = 29;
@@ -211,8 +211,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
-/*@import "~@/common/scss/mymixin.scss";*/
+@import "~src/assets/styles/scss/const.scss";
+/*@import "~src/assets/styles/scss/mymixin.scss";*/
 
 .my-phone-list {
   position: relative;

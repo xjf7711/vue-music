@@ -10,8 +10,8 @@
 import { mapMutations } from "vuex";
 import { getSingerList } from "src/api/singer.js";
 import { ERR_OK } from "src/api/config";
-import { createSinger } from "src/common/js/SingerClass.js";
-import { playlistMixin } from "src/common/js/mixin.js";
+import { createSinger } from "src/assets/js/SingerClass.js";
+import { playlistMixin } from "src/assets/js/mixin.js";
 import MyPhoneList from "src/components/MyPhoneList/MyPhoneList";
 
 const HOT_TITLE = "热门";
@@ -112,8 +112,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+@import "~src/assets/styles/scss/const.scss";
+@import "~src/assets/styles/scss/mymixin.scss";
 
 .my-singer {
   position: fixed;

@@ -34,9 +34,9 @@ import MyLoading from "src/components/MyLoading/MyLoading";
 import MyNoResult from "src/components/MyNoResult/MyNoResult";
 import { search } from "src/api/search.js";
 import { ERR_OK } from "src/api/config";
-// import { parseJsonp } from "src/common/js/myutils";
-import { createSingerSong } from "src/common/js/SingerSongClass.js";
-import { Singer } from "src/common/js/SingerClass.js";
+// import { parseJsonp } from "src/assets/js/myutils";
+import { createSingerSong } from "src/assets/js/SingerSongClass.js";
+import { Singer } from "src/assets/js/SingerClass.js";
 
 const TYPE_SINGER = "singer";
 
@@ -195,8 +195,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+@import "~src/assets/styles/scss/const.scss";
+@import "~src/assets/styles/scss/mymixin.scss";
 
 .my-suggest-list {
   height: 100%;

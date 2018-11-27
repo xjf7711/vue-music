@@ -141,7 +141,7 @@ import animations from "create-keyframe-animation";
 import Lyric from "lyric-parser"; // QQ音乐 歌词解析 https://github.com/ustbhuangyi/lyric-parser
 
 import { mapGetters, mapMutations, mapActions } from "vuex";
-import { myTime, myArray, prefixStyle } from "src/common/js/myutils.js";
+import { myTime, myArray, prefixStyle } from "src/assets/js/myutils.js";
 import MyProgressBar from "src/components/MyProgressBar/MyProgressBar";
 import MyProgressCircle from "src/components/MyProgressCircle/MyProgressCircle";
 import MyPlaylist from "src/views/MyPlaylist/MyPlaylist";
@@ -487,16 +487,16 @@ export default {
       this.currentSong
         .getLyric()
         .then(lyric => {
-          // console.log("this.currentSong.getLyric().then lyric is ", lyric);
+          console.log("this.currentSong.getLyric().then lyric is ", lyric);
           if (this.currentSong.lyric !== lyric) {
             // console.log("not same. ");
             return;
           }
-          // console.log("lyric is same");
-          // console.log("this.handleLyric is ", this.handleLyric)
+          console.log("lyric is same");
+          console.log("this.handleLyric is ", this.handleLyric);
           // /*eslint-disable no-new*/
           this.currentLyric = new Lyric(lyric, this.handleLyric);
-          // console.log("this.currentLyric is ", this.handleLyric);
+          console.log("this.currentLyric is ", this.handleLyric);
           if (this.playing) {
             this.currentLyric.play();
           }
@@ -617,8 +617,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/common/scss/const.scss";
-@import "~@/common/scss/mymixin.scss";
+@import "~src/assets/styles/scss/const.scss";
+@import "~src/assets/styles/scss/mymixin.scss";
 
 .my-player {
   .normal-player {
