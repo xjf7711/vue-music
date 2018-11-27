@@ -8,8 +8,7 @@ const Singer = () => import("src/views/Singer/Singer");
 const Rank = () => import("src/views/Rank/Rank");
 const Search = () => import("src/views/Search/Search");
 const SingerDetail = () => import("src/views/SingerDetail/SingerDetail");
-const SongList = () =>
-  import("src/views/SongList/SongList");
+const SongList = () => import("src/views/SongList/SongList");
 const RankDetail = () => import("src/views/RankDetail/RankDetail");
 const User = () => import("src/views/User/User");
 

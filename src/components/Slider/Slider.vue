@@ -62,7 +62,7 @@ export default {
   },
   activated() {
     if (this.autoPlay) {
-      this._play();
+      this._initPlay();
     }
   },
   deactivated() {
@@ -87,7 +87,7 @@ export default {
       // 动态添加 class、width
       for (let i = 0; i < this.children.length; i++) {
         let child = this.children[i];
-        DOM.addClass(child, "slider-item");
+        myDOM.addClass(child, "slider-item");
 
         child.style.width = sliderWidth + "px";
         width += sliderWidth;

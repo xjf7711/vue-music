@@ -1,6 +1,6 @@
 import jsonp from "src/assets/js/jsonp";
 // import { commonParams, options } from "@/api/common-query.js";
-import { commonParams, options } from "./config";
+import { commonParams, options, baseURL } from "./config";
 // import axios from "axios";
 import request from "src/assets/js/request";
 import { parseJsonp } from "src/assets/js/utils";
@@ -31,7 +31,7 @@ export function getHotKey() {
 export function search(query, page, perpage, zhida) {
   let url =
     process.env.NODE_ENV === "production"
-      ? "https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp"
+      ? "/soso/fcgi-bin/search_for_qq_cp"
       : "/api/search";
   let data = Object.assign({}, commonParams, {
     w: query,
@@ -57,8 +57,9 @@ export function search(query, page, perpage, zhida) {
   //     params: data
   //   })
   return request({
-    method: "get",
+    baseURL,
     url,
+    method: "get",
     params: data
   })
     .then(function(response) {

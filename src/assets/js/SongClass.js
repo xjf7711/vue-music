@@ -53,6 +53,7 @@ export function createSong(musicData) {
     // url: `https://thirdparty.gtimg.com/${musicData.songid}.m4a?fromtag=38`(不可用)
     // url: `http://ws.stream.qqmusic.qq.com/${musicData.songid}.m4a?fromtag=46` // 已失效
     // url: `http://ws.stream.qqmusic.qq.com/C100${musicData.songmid}.m4a?fromtag=0&guid=5184045268` // 已失效
+    // url: `http://isure.stream.qqmusic.qq.com/C100${musicData.songmid}.m4a?fromtag=32`(不可用)
     url: `http://dl.stream.qqmusic.qq.com/C400${musicData.songmid}/${
       musicData.songid
     }.m4a?guid=5184045268&fromtag=66` // 部分失效

@@ -61,9 +61,9 @@ const backdrop = prefixStyle("backdrop-filter");
 export default {
   mixins: [playlistMixin],
   components: {
-    MySongList,
-    MyScroll,
-    MyLoading
+    SongList,
+    Scroll,
+    Loading
   },
   props: {
     // 背景图

@@ -3,7 +3,7 @@ import axios from "axios";
 
 // create an axios instance
 const service = axios.create({
-  // baseURL: process.env.NODE_ENV === "production" ? "https://c.y.qq.com" : "/", // api 的 base_url
+  // baseURL: process.env.NODE_ENV === "production" ? "https://c.y.qq.com" : "", // api 的 base_url
   timeout: 5000 // request timeout
 });
 
@@ -21,8 +21,8 @@ service.interceptors.request.use(
     // },
     console.log("service.interceptions.request.use config is ", config);
     if (process.env.NODE_ENV === "production") {
-      config.headers["referer"] = "https://c.y.qq.com";
-      config.headers["host"] = "c.y.qq.com";
+      config.headers["referer"] = "https://y.qq.com/";
+      config.headers["host"] = "y.qq.com";
     }
     return config;
   },

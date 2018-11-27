@@ -47,8 +47,8 @@
 
     <!-- 清空弹窗 -->
     <confirm ref="confirmRef"
-                text="是否清空所有搜索历史" confirmBtnText="清空"
-                @confirm="confirm" @cancel="cancel"></confirm>
+             text="是否清空所有搜索历史" confirmBtnText="清空"
+             @confirm="confirm" @cancel="cancel"></confirm>
 
     <router-view/>
   </div>

@@ -186,7 +186,7 @@ module.exports = {
           // 比如我要调用'http://192.168.0.57:8081/ledger/add'，直接写'/ledger/add'即可
         },
         headers: {
-          Referer: "https://c.y.qq.com/",
+          Referer: "https://c.y.qq.com",
           host: "c.y.qq.com"
         }
         // 正式环境： 接口地址 /api/**                         前端页面地址

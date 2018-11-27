@@ -2,7 +2,7 @@ import jsonp from "src/assets/js/jsonp";
 // import axios from "axios";
 import request from "src/assets/js/request";
 // import { commonParams, options } from "src/api/common-query.js";
-import { commonParams, options } from "./config.js";
+import { commonParams, options, baseURL } from "./config.js";
 import { parseJsonp } from "src/assets/js/utils";
 
 /**
@@ -44,7 +44,7 @@ export function getList() {
   console.log("getList begins. ");
   const url =
     process.env.NODE_ENV === "production"
-      ? "https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg"
+      ? "/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg"
       : "/api/getList";
   // console.log("api recommend getList url is " + url);
   let data = Object.assign({}, commonParams, {
@@ -64,8 +64,9 @@ export function getList() {
   //     params: data
   //   })
   return request({
-    method: "get",
+    baseURL,
     url,
+    method: "get",
     params: data
   })
     .then(function(response) {
@@ -85,7 +86,7 @@ export function getList() {
 export function getSongList(disstid) {
   const url =
     process.env.NODE_ENV === "production"
-      ? "https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg"
+      ? "/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg"
       : "/api/getSongList";
   const data = Object.assign({}, commonParams, {
     // rnd: Math.random(),
@@ -111,8 +112,9 @@ export function getSongList(disstid) {
   //     params: data
   //   })
   return request({
-    method: "get",
+    baseURL,
     url,
+    method: "get",
     params: data
   })
     .then(function(response) {

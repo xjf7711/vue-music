@@ -19,3 +19,6 @@ export const options1 = {
 };
 
 export const ERR_OK = 0;
+
+export const baseURL =
+  process.env.NODE_ENV === "production" ? "https//c.y.qq.com" : "";

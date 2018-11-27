@@ -1,7 +1,8 @@
 // import axios from "axios";
 // import { commonParams } from "@/api/common-query.js";
-import { commonParams } from "./config";
+import { commonParams, baseURL } from "./config";
 import request from "src/assets/js/request";
+import { parseJsonp } from "src/assets/js/utils";
 
 /**
  * axios 抓取歌词数据
@@ -12,9 +13,10 @@ import request from "src/assets/js/request";
  */
 export function getLyric(id) {
   //   console.log("getLyric begins. id is " + id);
+
   const url =
     process.env.NODE_ENV === "production"
-      ? "https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric.fcg"
+      ? "/lyric/fcgi-bin/fcg_query_lyric.fcg"
       : "/api/getLyric";
   const data = Object.assign({}, commonParams, {
     // nobase64: 1, // 很重要。等于1时会转成文字。
@@ -33,13 +35,14 @@ export function getLyric(id) {
   //     params: data
   //   })
   return request({
-    method: "get",
+    baseURL,
     url,
+    method: "get",
     params: data
   })
     .then(res => {
       console.log("api song.getLyric res is ", res);
-      return Promise.resolve(res.data);
+      return Promise.resolve(parseJsonp(res.data));
     })
     .catch(err => {
       console.log(err);
