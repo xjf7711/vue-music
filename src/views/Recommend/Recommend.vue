@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setSonglist: "SET_SONGLIST" // "SET_DISC"
+      setSonglist: "SET_SONG_LIST" // "SET_DISC"
     }),
     // 子路由跳转
     selectItem(item) {

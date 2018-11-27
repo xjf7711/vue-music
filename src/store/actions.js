@@ -149,7 +149,7 @@ import {
   savePlay,
   saveFavorite,
   delFavorite
-} from "src/assets/js/store.js";
+} from "src/assets/js/storage.js";
 
 function findIndex(list, song) {
   return list.findIndex(item => {
@@ -175,7 +175,7 @@ export const selectPlay = function({ commit, state }, { list, index }) {
 
 // 随机播放全部按钮
 export const randomPlay = function({ commit }, { list }) {
-  commit(types.SET_MODE, 2);
+  commit(types.SET_PLAY_MODE, 2);
   commit(types.SET_PLAYING_STATE, true);
   commit(types.SET_FULL_SCREEN, true);
   commit(types.SET_PLAYLIST, myArray.shuffle(list));
@@ -266,7 +266,7 @@ export const deleteSong = function({ commit, state }, song) {
  * @param  {[type]} query          搜索关键词
  */
 export const saveHistory = function({ commit }, query) {
-  commit(types.SET_SEARCHHISTORY, localSave(query));
+  commit(types.SET_SEARCH_HISTORY, localSave(query));
 };
 
 /**
@@ -275,14 +275,14 @@ export const saveHistory = function({ commit }, query) {
  * @param  {[type]} query          搜索关键词
  */
 export const delHistory = function({ commit }, query) {
-  commit(types.SET_SEARCHHISTORY, localDel(query));
+  commit(types.SET_SEARCH_HISTORY, localDel(query));
 };
 
 /**
  * 删除全部搜索历史
  */
 export const clearHistory = function({ commit }) {
-  commit(types.SET_SEARCHHISTORY, localClear());
+  commit(types.SET_SEARCH_HISTORY, localClear());
 };
 
 // 清空播放列表
@@ -295,7 +295,7 @@ export const deleteSongList = function({ commit }) {
 
 // 把当前歌曲写进 vuex 最近播放 playHistory 中
 export const saveplayHistory = function({ commit }, song) {
-  commit(types.SET_PLAYHISTORY, savePlay(song));
+  commit(types.SET_PLAY_HISTORY, savePlay(song));
 };
 
 // 我的收藏

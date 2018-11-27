@@ -9,7 +9,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { getSingerDetail } from "src/api/singer.js";
-import { createSingerSong } from "src/assets/js/SingerSongClass.js";
+import { createSong } from "src/assets/js/SongClass.js";
 import MusicList from "src/views/MusicList/MusicList";
 
 export default {
@@ -61,7 +61,7 @@ export default {
         // 解构赋值
         let { musicData } = item;
         if (musicData.songid && musicData.albummid) {
-          result.push(createSingerSong(musicData));
+          result.push(createSong(musicData));
         }
       });
       return result;

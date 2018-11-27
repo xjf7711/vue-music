@@ -261,7 +261,7 @@ export default {
       setfullScreen: "SET_FULL_SCREEN",
       setPlayingState: "SET_PLAYING_STATE",
       setCurrentIndex: "SET_CURRENT_INDEX",
-      setMode: "SET_MODE",
+      setMode: "SET_PLAY_MODE",
       setPlayList: "SET_PLAYLIST"
     }),
     ...mapActions(["saveplayHistory", "savefavoriteList", "delfavoriteList"]),

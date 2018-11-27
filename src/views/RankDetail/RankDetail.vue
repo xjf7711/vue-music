@@ -10,7 +10,7 @@
 import { mapGetters } from "vuex";
 import { getRankDetail } from "src/api/rank.js";
 import { ERR_OK } from "src/api/config";
-import { createSingerSong } from "src/assets/js/SingerSongClass.js";
+import { createSong } from "src/assets/js/SongClass.js";
 import MusicList from "src/views/MusicList/MusicList";
 
 export default {
@@ -61,7 +61,7 @@ export default {
 
       list.forEach(item => {
         if (item.data.songid && item.data.albummid) {
-          result.push(createSingerSong(item.data));
+          result.push(createSong(item.data));
         }
       });
       return result;

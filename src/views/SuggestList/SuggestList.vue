@@ -35,7 +35,7 @@ import NoResult from "src/components/NoResult/NoResult";
 import { search } from "src/api/search.js";
 import { ERR_OK } from "src/api/config";
 // import { parseJsonp } from "src/assets/js/utils";
-import { createSingerSong } from "src/assets/js/SingerSongClass.js";
+import { createSong } from "src/assets/js/SongClass.js";
 import { Singer } from "src/assets/js/SingerClass.js";
 
 const TYPE_SINGER = "singer";
@@ -120,7 +120,7 @@ export default {
       let ret = [];
       list.forEach(item => {
         if (item.songid && item.albummid) {
-          ret.push(createSingerSong(item));
+          ret.push(createSong(item));
         }
       });
       return ret;

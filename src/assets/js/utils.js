@@ -173,7 +173,7 @@ export const myString = {};
 
 export const myStore = {
   // https://github.com/ustbhuangyi/storage
-  // https://github.com/jaywcjlove/store.js
+  // https://github.com/jaywcjlove/storage.js
 };
 
 export const myHTTP = {};

@@ -60,7 +60,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 // import { searchMixin } from "src/assets/js/mixin";
-import { SingerSong } from "src/assets/js/SingerSongClass.js";
+import { Song } from "src/assets/js/SongClass.js";
 import SearchBox from "src/components/SearchBox/SearchBox";
 import Scroll from "src/components/Scroll/Scroll";
 import Switches from "src/components/Switches/Switches";
@@ -137,7 +137,7 @@ export default {
     },
     selectSong(item, index) {
       if (index !== 0) {
-        this.insertSong(new SingerSong(item));
+        this.insertSong(new Song(item));
       }
 
       this.$refs.topTipRef.show();

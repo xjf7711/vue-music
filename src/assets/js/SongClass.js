@@ -1,9 +1,9 @@
 import { getLyric } from "src/api/song.js";
 import { ERR_OK } from "src/api/config";
-// import { parseJsonp } from "./utils";
+// import { parseJsonp } from "./utils"; // 数据应该在api中处理。
 import Base64 from "js-base64";
 
-export class SingerSong {
+export class Song {
   constructor({ id, mid, singer, name, album, duration, img, url }) {
     this.id = id;
     this.mid = mid;
@@ -36,9 +36,10 @@ export class SingerSong {
     });
   }
 }
-
-export function createSingerSong(musicData) {
-  return new SingerSong({
+// 工厂方式创建对象
+export function createSong(musicData) {
+  console.log("createSong musicData is ", musicData);
+  return new Song({
     id: musicData.songid,
     mid: musicData.songmid,
     singer: filterSinger(musicData.singer),
@@ -50,7 +51,7 @@ export function createSingerSong(musicData) {
     }.jpg?max_age=2592000`,
     // url: `http://10.151.0.22:9999/dl.stream.qqmusic.qq.com/C400${musicData.songmid}.m4a?fromtag=66`(可用)
     // url: `https://thirdparty.gtimg.com/${musicData.songid}.m4a?fromtag=38`(不可用)
-    // url: `http://ws.stream.qqmusic.qq.com/${musicData.songid}.m4a?fromtag=46`
+    // url: `http://ws.stream.qqmusic.qq.com/${musicData.songid}.m4a?fromtag=46` // 已失效
     // url: `http://ws.stream.qqmusic.qq.com/C100${musicData.songmid}.m4a?fromtag=0&guid=5184045268` // 已失效
     url: `http://dl.stream.qqmusic.qq.com/C400${musicData.songmid}/${
       musicData.songid
@@ -59,7 +60,10 @@ export function createSingerSong(musicData) {
     //   `http://223.111.154.154/amobile.music.tc.qq.com/C400${
     //     musicData.songmid
     //   }.m4a` +
-    //   `?guid=5184045268&vkey=C5414C050409CCE3C059876DAE9ED8D0F4B8E8531A4F2E59620FCD624F8A75F00EAF9EB0E9D09A44B24FCFF6EA390F7A08AE523687BBD39D&uin=0&fromtag=66` // vkey要匹配
+    //   `?guid=5184045268
+    //   &vkey=C5414C050409CCE3C059876DAE9ED8D0F4B8E8531A4F2E59620FCD624F8A75F00EAF9EB0E9D09A44B24FCFF6EA390F7A08AE523687BBD39D
+    //   &uin=0&fromtag=66`
+    //   vkey要获取匹配
   });
 }
 

@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setRankList: "SET_RANKLIST"
+      setRankList: "SET_RANK_LIST"
     }),
     selectItem(item) {
       this.$router.push({

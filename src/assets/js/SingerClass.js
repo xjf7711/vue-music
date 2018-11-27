@@ -1,6 +1,6 @@
 // 歌手信息类
 export class Singer {
-  // 传入一个对象
+  // 初始化  传入一个对象
   constructor({ id, name }) {
     this.id = id;
     this.name = name;
@@ -10,6 +10,7 @@ export class Singer {
 
 // 工厂方式创建类实例
 export function createSinger(singer) {
+  console.log("createSinger param singer is ", singer);
   return new Singer({
     id: singer.Fsinger_mid,
     name: singer.Fsinger_name

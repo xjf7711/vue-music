@@ -137,7 +137,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setMode: "SET_MODE",
+      setMode: "SET_PLAY_MODE",
       setCurrentIndex: "SET_CURRENT_INDEX",
       setPlayingState: "SET_PLAYING_STATE",
       setPlayList: "SET_PLAYLIST"

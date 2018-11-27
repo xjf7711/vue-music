@@ -25,7 +25,7 @@ import {
   getStorage,
   getPlayStorage,
   getFavorite
-} from "src/assets/js/store.js";
+} from "src/assets/js/storage.js";
 
 const playMode = {
   sequence: 0, // 顺序播放

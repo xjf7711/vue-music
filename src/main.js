@@ -1,4 +1,4 @@
-// import 'babel-polyfill' // 兼容
+/* import 'babel-polyfill' // 兼容 需要 npm install babel-polyfill --save-dev*/
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router/index";

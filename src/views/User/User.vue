@@ -44,7 +44,7 @@ import Switches from "src/components/Switches/Switches";
 import Scroll from "src/components/Scroll/Scroll";
 import SongList from "src/components/SongList/SongList";
 import NoResult from "src/components/NoResult/NoResult";
-import { SingerSong } from "src/assets/js/SingerSongClass.js";
+import { Song } from "src/assets/js/SongClass.js";
 import { playlistMixin } from "src/assets/js/mixin.js";
 
 export default {
@@ -114,7 +114,7 @@ export default {
       this.currentIndex = index;
     },
     selectSong(song) {
-      this.insertSong(new SingerSong(song));
+      this.insertSong(new Song(song));
     },
     back() {
       this.$router.back();
@@ -122,7 +122,7 @@ export default {
     random() {
       let list = this.currentIndex === 0 ? this.favoriteList : this.playHistory;
       list = list.map(song => {
-        return new SingerSong(song);
+        return new Song(song);
       });
 
       this.randomPlay({ list });
