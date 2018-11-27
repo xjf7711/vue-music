@@ -1,6 +1,6 @@
 import { getLyric } from "src/api/song.js";
 import { ERR_OK } from "src/api/config";
-// import { parseJsonp } from "./myutils";
+// import { parseJsonp } from "./utils";
 import Base64 from "js-base64";
 
 export class SingerSong {

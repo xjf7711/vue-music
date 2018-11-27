@@ -3,7 +3,7 @@ import jsonp from "src/assets/js/jsonp";
 import request from "src/assets/js/request";
 // import { commonParams, options } from "src/api/common-query.js";
 import { commonParams, options } from "./config.js";
-import { parseJsonp } from "src/assets/js/myutils";
+import { parseJsonp } from "src/assets/js/utils";
 
 /**
  * jsonp 抓取推荐页轮播图数据

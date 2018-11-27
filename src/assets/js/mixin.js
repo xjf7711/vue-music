@@ -1,6 +1,6 @@
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import { playMode } from "./config";
-import { myArray } from "./myutils";
+import { myArray } from "./utils";
 /*
 import { playlistMixin } from 'src/assets/js/mixin.js'
 

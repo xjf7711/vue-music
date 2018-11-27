@@ -1,24 +1,24 @@
 <template>
   <div id="app" @touchmove.prevent>
-    <my-header></my-header>
-    <my-tab></my-tab>
+    <m-header></m-header>
+    <tab></tab>
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
-    <my-player></my-player>
+    <player></player>
   </div>
 </template>
 
 <script>
-import MyHeader from "src/views/MyHeader/MyHeader";
-import MyTab from "src/views/MyTab/MyTab";
-import MyPlayer from "src/views/MyPlayer/MyPlayer";
+import MHeader from "src/views/Header/Header";
+import Tab from "src/views/Tab/Tab";
+import Player from "src/views/Player/Player";
 
 export default {
   components: {
-    MyHeader,
-    MyTab,
-    MyPlayer
+    MHeader,
+    Tab,
+    Player
   }
 };
 </script>

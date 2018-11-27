@@ -255,3 +255,13 @@ npm run build 项目打包
 ```
 1、jsonp方式改为axios。开发环境用代理，打包用baseURL。
 ```
+
+## todo
+```
+一、api中
+1、axios改为request后，有问题。。。
+2、axios替代jsonp请求。
+3、文件名中My要去掉。
+
+
+```

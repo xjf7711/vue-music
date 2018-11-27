@@ -1,26 +1,26 @@
 import Vue from "vue";
 import Router from "vue-router";
-// import MyRecommend from 'src/views/MyRecommend/MyRecommend'
-// import MySinger from 'src/views/MySinger/MySinger'
-// import MyRank from 'src/views/MyRank/MyRank'
-// import MySearch from 'src/views/MySearch/MySearch'
-// import MySingerDetail from 'src/views/MySingerDetail/MySingerDetail'
-// import MySongListDetail from 'src/views/MySongListDetail/MySongListDetail'
-// import MyRankDetail from 'src/views/MyRankDetail/MyRankDetail'
-// import MyUser from 'src/views/MyUser/MyUser'
+// import Recommend from 'src/views/Recommend/Recommend'
+// import Singer from 'src/views/Singer/Singer'
+// import Rank from 'src/views/Rank/Rank'
+// import Search from 'src/views/Search/Search'
+// import SingerDetail from 'src/views/SingerDetail/SingerDetail'
+// import SongListDetail from 'src/views/SongListDetail/SongListDetail'
+// import RankDetail from 'src/views/RankDetail/RankDetail'
+// import User from 'src/views/User/User'
 
 Vue.use(Router);
 
 // 路由懒加载
-const MyRecommend = () => import("src/views/MyRecommend/MyRecommend");
-const MySinger = () => import("src/views/MySinger/MySinger");
-const MyRank = () => import("src/views/MyRank/MyRank");
-const MySearch = () => import("src/views/MySearch/MySearch");
-const MySingerDetail = () => import("src/views/MySingerDetail/MySingerDetail");
-const MySongListDetail = () =>
-  import("src/views/MySongListDetail/MySongListDetail");
-const MyRankDetail = () => import("src/views/MyRankDetail/MyRankDetail");
-const MyUser = () => import("src/views/MyUser/MyUser");
+const Recommend = () => import("src/views/Recommend/Recommend");
+const Singer = () => import("src/views/Singer/Singer");
+const Rank = () => import("src/views/Rank/Rank");
+const Search = () => import("src/views/Search/Search");
+const SingerDetail = () => import("src/views/SingerDetail/SingerDetail");
+const SongListDetail = () =>
+  import("src/views/SongListDetail/SongListDetail");
+const RankDetail = () => import("src/views/RankDetail/RankDetail");
+const User = () => import("src/views/User/User");
 
 export default new Router({
   routes: [
@@ -31,52 +31,52 @@ export default new Router({
     {
       path: "/user",
       name: "user",
-      component: MyUser
+      component: User
     },
     {
       path: "/recommend",
       name: "recommend",
-      component: MyRecommend,
+      component: Recommend,
       children: [
         {
           path: ":id",
           name: "songlistdetail",
-          component: MySongListDetail
+          component: SongListDetail
         }
       ]
     },
     {
       path: "/singer",
       name: "singer",
-      component: MySinger,
+      component: Singer,
       children: [
         {
           path: ":id",
           name: "singerdetail",
-          component: MySingerDetail
+          component: SingerDetail
         }
       ]
     },
     {
       path: "/rank",
       name: "rank",
-      component: MyRank,
+      component: Rank,
       children: [
         {
           path: ":id",
           name: "rankdetail",
-          component: MyRankDetail
+          component: RankDetail
         }
       ]
     },
     {
       path: "/search",
       name: "search",
-      component: MySearch,
+      component: Search,
       children: [
         {
           path: ":id",
-          component: MySingerDetail
+          component: SingerDetail
         }
       ]
     }

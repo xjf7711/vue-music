@@ -141,7 +141,7 @@
 // 封装复杂的 mutations
 
 import * as types from "./mutations-type.js";
-import { myArray } from "src/assets/js/myutils.js";
+import { myArray } from "src/assets/js/utils.js";
 import {
   localSave,
   localDel,
