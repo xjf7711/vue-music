@@ -3,6 +3,7 @@
 import { commonParams, baseURL } from "./config";
 import request from "src/assets/js/request";
 import { parseJsonp } from "src/assets/js/utils";
+import axios from "axios";
 
 /**
  * axios 抓取歌词数据
@@ -46,5 +47,29 @@ export function getLyric(id) {
     })
     .catch(err => {
       console.log(err);
+    });
+}
+
+/* 获取播放源连接密钥 */
+export function getVkey(songmid) {
+  const url = "/api/vkey";
+
+  const data = Object.assign({}, commonParams, {
+    songmid: songmid,
+    filename: `C400${songmid}.m4a`,
+    guid: "1472133172",
+    uin: 0,
+    platform: "yqq",
+    needNewCode: 0,
+    cid: "205361747",
+    format: "json"
+  });
+
+  return axios
+    .get(url, {
+      params: data
+    })
+    .then(res => {
+      return Promise.resolve(res.data);
     });
 }

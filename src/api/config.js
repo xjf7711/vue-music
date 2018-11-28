@@ -1,5 +1,5 @@
 export const commonParams = {
-  g_tk: 5381, //  1928093487
+  g_tk: "1089387893", //  1928093487 5381
   inCharset: "utf8",
   outCharset: "utf-8",
   notice: 0,
@@ -21,4 +21,4 @@ export const options1 = {
 export const ERR_OK = 0;
 
 export const baseURL =
-  process.env.NODE_ENV === "production" ? "https//c.y.qq.com" : "";
+  process.env.NODE_ENV === "production" ? "https://c.y.qq.com" : "";

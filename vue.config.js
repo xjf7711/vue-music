@@ -155,6 +155,7 @@ module.exports = {
     port: 1111,
     // https: false,
     // hotOnly: false,
+    disableHostCheck: true, // 进行配置反向代理
     proxy: {
       // 设置代理
       // "/api": {
@@ -237,6 +238,21 @@ module.exports = {
         },
         headers: {
           referer: "https://y.qq.com/",
+          host: "c.y.qq.com"
+        }
+        // 正式环境： 接口地址 /api/**                         前端页面地址
+        // 开发环境： 接口地址 http://www.xxx.com/api/**       前端页面地址  http://localhost:8080
+      },
+      "/api/vkey": {
+        // target: 'http://192.168.0.57:8081',  // 你接口的域名 设置你调用的接口域名和端口号 别忘了加http
+        target: "https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg",
+        secure: true, // 如果是https接口，需要配置这个参数
+        changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
+        pathRewrite: {
+          "^/api/search": ""
+        },
+        headers: {
+          referer: "https://c.y.qq.com/",
           host: "c.y.qq.com"
         }
         // 正式环境： 接口地址 /api/**                         前端页面地址

@@ -138,6 +138,12 @@ module.exports = {
    * 有些值像 publicPath 和 historyApiFallback 不应该被修改，因为它们需要和开发服务器的 baseUrl 同步以保障正常的工作。
    * */
   devServer: {
+    // open: process.platform === 'darwin',
+    // host: '0.0.0.0',
+    // port: 8080,
+    // https: false,
+    // hotOnly: false,
+    // disableHostCheck: true, // 进行配置反向代理
     /**
      * 设置代理
      * Type: string | Object

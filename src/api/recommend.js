@@ -41,40 +41,46 @@ export function getRecommend() {
  * axios 结合 proxy 代理后端请求
  */
 export function getList() {
-  console.log("getList begins. ");
+  console.log("getList begins. and baseURL is " + baseURL);
+  // 使用baseURL有问题。请求直接报错，无response。404错误。？？？？ 设置错了。https后少:.
   const url =
     process.env.NODE_ENV === "production"
       ? "/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg"
       : "/api/getList";
   // console.log("api recommend getList url is " + url);
-  let data = Object.assign({}, commonParams, {
+  let params = Object.assign({}, commonParams, {
     rnd: Math.random(),
-    hostUin: 0,
-    format: "json",
+    loginUin: "0",
+    hostUin: "0",
+    format: "json", // 不设置，就是"jsonp"格式，返回是字符串
+    // jsonpCallback: "getPlaylist", // 返回值是json时，不需要设这个值。
     platform: "yqq",
-    needNewCode: 0,
-    categoryId: 10000000,
-    sortId: 5,
+    needNewCode: "0",
+    categoryId: "10000000",
+    sortId: "5",
     sin: 0,
     ein: 29
   });
-  console.log("api recommend getList data is ", data);
+  console.log("api recommend getList and params is ", params);
   // return axios
-  //   .get(url, {
-  //     params: data
+  //   .get("https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg", {
+  //     headers: {
+  //       Referer: "https://c.y.qq.com"
+  //     },
+  //     params
   //   })
   return request({
     baseURL,
     url,
     method: "get",
-    params: data
+    params
   })
-    .then(function(response) {
+    .then(response => {
       console.log("api recommend getList response is ", response);
       return Promise.resolve(response.data);
     })
-    .catch(function(error) {
-      console.log(error);
+    .catch(error => {
+      console.log("axios error is ", error);
     });
 }
 
@@ -117,10 +123,10 @@ export function getSongList(disstid) {
     method: "get",
     params: data
   })
-    .then(function(response) {
+    .then(response => {
       return Promise.resolve(parseJsonp(response.data));
     })
-    .catch(function(error) {
+    .catch(error => {
       console.log(error);
     });
   // let url = "https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg";

@@ -62,11 +62,11 @@ export function search(query, page, perpage, zhida) {
     method: "get",
     params: data
   })
-    .then(function(response) {
+    .then(response => {
       console.log("api search response.data is ", typeof response.data);
       return Promise.resolve(parseJsonp(response.data));
     })
-    .catch(function(error) {
+    .catch(error => {
       console.log(error);
     });
 }

@@ -1,4 +1,4 @@
-import { getLyric } from "src/api/song.js";
+import { getVkey, getLyric } from "src/api/song.js";
 import { ERR_OK } from "src/api/config";
 // import { parseJsonp } from "./utils"; // 数据应该在api中处理。
 import Base64 from "js-base64";
@@ -36,9 +36,10 @@ export class Song {
     });
   }
 }
+
 // 工厂方式创建对象
 export function createSong(musicData) {
-  console.log("createSong musicData is ", musicData);
+  // console.log("createSong musicData is ", musicData);
   return new Song({
     id: musicData.songid,
     mid: musicData.songmid,
@@ -71,14 +72,34 @@ export function createSong(musicData) {
 // 处理 musicData.singer 数组，使其变为一个字符串
 function filterSinger(singer) {
   let result = [];
-
   if (!singer) {
     return "";
   }
-
   singer.forEach(item => {
     result.push(item.name);
   });
-
   return result.join(" / ");
+}
+
+// 这是异步获取的，需要单独传参 mid对应 song.mid
+export function songUrl(vkey, mid) {
+  // getVkey有待验证有效性。
+  getVkey(mid).then(res => {
+    if (ERR_OK === res.code) {
+      const vkey = res.data.items[0].vkey;
+      return `http://dl.stream.qqmusic.qq.com/C400${mid}.m4a?vkey=${vkey}&guid=1472133172&uin=0&fromtag=66`;
+    } else {
+      console.log("player组件 vkey请求错误");
+    }
+  });
+  //     `http://dl.stream.qqmusic.qq.com/C400004IsqcS2BilGv.m4a?guid=5802445895&vkey=&uin=0&fromtag=38
+  // return `http://dl.stream.qqmusic.qq.com/C400${mid}.m4a?vkey=${vkey}&guid=1472133172&uin=0&fromtag=66`;
+}
+
+// 同parseJson方法
+export function recomSongList(res) {
+  res = res.replace(/jsonCallback/, "");
+  res = res.replace(/\(/g, " ");
+  res = res.replace(/\)/g, " ");
+  return JSON.parse(res);
 }
