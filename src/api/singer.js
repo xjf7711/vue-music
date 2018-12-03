@@ -8,7 +8,10 @@ import request from "../assets/js/request";
  * 接口：https://c.y.qq.com/v8/fcg-bin/v8.fcg
  */
 export function getSingerList() {
-  let url = "/api/getSingerList"; // "https://c.y.qq.com/v8/fcg-bin/v8.fcg";
+  let url =
+    process.env.NODE_ENV === "production"
+      ? "/v8/fcg-bin/v8.fcg"
+      : "/api/getSingerList";
   let data = Object.assign({}, commonParams, {
     channel: "singer",
     page: "list",
@@ -33,7 +36,7 @@ export function getSingerList() {
       return Promise.resolve(response.data);
     })
     .catch(error => {
-      console.log("axios error is ", error);
+      console.log("request error is ", error);
     });
 }
 
@@ -44,7 +47,10 @@ export function getSingerList() {
  * singermid:002J4UUk29y8BY
  */
 export function getSingerDetail(singermid) {
-  let url = "/api/getSingerDetail"; // "https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg";
+  let url =
+    process.env.NODE_ENV === "production"
+      ? "/v8/fcg-bin/fcg_v8_singer_track_cp.fcg"
+      : "/api/getSingerDetail";
   let data = Object.assign({}, commonParams, {
     // g_tk: 1576475597,
     hostUin: 0,

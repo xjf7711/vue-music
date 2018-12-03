@@ -52,7 +52,10 @@ export function getLyric(id) {
 
 /* 获取播放源连接密钥 */
 export function getVkey(songmid) {
-  const url = "/api/vKey";
+  const url =
+    process.env.NODE_ENV === "production"
+      ? "/base/fcgi-bin/fcg_music_express_mobile3.fcg"
+      : "/api/vKey";
 
   const params = Object.assign({}, commonParams, {
     songmid,
@@ -71,6 +74,7 @@ export function getVkey(songmid) {
   //   })
   return request({
     method: "get",
+    baseURL,
     url,
     params
   }).then(res => {
@@ -122,8 +126,10 @@ export function getPlaySongVkey() {
       }
     }
   };
-  const url = "/api/getPlaySongVkey";
-  // "https://u.y.qq.com/cgi-bin/musicu.fcg";
+  const url =
+    process.env.NODE_ENV === "production"
+      ? "/cgi-bin/musicu.fcg"
+      : "/api/getPlaySongVkey";
   return request({
     method: "get",
     url,

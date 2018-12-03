@@ -78,9 +78,9 @@ export function getList() {
     url,
     method: "get",
     // withCredentials: true, // headers中添加cookie时设置
-    // headers: { // 不能修改referer
-    //   // Referer: "https://c.y.qq.com"
-    //   // referer: "https://c.y.qq.com"
+    // headers: {
+    //   // 不能修改referer
+    //   Referer: "https://y.qq.com"
     // },
     params
   })

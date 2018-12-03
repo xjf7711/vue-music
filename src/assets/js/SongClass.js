@@ -24,8 +24,8 @@ export class Song {
       getLyric(this.id).then(res => {
         console.log("getLyric(this.id) res is ", res);
         // const resultData = parseJsonp(res);
-        console.log("res.retcode is ", typeof res.retcode);
-        if (ERR_OK === res.retcode) {
+        // console.log("res.retcode is ", typeof res.retcode);
+        if (res && ERR_OK === res.retcode) {
           this.lyric = Base64.Base64.decode(res.lyric);
           console.log("this.lyric is ", this.lyric);
           resolve(this.lyric);
