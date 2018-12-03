@@ -38,7 +38,7 @@ export function getSingerList() {
 }
 
 /**
- * jsonp 抓取歌手详情页数据
+ * 抓取歌手详情页数据
  * 出现页面：https://y.qq.com/portal/singer_list.html
  * 接口：https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg
  * singermid:002J4UUk29y8BY
@@ -68,6 +68,6 @@ export function getSingerDetail(singermid) {
       return Promise.resolve(response.data);
     })
     .catch(error => {
-      console.log("axios error is ", error);
+      console.log("request error is ", error);
     });
 }

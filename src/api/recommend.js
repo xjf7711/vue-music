@@ -3,7 +3,7 @@
 import request from "src/assets/js/request";
 // import { commonParams, options } from "src/api/common-query.js";
 import { commonParams, baseURL } from "./config.js";
-import { parseJsonp } from "src/assets/js/utils";
+// import { parseJsonp } from "src/assets/js/utils";
 
 /**
  * jsonp 抓取推荐页轮播图数据
@@ -56,7 +56,7 @@ export function getList() {
     rnd: Math.random(),
     loginUin: 0,
     hostUin: 0,
-    format: `json`, // 不设置，就是"jsonp"格式，返回是字符串
+    // format: `json`, // commonParams中已改为json
     // jsonpCallback: "getPlaylist", // 返回值是json时，不需要设这个值。
     platform: "yqq",
     needNewCode: 0,
@@ -65,7 +65,7 @@ export function getList() {
     sin: 0,
     ein: 29
   });
-  console.log("api recommend getList and params is ", params);
+  // console.log("api recommend getList and params is ", params);
   // return axios
   //   .get("https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg", {
   //     headers: {
@@ -85,11 +85,11 @@ export function getList() {
     params
   })
     .then(response => {
-      console.log("api recommend getList response is ", response);
+      // console.log("api recommend getList response is ", response);
       return Promise.resolve(response.data);
     })
     .catch(error => {
-      console.log("axios error is ", error);
+      console.log("request error is ", error);
     });
 }
 
@@ -133,7 +133,7 @@ export function getSongList(disstid) {
     params: data
   })
     .then(response => {
-      return Promise.resolve(parseJsonp(response.data));
+      return Promise.resolve(response.data);
     })
     .catch(error => {
       console.log(error);

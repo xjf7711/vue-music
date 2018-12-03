@@ -187,7 +187,7 @@ module.exports = {
         },
         headers: {
           referer: "https://y.qq.com",
-          host: "y.qq.com"
+          // host: "y.qq.com"
         }
         // 正式环境： 接口地址 /api/**                         前端页面地址
         // 开发环境： 接口地址 http://www.xxx.com/api/**       前端页面地址  http://localhost:8080
@@ -288,6 +288,14 @@ module.exports = {
         }
         // 正式环境： 接口地址 /api/**                         前端页面地址
         // 开发环境： 接口地址 http://www.xxx.com/api/**       前端页面地址  http://localhost:8080
+      },
+      "/api/getPlaySongVkey": {
+        target: "https://u.y.qq.com/cgi-bin/musicu.fcg",
+        secure: true,
+        changeOrigin: true,
+        pathRewrite: {
+          "/api/getPlaySongVkey": ""
+        }
       }
     }
     // before: app => {

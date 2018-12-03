@@ -141,11 +141,14 @@ import animations from "create-keyframe-animation";
 import Lyric from "lyric-parser"; // QQ音乐 歌词解析 https://github.com/ustbhuangyi/lyric-parser
 
 import { mapGetters, mapMutations, mapActions } from "vuex";
+import { ERR_OK } from "src/api/config";
+import { getVkey } from "src/api/song";
 import { myTime, myArray, prefixStyle } from "src/assets/js/utils.js";
+
 import ProgressBar from "src/components/ProgressBar/ProgressBar";
 import ProgressCircle from "src/components/ProgressCircle/ProgressCircle";
-import Playlist from "src/views/Playlist/Playlist";
 import Scroll from "src/components/Scroll/Scroll";
+import Playlist from "src/views/Playlist/Playlist";
 // 样式兼容性
 const transform = prefixStyle("transform");
 const transitionDuration = prefixStyle("transitionDuration");
@@ -223,6 +226,8 @@ export default {
       }
       // DOM 更新了
       clearTimeout(this.timer);
+      console.log("Player.vue this.currentSong is ", this.currentSong);
+      this._getVkey();
       this.timer = setTimeout(() => {
         this.$refs.audioRef.play();
         this._getLyric();
@@ -480,6 +485,22 @@ export default {
       const x = -(window.innerWidth / 2 - paddingLeft);
       const y = window.innerHeight - paddingTop - width / 2 - paddingBottom;
       return { x, y, scale };
+    },
+    _getVkey() {
+      const mid = this.currentSong.mid;
+      getVkey(mid).then(res => {
+        console.log("getVkey res is ", res);
+        if (ERR_OK === res.code) {
+          const vkey = res.data.items[0].vkey;
+          // http://dl.stream.qqmusic.qq.com/C400003mAan70zUy5O.m4a?guid=4505128350&vkey=3EACF87057A04A4E590AE357FB4C51AB8F5FFEA5B68DE2E2C5D7976D8F04BFD8CB2E0D7ACD834004F9A9E00CEECFDD412A768A63623822C5&uin=0&fromtag=3&r=18235195520833347
+          const url = `http://dl.stream.qqmusic.qq.com/C400${mid}.m4a?guid=1472133172&vkey=${vkey}&uin=0&fromtag=38`;
+          this.$set(this.currentSong, "url", url);
+          // this.$refs.audioRef.play();
+          // this._getLyric();
+        } else {
+          console.log("player组件 vkey请求错误");
+        }
+      });
     },
     // 歌词处理
     _getLyric() {

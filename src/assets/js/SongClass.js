@@ -49,15 +49,15 @@ export function createSong(musicData) {
     duration: musicData.interval,
     img: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${
       musicData.albummid
-    }.jpg?max_age=2592000`,
+    }.jpg?max_age=2592000`
     // url: `http://10.151.0.22:9999/dl.stream.qqmusic.qq.com/C400${musicData.songmid}.m4a?fromtag=66`(可用)
     // url: `https://thirdparty.gtimg.com/${musicData.songid}.m4a?fromtag=38`(不可用)
     // url: `http://ws.stream.qqmusic.qq.com/${musicData.songid}.m4a?fromtag=46` // 已失效
     // url: `http://ws.stream.qqmusic.qq.com/C100${musicData.songmid}.m4a?fromtag=0&guid=5184045268` // 已失效
     // url: `http://isure.stream.qqmusic.qq.com/C100${musicData.songmid}.m4a?fromtag=32`(不可用)
-    url: `http://dl.stream.qqmusic.qq.com/C400${musicData.songmid}/${
-      musicData.songid
-    }.m4a?guid=5184045268&fromtag=66` // 部分失效
+    // url: `http://dl.stream.qqmusic.qq.com/C400${musicData.songmid}/${
+    //   musicData.songid
+    // }.m4a?guid=5184045268&fromtag=66` // 部分失效
     // url:
     //   `http://223.111.154.154/amobile.music.tc.qq.com/C400${
     //     musicData.songmid
