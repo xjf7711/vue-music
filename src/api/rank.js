@@ -1,31 +1,52 @@
-import jsonp from "src/assets/js/jsonp";
+// import jsonp from "src/assets/js/jsonp";
 // import { commonParams, options } from "./common-query.js";
-import { commonParams, options } from "./config";
+import { baseURL, commonParams } from "./config";
+import request from "../assets/js/request";
+// import {parseJsonp} from "../assets/js/utils";
 
 /**
- * jsonp 抓取排行页数据
+ * json 抓取排行页数据
  * 接口（pc端）：https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_opt.fcg
  * 接口（移动端）：https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg
  * 提供方：https://y.qq.com/n/yqq/toplist/4.html
  */
 export function getRankList() {
-  const url = "https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg";
-  const data = Object.assign({}, commonParams, {
+  const url =
+    process.env.NODE_ENV === "production"
+      ? "/v8/fcg-bin/fcg_myqq_toplist.fcg"
+      : "/api/getRankList";
+  const params = Object.assign({}, commonParams, {
     uin: 0,
-    format: "h5",
+    format: "json", // h5 ???
+    platform: "h5",
     needNewCode: 1
   });
-  return jsonp(url, data, options);
+  // return jsonp(url, data, options);
+  return request({
+    baseURL,
+    url,
+    method: "get",
+    params
+  })
+    .then(response => {
+      return Promise.resolve(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
 }
 
 /**
- * jsonp 抓取排行详情页数据
+ * json 抓取排行详情页数据
  * 接口：https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg
  * 提供方：https://y.qq.com/w/toplist.html?ADTAG=myqq&from=myqq&channel=10007100&id=4&type=top
  */
 export function getRankDetail(topid) {
-  let url = "https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg";
-  let data = Object.assign({}, commonParams, {
+  let url =
+    process.env.NODE_ENV === "production"
+      ? "/v8/fcg-bin/fcg_v8_toplist_cp.fcg"
+      : "/api/getRankDetail";
+  let params = Object.assign({}, commonParams, {
     hostUin: 0,
     platform: "h5",
     needNewCode: 1,
@@ -40,5 +61,17 @@ export function getRankDetail(topid) {
     page: "detail",
     topid
   });
-  return jsonp(url, data, options);
+  // return jsonp(url, data, options);
+  return request({
+    baseURL,
+    url,
+    method: "get",
+    params
+  })
+    .then(response => {
+      return Promise.resolve(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
 }

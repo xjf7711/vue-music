@@ -167,13 +167,12 @@ module.exports = {
       //   target: "/"
       // },
       // proxy all requests starting with /api to jsonplaceholder
-      "/api/getRecommend/": {
+      "/api/getRecommend": {
         target:
           "https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg",
-        // secure: false,
         changeOrigin: true,
         pathRewrite: {
-          "^/api/getReCommend/": "/"
+          "^/api/getRecommend": ""
         }
       },
       "/api/getList": {
@@ -187,11 +186,43 @@ module.exports = {
           // 比如我要调用'http://192.168.0.57:8081/ledger/add'，直接写'/ledger/add'即可
         },
         headers: {
-          Referer: "https://c.y.qq.com",
-          host: "c.y.qq.com"
+          referer: "https://y.qq.com",
+          host: "y.qq.com"
         }
         // 正式环境： 接口地址 /api/**                         前端页面地址
         // 开发环境： 接口地址 http://www.xxx.com/api/**       前端页面地址  http://localhost:8080
+      },
+      "/api/getSingerList": {
+        target: "https://c.y.qq.com/v8/fcg-bin/v8.fcg",
+        secure: true, // 如果是https接口，需要配置这个参数
+        changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
+        pathRewrite: {
+          "^/api/getSingerList": ""
+        }
+      },
+      "/api/getSingerDetail": {
+        target: "https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg",
+        secure: true, // 如果是https接口，需要配置这个参数
+        changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
+        pathRewrite: {
+          "^/api/getSingerDetail": ""
+        }
+      },
+      "/api/getRankList": {
+        target: "https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg",
+        secure: true, // 如果是https接口，需要配置这个参数
+        changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
+        pathRewrite: {
+          "^/api/getRankList": ""
+        }
+      },
+      "/api/getRankDetail": {
+        target: "https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg",
+        secure: true, // 如果是https接口，需要配置这个参数
+        changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
+        pathRewrite: {
+          "^/api/getRankDetail": ""
+        }
       },
       "/api/getLyric": {
         // target: 'http://192.168.0.57:8081',  // 你接口的域名 设置你调用的接口域名和端口号 别忘了加http
@@ -205,7 +236,7 @@ module.exports = {
         },
         headers: {
           referer: "https://y.qq.com/",
-          host: "c.y.qq.com"
+          // host: "c.y.qq.com"
         }
         // 正式环境： 接口地址 /api/**                         前端页面地址
         // 开发环境： 接口地址 http://www.xxx.com/api/**       前端页面地址  http://localhost:8080
@@ -218,8 +249,7 @@ module.exports = {
         changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
         pathRewrite: {
           // '^/fsy': ''
-          "^/api/getSongList": "" // 这里理解成用'/ledger'代替target里面的地址，后面组件中我们掉接口时直接用ledger代替
-          // 比如我要调用'http://192.168.0.57:8081/ledger/add'，直接写'/ledger/add'即可
+          "^/api/getSongList": ""
         },
         headers: {
           referer: "https://y.qq.com/",
@@ -243,17 +273,18 @@ module.exports = {
         // 正式环境： 接口地址 /api/**                         前端页面地址
         // 开发环境： 接口地址 http://www.xxx.com/api/**       前端页面地址  http://localhost:8080
       },
-      "/api/vkey": {
+      "/api/vKey": {
         // target: 'http://192.168.0.57:8081',  // 你接口的域名 设置你调用的接口域名和端口号 别忘了加http
-        target: "https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg",
+        target:
+          "https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg",
         secure: true, // 如果是https接口，需要配置这个参数
         changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
         pathRewrite: {
-          "^/api/search": ""
+          "^/api/vKey": ""
         },
         headers: {
           referer: "https://c.y.qq.com/",
-          host: "c.y.qq.com"
+          // host: "c.y.qq.com"
         }
         // 正式环境： 接口地址 /api/**                         前端页面地址
         // 开发环境： 接口地址 http://www.xxx.com/api/**       前端页面地址  http://localhost:8080

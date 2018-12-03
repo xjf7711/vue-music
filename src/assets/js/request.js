@@ -4,7 +4,7 @@ import axios from "axios";
 // create an axios instance
 const service = axios.create({
   // baseURL: process.env.NODE_ENV === "production" ? "https://c.y.qq.com" : "", // api 的 base_url
-  timeout: 5000 // request timeout
+  timeout: 15000 // request timeout
 });
 
 // request interceptor// 添加请求拦截器
@@ -21,21 +21,29 @@ service.interceptors.request.use(
     //   host: "c.y.qq.com"
     // },
     console.log("service.interceptions.request.use config is ", config);
-    console.log("process.env.NODE_ENV is " + process.env.NODE_ENV);
-    if (process.env.NODE_ENV === "production") {
-      config.headers["Referer"] = "https://y.qq.com/portal/playlist.html";
-      // config.headers["host"] = "y.qq.com"; // 没用
-      config.headers["Cookie"] =
-        "RK=7dNm4/X+Yj; tvfe_boss_uuid=bf00ee54e9081ab4; pgv_pvi=8772238336; pac_uid=1_857193777; pgv_pvid=6457341280; o_cookie=80; ptcz=c761e59c8c8d6bd5198866d02a5cb7313af1af468006c455d6c2b5d26201d42e; pgv_si=s10759168; _qpsvr_localtk=0.08285763449905015; ptisp=ctc; luin=o0857193777; lskey=00010000228dd1371b945c68ecfd3b71d3071425024a7a8a2a23e3ffcb5b9904c9f7088d2ea8c01539ffed92; pt2gguin=o0857193777; uin=o0857193777; skey=@Kydi7w0EI; p_uin=o0857193777; p_skey=HjsE9sEjznJfXk*9KFEeW4VZr6i3*tlXZ2nuzEw8kCg_; pt4_token=c-p6sv3JEboA51cSQ3ABqxM8O80Jct3jYYkgy-aEQuE_; p_luin=o0857193777; p_lskey=000400008f9c296cd10c03a5173d22a184aad124d791568e90e4198beb8ad699a4d02fbfc059f71ab3d8758c; ts_last=y.qq.com/portal/playlist.html; ts_refer=ui.ptlogin2.qq.com/cgi-bin/login; ts_uid=3392060960";
-      config.headers["User-Agent"] = // 没用
-        "'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36',";
-    }
+    // console.log("process.env.NODE_ENV is " + process.env.NODE_ENV);
+    // if ("production" === process.env.NODE_ENV) {
+    //   // config.headers["Accept"] = "*/*"; // application/json, text/plain, */*
+    //   // config.headers["cookie"] =
+    //   //   "pgv_pvi=6355487744; yqq_stat=0; pgv_info=ssid=s8878349185; ts_last=y.qq.com/; ts_refer=www.baidu.com/link; pgv_pvid=4505128350; ts_uid=2585128660; pgv_si=s4885803008";
+    //   // config.headers["Accept-Encoding"] = "gzip, deflate";
+    //   // config.headers["accept-language"] = "zh-CN,zh;q=0.9";
+    //   // config.headers["Connection"] = "keep-alive";
+    //   // config.headers["Host"] = "c.y.qq.com"; // 没用
+    //   // config.headers["Referer"] = "https://c.y.qq.com";
+    //   // config.headers["Postman-Token"] = "9e7053c4-ac24-4059-a15d-ba849abda676";
+    //   // config.headers["User-Agent"] = "PostmanRuntime/7.4.0";
+    //   // "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36";
+    //   // config.headers["Server"] = "tws";
+    //   // config.headers["UUID"] = 2709774090;
+    //   // config.headers["Area"] = "sh";
+    // }
     return config;
   },
   error => {
     // 对请求错误做些什么
     // Do something with request error
-    console.log(error); // for debug
+    console.error(error); // for debug
     Promise.reject(error);
   }
 );
@@ -44,7 +52,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     // 对响应数据做点什么
-    console.log("service.interception.response.use response is ", response);
+    // console.log("service.interception.response.use response is ", response);
     return response;
     /**
      * 下面的注释为通过在response里，自定义code来标示请求状态

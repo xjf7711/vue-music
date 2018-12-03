@@ -1,34 +1,101 @@
 # vue-music
 
-    
-
 ## 概述
-> 项目是基于Vue.js，成品是一个移动端的音乐播放器，来源于imooc的实战课程“Vue.js 打造高级实战——音乐 App”。
-> 文件夹结构按照vue-cli3的demo进行了调整
-> 使用vue-cli3,sass等项目改造。
+
+> 项目是基于Vue全家桶(2.x)制作的移动端音乐WebApp，成品是一个移动端的音乐播放器，来源于imooc的实战课程“Vue.js 打造高级实战——音乐 App”。
+
+> 文件夹结构使用vue-cli3的demo的结构。
+> 因为vue-cli3推荐使用scss,所以使用scss改造了原来的stalus。
+
+> 由于QQ音乐API接口调整，相应的做了调整。在vue.config.js中的dev-serve的proxy设置了代理。
 > 自己动手实践并加以修改拓展。 
+
 > 项目的大致流程是Vue-cli构建开发环境，分析需求，设计构思，规划目录结构，开始编码。
+
 > 慕课网学习地址: http://coding.imooc.com/class/107.html
 
 ## 视图层
-```
-推荐页
-歌手页
-    歌手详情
-歌曲排行榜
-    排行榜详情
-搜索页
-用户中心
-```
 
-## 数据来源
-```
-所有数据都来自于QQ音乐，抓取自QQ的接口，大部分接口都是JSONP，抓取比较容易，其中一些接口限制了host，
-不能直接抓取，采用的方法是用axios代理，设置header，以此绕过host的限制。 
+#### 推荐页
 
-PS：具体代码请看vue.config.js文件中dev-serve中proxy.
+>上部分是一个轮播图组件，使用第三方库 better-scroll 辅助实现，使用 jsonp 抓取 QQ音乐(移动端)数据   
 
-```
+>下部分是一个歌单推荐列表，使用 axios + Node.js 代理后端请求，绕过主机限制 (伪造 headers)，抓取 QQ音乐(PC端)数据
+
+>歌单推荐列表图片，使用图片懒加载技术 vue-lazyload，优化页面加载速度
+
+>为了更好的用户体验，当数据未请求到时，显示 loading 组件
+
+#### 推荐页 -> 歌单详情页
+
+>由于歌手的状态多且杂，这里使用 vuex 集中管理歌手状态
+
+>这个组件更加注重 UX，做了很多类原生 APP 动画，如下拉图片放大、跟随推动、ios 渐进增强的高斯模糊效果 backdrop-filter 等
+
+#### 歌手页
+
+>左右联动是这个组件的难点
+
+>左侧是一个歌手列表，使用 jsonp 抓取 QQ音乐(PC端)歌手数据并重组 JSON 数据结构
+
+>列表图片使用懒加载技术 vue-lazyload，优化页面加载速度
+
+>右侧是一个字母列表，与左侧歌手列表联动，滚动固定标题实现
+
+#### 歌手页 -> 歌手详情页
+
+> 复用歌单详情页，只改变传入的参数，数据同样爬取自QQ音乐
+
+#### 歌曲排行榜
+
+>排行榜详情--复用歌单详情页
+
+#### 搜索页
+
+>抓数据，写组件，另外，根据抓取的数据特征，做了上拉刷新的功能
+
+>考虑到数据量大且频繁的问题，对请求做了节流处理
+
+>考虑到移动端键盘占屏的问题，对滚动前的 input 做了 blur() 操作
+
+>对搜索历史进行了 localstorage 缓存，清空搜索历史时使用了改装过的 confirm 组件
+
+>支持将搜索的歌曲添加到播放列表
+
+#### 用户中心
+
+>将 localstorage 中 “我的收藏” 和 “最近播放” 反映到界面上
+
+#### 播放器内核页
+
+>核心组件。用 vuex 管理各种播放时状态，播放、暂停等功能调用 audio API
+
+>播放器可以最大化和最小化
+
+>中部唱片动画使用第三方 JS 动画库 create-keyframe-animation 实现
+
+>底部操作区图标使用 iconfonts。
+
+>抽象了一个横向进度条组件和一个圆形进度条组件，横向进度条可以拖动小球和点击进度条来改变播放进度，圆形进度条组件使用 SVG <circle> 元素
+
+>播放模式有：顺序播放、单曲循环、随机播放，原理是调整歌单列表数组
+
+>歌词的爬取利用 axios 代理后端请求，伪造 headers 来实现，先将歌词 jsonp 格式转换为 json 格式，再使用第三方库 js-base64 进行 Base64 解码操作，最后再使用第三方库 lyric-parser对歌词进行格式化
+
+>实现了侧滑显示歌词、歌词跟随进度条高亮等交互效果
+
+>增加了当前播放列表组件，可在其中加入/删除歌曲
+
+#### 其他
+
+>此应用的全部数据来自 QQ音乐，推荐页的歌单列表及歌词是利用 axios 结合 node.js 代理后端请求抓取的。
+
+>全局通用的应用级状态使用 vuex 集中管理
+
+>全局引入 fastclick 库，消除 click 移动浏览器300ms延迟
+
+>页面是响应式的，适配常见的移动端屏幕，采用 flex 布局
+
 
 ## 技术栈
 
@@ -178,11 +245,22 @@ PS：具体代码请看vue.config.js文件中dev-serve中proxy.
 
 ```
 
+## 数据来源
+```
+所有数据都来自于QQ音乐，抓取自QQ的接口，大部分接口都是JSONP，抓取比较容易，其中一些接口限制了host，
+不能直接抓取，采用的方法是用axios代理，设置header，以此绕过host的限制。 
+
+PS：具体代码请看vue.config.js文件中dev-serve中proxy.
+
+```
+
 ## 数据处理
 
 > 爬取QQ音乐2W歌单和50W首歌曲: https://blog.csdn.net/lht_okk/article/details/77206510
+
 > 歌单url：https://y.qq.com/portal/playlist.html
-> vue-music 跨域获取QQ音乐歌单接口: https://www.cnblogs.com/shengnan-2017/p/9104079.html
+
+> vue-music跨域获取QQ音乐歌单接口: https://www.cnblogs.com/shengnan-2017/p/9104079.html
 
 ```
 通过调用QQ音乐的JSONP接口，获取的数据并不能直接拿来用，需要做进一步的规格化，
@@ -248,6 +326,8 @@ npm run build 项目打包
 1、目录结构修改
 2、axios请求和api修改
 3、stylus改为sass
+4、重新引用了幻灯片播放组件。之前的组件是基于老版本的better-scroll写的，有问题。
+    https://github.com/ustbhuangyi/better-scroll/blob/master/example/components/slide/slide.vue
 ```
 
 ## 计划
@@ -259,9 +339,9 @@ npm run build 项目打包
 ## todo
 ```
 一、api中
-1、axios改为request后，有问题。。。
+1、axios改为request后，有问题。。。（已解决）
 2、axios替代jsonp请求。
-3、文件名中My要去掉。
-4、接口权限要获取
+3、文件名中My要去掉。（已完成）
+4、接口权限要获取。。。
 
 ```

@@ -1,148 +1,199 @@
 <!-- better-scroll 轮播图组件 -->
 <template>
-  <div class="slider" ref="slider">
-    <div class="slider-group" ref="sliderGroup">
-      <slot></slot>
+  <div class="slide" ref="slide">
+    <div class="slide-group" ref="slideGroup">
+      <slot>
+      </slot>
     </div>
-    <!-- 轮播点 -->
-    <div class="dots">
-      <span v-for="(dot, index) in dots" :key="index"
-            :class="{ active: currentDotsIndex === index }" class="dot"></span>
+    <div v-if="showDot" class="dots">
+      <span class="dot" :class="{active: currentPageIndex === index }" v-for="(item, index) in dots" :key="index"></span>
     </div>
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
+import { myDOM } from "src/assets/js/utils";
 import BScroll from "better-scroll";
-import { myDOM } from "src/assets/js/utils.js";
 
+const COMPONENT_NAME = "slide";
 export default {
+  name: COMPONENT_NAME,
   props: {
-    // 是否循环播放
     loop: {
       type: Boolean,
       default: true
     },
-    // 是否自动播放
     autoPlay: {
       type: Boolean,
       default: true
     },
-    // 轮播延时
-    delay: {
+    interval: {
       type: Number,
-      default: 3000
+      default: 4000
+    },
+    showDot: {
+      type: Boolean,
+      default: true
+    },
+    click: {
+      type: Boolean,
+      default: true
+    },
+    threshold: {
+      type: Number,
+      default: 0.3
+    },
+    speed: {
+      type: Number,
+      default: 400
     }
   },
   data() {
     return {
       dots: [],
-      currentDotsIndex: 0
+      currentPageIndex: 0
     };
   },
   mounted() {
-    setTimeout(() => {
-      this._setSliderWidth();
-      this._initDots();
-      this._initSlider();
-
-      if (this.autoPlay) {
-        this._initPlay();
+    this.update();
+    window.addEventListener("resize", () => {
+      if (!this.slide || !this.slide.enabled) {
+        return;
       }
-
-      // 当窗口尺寸改变时，重新计算轮播宽度
-      window.addEventListener("resize", () => {
-        if (!this.slider) {
-          return;
+      clearTimeout(this.resizeTimer);
+      this.resizeTimer = setTimeout(() => {
+        if (this.slide.isInTransition) {
+          this._onScrollEnd();
+        } else {
+          if (this.autoPlay) {
+            this._play();
+          }
         }
-        this._setSliderWidth(true);
-        this.slider.refresh();
-      });
-    }, 20);
+        this.refresh();
+      }, 60);
+    });
   },
   activated() {
+    if (!this.slide) {
+      return;
+    }
+    this.slide.enable();
+    let pageIndex = this.slide.getCurrentPage().pageX;
+    this.slide.goToPage(pageIndex, 0, 0);
+    this.currentPageIndex = pageIndex;
     if (this.autoPlay) {
-      this._initPlay();
+      this._play();
     }
   },
   deactivated() {
+    this.slide.disable();
     clearTimeout(this.timer);
   },
-  // beforeDestroy() {
-  //   clearTimeout(this.timer);
-  // },
-  destroyed() {
-    // 良好的习惯：销毁定时器
+  beforeDestroy() {
+    this.slide.disable();
     clearTimeout(this.timer);
   },
   methods: {
-    // 轮播图(sliderGroup)宽度
-    _setSliderWidth(isResize) {
-      // 拿到传过来的图片
-      this.children = this.$refs.sliderGroup.children;
-      // console.log(this.children) // (5) [div, div, div, div, div]
-      // 拿到父元素（slider）宽度
+    update() {
+      if (this.slide) {
+        this.slide.destroy();
+      }
+      this.$nextTick(() => {
+        this.init();
+      });
+    },
+    refresh() {
+      this._setSlideWidth(true);
+      this.slide.refresh();
+    },
+    prev() {
+      this.slide.prev();
+    },
+    next() {
+      this.slide.next();
+    },
+    init() {
+      clearTimeout(this.timer);
+      this.currentPageIndex = 0;
+      this._setSlideWidth();
+      if (this.showDot) {
+        this._initDots();
+      }
+      this._initSlide();
+      if (this.autoPlay) {
+        this._play();
+      }
+    },
+    _setSlideWidth(isResize) {
+      this.children = this.$refs.slideGroup.children;
       let width = 0;
-      let sliderWidth = this.$refs.slider.clientWidth;
-      // 动态添加 class、width
+      let slideWidth = this.$refs.slide.clientWidth;
       for (let i = 0; i < this.children.length; i++) {
         let child = this.children[i];
-        myDOM.addClass(child, "slider-item");
-
-        child.style.width = sliderWidth + "px";
-        width += sliderWidth;
+        myDOM.addClass(child, "slide-item");
+        child.style.width = slideWidth + "px";
+        width += slideWidth;
       }
       if (this.loop && !isResize) {
-        width += 2 * sliderWidth;
+        width += 2 * slideWidth;
       }
-      this.$refs.sliderGroup.style.width = width + "px";
+      this.$refs.slideGroup.style.width = width + "px";
     },
-    // 初始化轮播图
-    _initSlider() {
-      this.slider = new BScroll(this.$refs.slider, {
+    _initSlide() {
+      // console.log("Slider.vue _initSlide this.threshold is " + this.threshold);
+      this.slide = new BScroll(this.$refs.slide, {
         scrollX: true,
         scrollY: false,
         momentum: false,
-        snap: true,
-        snapLoop: this.loop,
-        snapThreshold: 0.3,
-        snapSpeed: 400
+        snap: {
+          loop: this.loop,
+          threshold: this.threshold,
+          speed: this.speed
+        },
+        bounce: false,
+        stopPropagation: true,
+        click: this.click
       });
-
-      this.slider.on("scrollEnd", () => {
-        let nowIndex = this.slider.getCurrentPage().pageX;
-        // 循环模式下 -1
-        if (this.loop) {
-          nowIndex -= 1;
+      this.slide.on("scrollEnd", this._onScrollEnd);
+      this.slide.on("touchEnd", () => {
+        if (this.autoPlay) {
+          this._play();
         }
-        this.currentDotsIndex = nowIndex;
-
-        // 重置自动轮播定时器
+      });
+      this.slide.on("beforeScrollStart", () => {
         if (this.autoPlay) {
           clearTimeout(this.timer);
-          this._initPlay();
         }
-
-        // this.slider.on("beforeScrollStart", () => { // ??
-        //   if (this.autoPlay) {
-        //     clearTimeout(this.timer);
-        //   }
-        // });
       });
     },
-    // 初始化轮播点
+    _onScrollEnd() {
+      this.currentPageIndex = this.slide.getCurrentPage().pageX;
+      if (this.autoPlay) {
+        this._play();
+      }
+    },
     _initDots() {
       this.dots = new Array(this.children.length);
     },
-    // 自动播放
-    _initPlay() {
-      let nextIndex = this.currentDotsIndex + 1;
-      if (this.loop) {
-        nextIndex += 1;
-      }
+    _play() {
+      clearTimeout(this.timer);
       this.timer = setTimeout(() => {
-        this.slider.goToPage(nextIndex, 0, 400);
-      }, this.delay);
+        this.slide.next();
+      }, this.interval);
+    }
+  },
+  watch: {
+    loop() {
+      this.update();
+    },
+    autoPlay() {
+      this.update();
+    },
+    speed() {
+      this.update();
+    },
+    threshold() {
+      this.update();
     }
   }
 };
@@ -150,15 +201,15 @@ export default {
 
 <style lang="scss" scoped>
 @import "~src/assets/styles/scss/const.scss";
-@import "~src/assets/styles/scss/mixin.scss";
+/*@import "~src/assets/styles/scss/mixin.scss";*/
 
-.slider {
+.slide {
   min-height: 1px;
-  .slider-group {
+  .slide-group {
     position: relative;
     overflow: hidden;
     white-space: nowrap;
-    .slider-item {
+    .slide-item {
       float: left;
       box-sizing: border-box;
       overflow: hidden;

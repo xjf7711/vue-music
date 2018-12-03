@@ -1,15 +1,15 @@
 <!-- 推荐页组件 -->
 <template>
-  <div class="recommend" ref="recommendRef">
+  <div class="recommend-wrapper" ref="recommendRef">
     <!-- better-scroll 滚动组件，当请求到 lists 时才渲染 -->
-    <scroll ref="scroll" :data="lists" class="recommend-content">
+    <scroll ref="scrollRef" :data="lists" class="recommend-content">
       <div>
         <!-- 轮播图，当请求到 recommends 时才渲染 -->
         <div v-if="recommends.length" class="slide-wrapper">
           <slider>
             <div v-for="(recommend,index) in recommends" :key="index">
               <a :href="recommend.linkUrl">
-                <img @load="loadImg" :src="recommend.picUrl" class="needsclick">
+                <img @load="loadImg" :src="recommend.picUrl" class="needsclick" alt="">
               </a>
             </div>
           </slider>
@@ -21,7 +21,7 @@
           <ul>
             <li @click="selectItem(item)" v-for="(item,index) in lists" :key="index" class="item">
               <div class="icon">
-                <img v-lazy="item.imgurl" width="60" height="60">
+                <img v-lazy="item.imgurl" width="60" height="60" alt="" src="">
               </div>
               <div class="text">
                 <p v-html="item.creator.name" class="name"></p>
@@ -44,7 +44,7 @@
 
 <script>
 import { getList, getRecommend } from "src/api/recommend.js";
-import Slider from "components/Slider/Slider";
+import Slider from "src/components/Slider/Slider";
 import Scroll from "src/components/Scroll/Scroll";
 import Loading from "src/components/Loading/Loading";
 import { playlistMixin } from "src/assets/js/mixin.js";
@@ -66,9 +66,9 @@ export default {
   },
   created() {
     this._getRecommend();
-    setTimeout(() => {
-      this._getList();
-    }, 1000);
+    // setTimeout(() => {
+    this._getList();
+    // }, 1000);
   },
   methods: {
     ...mapMutations({
@@ -87,11 +87,12 @@ export default {
     // 当有迷你播放器时，调整滚动底部距离
     handlePlaylist(playlist) {
       this.$refs.recommendRef.style.bottom = playlist.length > 0 ? "60px" : "";
-      this.$refs.scroll.refresh();
+      this.$refs.scrollRef.refresh();
     },
     // 获取轮播图数据
     _getRecommend() {
       getRecommend().then(res => {
+        // console.log("getRecommend res is ", res)
         if (ERR_OK === res.code) {
           // console.log(res)
           this.recommends = res.data.slider;
@@ -111,8 +112,8 @@ export default {
     // 当首次获取到图片时，Better-scroll 重新计算
     loadImg() {
       if (!this.flag) {
-        this.$refs.scroll.refresh();
         this.flag = true;
+        this.$refs.scrollRef.refresh();
       }
     }
   }
@@ -123,7 +124,7 @@ export default {
 @import "~src/assets/styles/scss/const.scss";
 @import "~src/assets/styles/scss/mixin.scss";
 
-.recommend {
+.recommend-wrapper {
   position: fixed;
   width: 100%;
   top: 88px;

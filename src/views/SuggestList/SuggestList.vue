@@ -1,6 +1,6 @@
 <!-- 搜索建议页列表组件 -->
 <template>
-  <scroll class="suggest-list"
+  <scroll class="suggest-scroll"
              ref="scrollRef"
              :data="result"
              :beforeScroll="beforeScrollData"
@@ -198,7 +198,7 @@ export default {
 @import "~src/assets/styles/scss/const.scss";
 @import "~src/assets/styles/scss/mixin.scss";
 
-.suggest-list {
+.suggest-scroll {
   height: 100%;
   overflow: hidden;
   .suggest-list {

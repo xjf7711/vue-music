@@ -1,8 +1,8 @@
-import jsonp from "src/assets/js/jsonp";
+// import jsonp from "src/assets/js/jsonp";
 // import axios from "axios";
 import request from "src/assets/js/request";
 // import { commonParams, options } from "src/api/common-query.js";
-import { commonParams, options, baseURL } from "./config.js";
+import { commonParams, baseURL } from "./config.js";
 import { parseJsonp } from "src/assets/js/utils";
 
 /**
@@ -11,27 +11,30 @@ import { parseJsonp } from "src/assets/js/utils";
  */
 export function getRecommend() {
   let url =
-    "https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg";
+    process.env.NODE_ENV === "production"
+      ? "/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg"
+      : "/api/getRecommend";
   let data = Object.assign({}, commonParams, {
     platform: "h5",
+    format: "json",
     uin: 0,
     needNewCode: 1
   });
-  return jsonp(url, data, options);
+  // return jsonp(url, data, options);
 
-  // 以下代码无效。代理有问题？？？
-  // const params = Object.assign({}, commonParams, {
-  //   platform: "h5",
-  //   uin: 0,
-  //   needNewCode: 1,
-  //   jsonpCallback: "getPlaylist"
-  //   // _: 1542893454334
-  // });
-  // return request({
-  //   url: "/api/getRecommend/",
-  //   method: "get",
-  //   params
-  // });
+  return request({
+    baseURL,
+    url,
+    method: "get",
+    params: data
+  })
+    .then(response => {
+      console.log("api recommend getRecommend response is ", response);
+      return Promise.resolve(response.data);
+    })
+    .catch(error => {
+      console.log("axios error is ", error);
+    });
 }
 
 /**
@@ -49,15 +52,16 @@ export function getList() {
       : "/api/getList";
   // console.log("api recommend getList url is " + url);
   let params = Object.assign({}, commonParams, {
+    picmid: 1,
     rnd: Math.random(),
-    loginUin: "0",
-    hostUin: "0",
-    format: "json", // 不设置，就是"jsonp"格式，返回是字符串
+    loginUin: 0,
+    hostUin: 0,
+    format: `json`, // 不设置，就是"jsonp"格式，返回是字符串
     // jsonpCallback: "getPlaylist", // 返回值是json时，不需要设这个值。
     platform: "yqq",
-    needNewCode: "0",
-    categoryId: "10000000",
-    sortId: "5",
+    needNewCode: 0,
+    categoryId: 10000000,
+    sortId: 5,
     sin: 0,
     ein: 29
   });
@@ -73,6 +77,11 @@ export function getList() {
     baseURL,
     url,
     method: "get",
+    // withCredentials: true, // headers中添加cookie时设置
+    // headers: { // 不能修改referer
+    //   // Referer: "https://c.y.qq.com"
+    //   // referer: "https://c.y.qq.com"
+    // },
     params
   })
     .then(response => {

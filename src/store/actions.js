@@ -272,7 +272,7 @@ export const saveHistory = function({ commit }, query) {
 /**
  * 删除单个搜索历史
  * @param commit
- * @param  {[type]} query          搜索关键词
+ * @param query
  */
 export const delHistory = function({ commit }, query) {
   commit(types.SET_SEARCH_HISTORY, localDel(query));
@@ -281,7 +281,7 @@ export const delHistory = function({ commit }, query) {
 /**
  * 删除全部搜索历史
  */
-export const clearHistory = function({ commit }) {
+export const clearHistory = function(commit) {
   commit(types.SET_SEARCH_HISTORY, localClear());
 };
 

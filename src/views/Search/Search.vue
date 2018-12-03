@@ -42,7 +42,7 @@
                        :query="query"
                        :zhida="zhida"
                        @beforeScroll="blurInput"
-                       @select="savaHis"></suggest-List>
+                       @select="saveHis"></suggest-List>
     </div>
 
     <!-- 清空弹窗 -->
@@ -108,7 +108,7 @@ export default {
   methods: {
     ...mapActions(["saveHistory", "delHistory", "clearHistory"]),
     // 保存搜索结果历史到 vuex 和 localstorage 中
-    savaHis() {
+    saveHis() {
       this.saveHistory(this.query);
     },
     deleteHis(item) {
