@@ -114,13 +114,15 @@
     Node.js：利用 Express 起一个本地测试服务器
     jsonp：服务端通讯。抓取 QQ音乐(移动端)数据
     axios：服务端通讯。结合 Node.js 代理后端请求，抓取 QQ音乐(PC端)数据
-    【自动化构建及其他工具】
+    
+#### 【自动化构建及其他工具】
     
     vue-cli：Vue 脚手架工具，快速初始化项目代码
     eslint：代码风格检查工具，规范代码书写
     vConsole：移动端调试工具，在移动端输出日志
 
 ## 项目树
+
 ```
 
 ├── README.md
@@ -246,6 +248,7 @@
 ```
 
 ## 数据来源
+
 ```
 所有数据都来自于QQ音乐，抓取自QQ的接口，大部分接口都是JSONP，抓取比较容易，其中一些接口限制了host，
 不能直接抓取，采用的方法是用axios代理，设置header，以此绕过host的限制。 
@@ -277,6 +280,7 @@ PS：具体代码请看vue.config.js文件中dev-serve中proxy.
 ```
 
 ## 交互体验
+
 ```
 该项目的很多地方都涉及到滚动，包括下拉滚动，下拉滚动刷新等。
 这里面用到了一个库(better-scroll)，来实现所有涉及到的滚动，建议学习下它的API。
@@ -292,6 +296,7 @@ PS：具体代码请看vue.config.js文件中dev-serve中proxy.
 
 
 ## 项目截图
+
 ![image](https://raw.githubusercontent.com/xjf7711/vue-music/master/public/shotcut/1.png)
 
 ![image](https://raw.githubusercontent.com/xjf7711/vue-music/master/public/shotcut/2.png)

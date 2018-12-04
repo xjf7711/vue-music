@@ -64,7 +64,7 @@ export function search(query, page, perpage, zhida) {
   })
     .then(response => {
       console.log("api search response.data is ", typeof response.data);
-      return Promise.resolve(parseJsonp(response.data));
+      return Promise.resolve(response.data);
     })
     .catch(error => {
       console.log(error);

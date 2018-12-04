@@ -228,8 +228,8 @@ export default {
       clearTimeout(this.timer);
       console.log("Player.vue this.currentSong is ", this.currentSong);
       this._getVkey().then(res => {
-        console.log("this._getVkey res is ", res)
-        this.$set(this.currentSong, "url", res)
+        console.log("this._getVkey res is ", res);
+        this.$set(this.currentSong, "url", res);
         this.timer = setTimeout(() => {
           this.$refs.audioRef.play();
           this._getLyric();
