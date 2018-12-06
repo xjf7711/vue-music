@@ -325,15 +325,15 @@ PS：具体代码请看vue.config.js文件中dev-serve中proxy.
 
 ## 项目截图
 
-![image](https://raw.githubusercontent.com/xjf7711/vue-music/master/public/shotcut/1.png)
+![image](https://raw.githubusercontent.com/xjf7711/vue-music/master/public/screencut/1.png)
 
-![image](https://raw.githubusercontent.com/xjf7711/vue-music/master/public/shotcut/2.png)
+![image](https://raw.githubusercontent.com/xjf7711/vue-music/master/public/screencut/2.png)
 
-![image](https://raw.githubusercontent.com/xjf7711/vue-music/master/public/shotcut/3.png)
+![image](https://raw.githubusercontent.com/xjf7711/vue-music/master/public/screencut/3.png)
 
-![image](https://raw.githubusercontent.com/xjf7711/vue-music/master/public/shotcut/4.png)
+![image](https://raw.githubusercontent.com/xjf7711/vue-music/master/public/screencut/4.png)
 
-![image](https://raw.githubusercontent.com/xjf7711/vue-music/master/public/shotcut/5.png)
+![image](https://raw.githubusercontent.com/xjf7711/vue-music/master/public/screencut/5.png)
 
 
 ## 安装与运行
@@ -355,13 +355,16 @@ npm run build 项目打包
 
 ## 修改记录
 
-```
-1、目录结构修改
-2、axios请求和api修改
-3、stylus改为sass
-4、重新引用了幻灯片播放组件。之前的组件是基于老版本的better-scroll写的，有问题。
-    https://github.com/ustbhuangyi/better-scroll/blob/master/example/components/slide/slide.vue
-5、添加cordova-plugin-http插件。手机APP中使用该方法进行ajax请求。因为headers中的
-  referer无法在前端修改。必须通过插件的方式实现。
-```
+> 1、目录结构修改
+> 
+> 2、axios请求和api修改
+> 
+> 3、stylus改为scss
+> 
+> 4、重新引用了幻灯片播放组件。之前的组件是基于老版本的better-scroll写的，有问题。
+>   引用地址：https://github.com/ustbhuangyi/better-scroll/blob/master/example/components/slide/slide.vue
+> 
+> 5、添加cordova-plugin-http插件。手机APP中使用该方法进行ajax请求。因为headers中的
+>   referer无法在前端修改。必须通过插件的方式实现。
+
 
