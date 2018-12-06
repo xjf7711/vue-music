@@ -12,7 +12,7 @@ import { getSingerList } from "src/api/singer.js";
 import { ERR_OK } from "src/api/config";
 import { createSinger } from "src/assets/js/SingerClass.js";
 import { playlistMixin } from "src/assets/js/mixin.js";
-import PhoneList from "src/components/PhoneList/PhoneList";
+import PhoneList from "src/components/phone-list/PhoneList";
 
 const HOT_TITLE = "热门";
 const HOT_NUM = 10;

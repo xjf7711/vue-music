@@ -44,9 +44,9 @@
 
 <script>
 import { getList, getRecommend } from "src/api/recommend.js";
-import Slider from "src/components/Slider/Slider";
-import Scroll from "src/components/Scroll/Scroll";
-import Loading from "src/components/Loading/Loading";
+import Slider from "src/components/slider/Slider";
+import Scroll from "src/components/scroll/Scroll";
+import Loading from "src/components/loading/Loading";
 import { playlistMixin } from "src/assets/js/mixin.js";
 import { mapMutations } from "vuex";
 import { ERR_OK } from "src/api/config";

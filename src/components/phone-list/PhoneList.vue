@@ -47,8 +47,8 @@
 </template>
 
 <script>
-import Scroll from "src/components/Scroll/Scroll";
-import Loading from "src/components/Loading/Loading";
+import Scroll from "src/components/scroll/Scroll";
+import Loading from "src/components/loading/Loading";
 import { myDOM } from "src/assets/js/utils.js";
 
 const RIGHT_ONEWORD_HEIGHT = 18;

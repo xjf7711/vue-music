@@ -29,9 +29,9 @@
 
 <script>
 import { mapMutations, mapActions } from "vuex";
-import Scroll from "src/components/Scroll/Scroll";
-import Loading from "src/components/Loading/Loading";
-import NoResult from "src/components/NoResult/NoResult";
+import Scroll from "src/components/scroll/Scroll";
+import Loading from "src/components/loading/Loading";
+import NoResult from "src/components/no-result/NoResult";
 import { search } from "src/api/search.js";
 import { ERR_OK } from "src/api/config";
 // import { parseJsonp } from "src/assets/js/utils";

@@ -2,7 +2,11 @@
 
 ## 概述
 
-> 项目是基于Vue全家桶(2.x)制作的移动端音乐WebApp，成品是一个移动端的音乐播放器，来源于imooc的实战课程“Vue.js 打造高级实战——音乐 App”。
+> 项目是基于Vue全家桶(2.x)制作的移动端音乐WebApp，成品是一个移动端的音乐播放器，
+> 来源于imooc的实战课程“Vue.js 打造高级实战——音乐 App”。
+
+> 针对cordova方式打包成APP后的请求做了处理，主要是引用了cordova-plugin-http插件。
+> 在APP中使用插件的方式请求数据，而不是axios方式。
 
 > 文件夹结构使用vue-cli3的demo的结构。
 > 因为vue-cli3推荐使用scss,所以使用scss改造了原来的stalus。
@@ -129,10 +133,9 @@
 ├── public
 │   ├── favicon.ico
 │   ├── index.html
-│   └── shotcut
+│   └── screencut
 ├── package.json
 ├── src
-│   ├── App.vue
 │   ├── api
 │   │   ├── config.js
 │   │   ├── rank.js
@@ -140,110 +143,135 @@
 │   │   ├── search.js
 │   │   ├── singer.js
 │   │   └── song.js
+│   ├── assets
+│   │   ├── fonts
+│   │   │   ├── iconmoon.eot
+│   │   │   ├── iconmoon.svg
+│   │   │   ├── iconmoon.ttf
+│   │   │   └── iconmoon.woff
+│   │   │   ├── music-icon.eot
+│   │   │   ├── music-icon.svg
+│   │   │   ├── music-icon.ttf
+│   │   │   └── music-icon.woff
+│   │   ├── images
+│   │   │   └── default.png
+│   │   ├── js
+│   │   │   ├── config.js
+│   │   │   ├── corHttp.js
+│   │   │   ├── jsonp.js
+│   │   │   ├── mixin.js
+│   │   │   ├── request.js
+│   │   │   ├── SingerClass.js
+│   │   │   ├── SongClass.js
+│   │   │   ├── storage.js
+│   │   │   └── utils.js
+│   │   └── styles
+│   │       ├── sass
+│   │       │   ├── base.sass
+│   │       │   ├── icon.sass
+│   │       │   ├── index.sass
+│   │       │   ├── mixin.sass
+│   │       │   ├── reset.sass
+│   │       │   └── variable.sass
+│   │       ├── scss
+│   │       │   ├── base.scss
+│   │       │   ├── icon.scss
+│   │       │   ├── index.scss
+│   │       │   ├── mixin.scss
+│   │       │   ├── reset.scss
+│   │       │   └── variable.scss
+│   │       ├── stylus
+│   │       │   ├── base.styl
+│   │       │   ├── icon.styl
+│   │       │   ├── index.styl
+│   │       │   ├── mixin.styl
+│   │       │   ├── reset.styl
+│   │       │   └── variable.styl
+│   │       └── logo.png
 │   ├── components
 │   │   ├── confirm
-│   │   │   └── confirm.vue
-│   │   ├── listview
-│   │   │   └── listview.vue
+│   │   │   └── Confirm.vue
 │   │   ├── loading
 │   │   │   ├── loading.gif
-│   │   │   └── loading.vue
+│   │   │   └── Loading.vue
 │   │   ├── no-result
-│   │   │   ├── no-result.vue
 │   │   │   ├── no-result@2x.png
-│   │   │   └── no-result@3x.png
+│   │   │   ├── no-result@3x.png
+│   │   │   └── NoResult.vue
+│   │   ├── phone-list
+│   │   │   └── PhoneList.vue
 │   │   ├── progress-bar
-│   │   │   └── progress-bar.vue
+│   │   │   └── ProgressBar.vue
 │   │   ├── progress-circle
-│   │   │   └── progress-circle.vue
+│   │   │   └── ProgressCircle.vue
 │   │   ├── scroll
-│   │   │   └── scroll.vue
+│   │   │   └── Scroll.vue
 │   │   ├── search-box
-│   │   │   └── search-box.vue
+│   │   │   └── SearchBox.vue
 │   │   ├── search-list
-│   │   │   └── search-list.vue
+│   │   │   └── SearchList.vue
 │   │   ├── slider
-│   │   │   └── slider.vue
+│   │   │   └── Slider.vue
 │   │   ├── song-list
 │   │   │   ├── first@2x.png
 │   │   │   ├── first@3x.png
 │   │   │   ├── second@2x.png
 │   │   │   ├── second@3x.png
-│   │   │   ├── song-list.vue
+│   │   │   ├── SongList.vue
 │   │   │   ├── third@2x.png
 │   │   │   └── third@3x.png
 │   │   ├── switches
-│   │   │   └── switches.vue
+│   │   │   └── Switches.vue
 │   │   └── top-tip
-│   │       └── top-tip.vue
-│   ├── assets
-│   │   ├── fonts
-│   │   │   ├── music-icon.eot
-│   │   │   ├── music-icon.svg
-│   │   │   ├── music-icon.ttf
-│   │   │   └── music-icon.woff
-│   │   ├── image
-│   │   │   └── default.png
-│   │   ├── js
-│   │   │   ├── cache.js
-│   │   │   ├── config.js
-│   │   │   ├── dom.js
-│   │   │   ├── jsonp.js
-│   │   │   ├── mixin.js
-│   │   │   ├── request.js
-│   │   │   ├── singer.js
-│   │   │   ├── song.js
-│   │   │   └── util.js
-│   │   └── styles
-│   │       ├── base.sass
-│   │       ├── icon.sass
-│   │       ├── index.sass
-│   │       ├── mixin.sass
-│   │       ├── reset.sass
-│   │       └── variable.sass
+│   │       └── TopTip.vue
+│   ├── router.js
+│   │   └── index.js
+│   ├── store
+│   │   ├── actions.js
+│   │   ├── getters.js
+│   │   ├── index.js
+│   │   ├── mutations.js
+│   │   ├── mutations-types.js
+│   │   └── state.js
 │   ├── views
 │   │   ├── add-song
-│   │   │   └── add-song.vue
-│   │   ├── disc
-│   │   │   └── disc.vue
-│   │   ├── m-header
+│   │   │   └── AddSong.vue
+│   │   ├── header
 │   │   │   ├── logo@2x.png
 │   │   │   ├── logo@3x.png
-│   │   │   └── m-header.vue
+│   │   │   └── Header.vue
 │   │   ├── music-list
-│   │   │   └── music-list.vue
+│   │   │   └── MusicList.vue
+│   │   ├── play-list
+│   │   │   └── PlayList.vue
 │   │   ├── player
-│   │   │   └── player.vue
-│   │   ├── playlist
-│   │   │   └── playlist.vue
+│   │   │   └── Player.vue
 │   │   ├── rank.............. 排行页
-│   │   │   └── rank.vue
+│   │   │   └── Rank.vue
+│   │   ├── rank-detail....... 排行详情页
+│   │   │   └── RankDetail.vue
 │   │   ├── recommend......... 推荐页
-│   │   │   └── recommend.vue
+│   │   │   └── Recommend.vue
 │   │   ├── search............ 搜索页
-│   │   │   └── search.vue
+│   │   │   └── Search.vue
 │   │   ├── singer............ 歌手页
-│   │   │   └── singer.vue
+│   │   │   └── Singer.vue
 │   │   ├── singer-detail..... 歌手详情页
-│   │   │   └── singer-detail.vue
+│   │   │   └── SingerDetail.vue
+│   │   ├── song-list......... 歌曲列表页
+│   │   │   └── SingerList.vue
 │   │   ├── suggest
-│   │   │   └── suggest.vue
+│   │   │   └── Suggest.vue
 │   │   ├── tab
-│   │   │   └── tab.vue
+│   │   │   └── Tab.vue
 │   │   ├── top-list
-│   │   │   └── top-list.vue
-│   │   └── user-center....... 用户中心
-│   │       └── user-center.vue
+│   │   │   └── TopList.vue
+│   │   └── user............. 用户中心
+│   │       └── User.vue
+│   ├── App.vue
 │   ├── main.js
-│   ├── router.js
-│   └── store
-│       ├── actions.js
-│       ├── getters.js
-│       ├── index.js
-│       ├── mutation-types.js
-│       ├── mutations.js
-│       └── state.js
-└── vue.config.js
+├── README.md............说明
+└── vue.config.js........webpack配置
 
 ```
 
@@ -333,20 +361,7 @@ npm run build 项目打包
 3、stylus改为sass
 4、重新引用了幻灯片播放组件。之前的组件是基于老版本的better-scroll写的，有问题。
     https://github.com/ustbhuangyi/better-scroll/blob/master/example/components/slide/slide.vue
+5、添加cordova-plugin-http插件。手机APP中使用该方法进行ajax请求。因为headers中的
+  referer无法在前端修改。必须通过插件的方式实现。
 ```
 
-## 计划
-
-```
-1、jsonp方式改为axios。开发环境用代理，打包用baseURL。
-```
-
-## todo
-```
-一、api中
-1、axios改为request后，有问题。。。（已解决）
-2、axios替代jsonp请求。
-3、文件名中My要去掉。（已完成）
-4、接口权限要获取。。。
-
-```

@@ -3,14 +3,14 @@ import Router from "vue-router";
 Vue.use(Router);
 
 // 路由懒加载
-const Recommend = () => import("src/views/Recommend/Recommend");
-const Singer = () => import("src/views/Singer/Singer");
-const Rank = () => import("src/views/Rank/Rank");
-const Search = () => import("src/views/Search/Search");
-const SingerDetail = () => import("src/views/SingerDetail/SingerDetail");
-const SongList = () => import("src/views/SongList/SongList");
-const RankDetail = () => import("src/views/RankDetail/RankDetail");
-const User = () => import("src/views/User/User");
+const Recommend = () => import("src/views/recommend/Recommend");
+const Singer = () => import("src/views/singer/Singer");
+const Rank = () => import("src/views/rank/Rank");
+const Search = () => import("src/views/search/Search");
+const SingerDetail = () => import("src/views/singer-detail/SingerDetail");
+const SongList = () => import("src/views/song-list/SongList");
+const RankDetail = () => import("src/views/rank-detail/RankDetail");
+const User = () => import("src/views/user/User");
 
 export default new Router({
   routes: [

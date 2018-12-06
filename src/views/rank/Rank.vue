@@ -38,8 +38,8 @@ import { getRankList } from "src/api/rank.js";
 import { ERR_OK } from "src/api/config";
 import { playlistMixin } from "src/assets/js/mixin.js";
 
-import Loading from "src/components/Loading/Loading";
-import Scroll from "src/components/Scroll/Scroll";
+import Loading from "src/components/loading/Loading";
+import Scroll from "src/components/scroll/Scroll";
 
 export default {
   mixins: [playlistMixin],

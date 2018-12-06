@@ -14,7 +14,7 @@
 import { mapGetters } from "vuex";
 import { getSongList } from "src/api/recommend.js";
 import { ERR_OK } from "src/api/config";
-import MusicList from "src/views/MusicList/MusicList";
+import MusicList from "src/views/music-list/MusicList";
 import { createSong } from "src/assets/js/SongClass.js";
 
 export default {

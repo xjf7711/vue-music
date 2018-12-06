@@ -61,13 +61,13 @@
 import { mapActions, mapGetters } from "vuex";
 // import { searchMixin } from "src/assets/js/mixin";
 import { Song } from "src/assets/js/SongClass.js";
-import SearchBox from "src/components/SearchBox/SearchBox";
-import Scroll from "src/components/Scroll/Scroll";
-import Switches from "src/components/Switches/Switches";
-import SongList from "src/components/SongList/SongList";
-import TopTip from "src/components/TopTip/TopTip";
-import SearchList from "src/components/SearchList/SearchList";
-import SuggestList from "src/views/SuggestList/SuggestList";
+import SearchBox from "src/components/search-box/SearchBox";
+import Scroll from "src/components/scroll/Scroll";
+import Switches from "src/components/switches/Switches";
+import SongList from "src/components/song-list/SongList";
+import TopTip from "src/components/top-tip/TopTip";
+import SearchList from "src/components/search-list/SearchList";
+import SuggestList from "src/views/suggest/Suggest";
 
 export default {
   // minxins: [searchMixin],

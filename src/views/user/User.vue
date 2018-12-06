@@ -40,10 +40,10 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import Switches from "src/components/Switches/Switches";
-import Scroll from "src/components/Scroll/Scroll";
-import SongList from "src/components/SongList/SongList";
-import NoResult from "src/components/NoResult/NoResult";
+import Switches from "src/components/switches/Switches";
+import Scroll from "src/components/scroll/Scroll";
+import SongList from "src/components/song-list/SongList";
+import NoResult from "src/components/no-result/NoResult";
 import { Song } from "src/assets/js/SongClass.js";
 import { playlistMixin } from "src/assets/js/mixin.js";
 

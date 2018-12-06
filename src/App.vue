@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import MHeader from "src/views/Header/Header";
-import Tab from "src/views/Tab/Tab";
-import Player from "src/views/Player/Player";
+import MHeader from "src/views/header/Header";
+import Tab from "src/views/tab/Tab";
+import Player from "src/views/player/Player";
 
 export default {
   components: {

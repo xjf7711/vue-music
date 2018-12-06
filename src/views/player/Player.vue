@@ -145,10 +145,10 @@ import { ERR_OK } from "src/api/config";
 import { getVkey } from "src/api/song";
 import { myTime, myArray, prefixStyle } from "src/assets/js/utils.js";
 
-import ProgressBar from "src/components/ProgressBar/ProgressBar";
-import ProgressCircle from "src/components/ProgressCircle/ProgressCircle";
-import Scroll from "src/components/Scroll/Scroll";
-import Playlist from "src/views/Playlist/Playlist";
+import ProgressBar from "src/components/progress-bar/ProgressBar";
+import ProgressCircle from "src/components/progress-circle/ProgressCircle";
+import Scroll from "src/components/scroll/Scroll";
+import Playlist from "src/views/play-list/Playlist";
 // 样式兼容性
 const transform = prefixStyle("transform");
 const transitionDuration = prefixStyle("transitionDuration");

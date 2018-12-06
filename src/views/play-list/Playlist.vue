@@ -56,9 +56,9 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
-import Scroll from "src/components/Scroll/Scroll";
-import Confirm from "src/components/Confirm/Confirm";
-import AddSong from "src/views/AddSong/AddSong";
+import Scroll from "src/components/scroll/Scroll";
+import Confirm from "src/components/confirm/Confirm";
+import AddSong from "src/views/add-song/AddSong";
 import { myArray } from "src/assets/js/utils.js";
 import { playMode } from "src/assets/js/config";
 // import { playerMixin } from "src/assets/js/mixin";

@@ -60,11 +60,11 @@ import { getHotKey } from "src/api/search.js";
 import { ERR_OK } from "src/api/config";
 import { playlistMixin } from "src/assets/js/mixin.js";
 // import { playlistMixin, searchMixin } from "assets/js/mixin";
-import SearchBox from "src/components/SearchBox/SearchBox";
-import SearchList from "src/components/SearchList/SearchList";
-import Confirm from "src/components/Confirm/Confirm";
-import Scroll from "src/components/Scroll/Scroll";
-import SuggestList from "src/views/SuggestList/SuggestList";
+import SearchBox from "src/components/search-box/SearchBox";
+import SearchList from "src/components/search-list/SearchList";
+import Confirm from "src/components/confirm/Confirm";
+import Scroll from "src/components/scroll/Scroll";
+import SuggestList from "src/views/suggest/Suggest";
 
 export default {
   mixins: [playlistMixin], // searchMixin

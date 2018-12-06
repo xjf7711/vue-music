@@ -1,17 +1,16 @@
-<!-- xx组件 -->
+<!-- 歌手详情页组件 -->
 
 <template>
-  <transition name="slide" class="rank-detail">
-    <music-list :songs="songs" :title="title" :bg-image="bgImage" :rank="true"></music-list>
+  <transition name="slide">
+    <music-list :songs="songs" :title="title" :bg-image="bgImage"></music-list>
   </transition>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import { getRankDetail } from "src/api/rank.js";
-import { ERR_OK } from "src/api/config";
+import { getSingerDetail } from "src/api/singer.js";
 import { createSong } from "src/assets/js/SongClass.js";
-import MusicList from "src/views/MusicList/MusicList";
+import MusicList from "src/views/music-list/MusicList";
 
 export default {
   components: {
@@ -24,44 +23,45 @@ export default {
   },
   computed: {
     // vuex, 使用对象展开运算符将 getters 混入 computed 对象中
-    ...mapGetters(["rankList"]),
+    ...mapGetters(["singer"]),
     // 传入子组件
     title() {
-      return this.rankList.topTitle;
+      return this.singer.name;
     },
     // 传入子组件
     bgImage() {
-      if (this.songs.length) {
-        return this.songs[0].img;
-      }
+      return this.singer.avatar;
     }
   },
   mounted() {
-    this._getRankDetail();
+    // console.log(this.singer)
+    this._getSingerDetail();
   },
   methods: {
-    // 获取指定排行榜单详情
-    _getRankDetail() {
-      // 禁止直接刷新详情页（获取不到排行 id）
-      if (!this.rankList.id) {
-        this.$router.push("/rank");
+    // 获取指定歌手详情
+    _getSingerDetail() {
+      // 禁止直接刷新详情页（获取不到歌手 id）
+      if (!this.singer.id) {
+        this.$router.push("/singer");
         return;
       }
 
-      getRankDetail(this.rankList.id).then(res => {
-        if (ERR_OK === res.code) {
-          // console.log(res.songlist)
-          this.songs = this._formatSongs(res.songlist);
+      getSingerDetail(this.singer.id).then(res => {
+        if (res.code === 0) {
+          // console.log(res.data.list)
+          // console.log(this._formatSongs(res.data.list))
+          this.songs = this._formatSongs(res.data.list);
         }
       });
     },
-    // 重组 res.songlist 数据
+    // 重组 res.data.list 数据
     _formatSongs(list) {
       let result = [];
-
       list.forEach(item => {
-        if (item.data.songid && item.data.albummid) {
-          result.push(createSong(item.data));
+        // 解构赋值
+        let { musicData } = item;
+        if (musicData.songid && musicData.albummid) {
+          result.push(createSong(musicData));
         }
       });
       return result;
@@ -74,7 +74,7 @@ export default {
 /*@import "~src/assets/styles/scss/const.scss";*/
 /*@import "~src/assets/styles/scss/mixin.scss";*/
 
-.rank-detail {
+.singer-detail {
   // position: fixed;
   // z-index: 100;
   // top: 0;

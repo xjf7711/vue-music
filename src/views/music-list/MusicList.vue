@@ -50,9 +50,9 @@
 import { mapActions } from "vuex";
 import { playlistMixin } from "src/assets/js/mixin.js";
 import { prefixStyle } from "src/assets/js/utils";
-import SongList from "src/components/SongList/SongList";
-import Scroll from "src/components/Scroll/Scroll";
-import Loading from "src/components/Loading/Loading";
+import SongList from "src/components/song-list/SongList";
+import Scroll from "src/components/scroll/Scroll";
+import Loading from "src/components/loading/Loading";
 
 const TRANSFORMY_RESERVED = 40;
 const transform = prefixStyle("transform");
