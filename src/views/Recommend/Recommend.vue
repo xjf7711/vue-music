@@ -64,11 +64,12 @@ export default {
       lists: []
     };
   },
-  created() {
-    this._getRecommend();
-    // setTimeout(() => {
-    this._getList();
-    // }, 1000);
+  mounted() {
+    // 考虑cordova中deviceready的时间。
+    setTimeout(() => {
+      this._getRecommend();
+      this._getList();
+    }, 1000);
   },
   methods: {
     ...mapMutations({

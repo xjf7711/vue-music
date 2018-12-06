@@ -252,8 +252,7 @@ module.exports = {
           "^/api/getSongList": ""
         },
         headers: {
-          referer: "https://y.qq.com/",
-          host: "c.y.qq.com"
+          referer: "https://y.qq.com/"
         }
         // 正式环境： 接口地址 /api/**                         前端页面地址
         // 开发环境： 接口地址 http://www.xxx.com/api/**       前端页面地址  http://localhost:8080
@@ -268,7 +267,7 @@ module.exports = {
         },
         headers: {
           referer: "https://y.qq.com/",
-          host: "c.y.qq.com"
+          // host: "c.y.qq.com"
         }
         // 正式环境： 接口地址 /api/**                         前端页面地址
         // 开发环境： 接口地址 http://www.xxx.com/api/**       前端页面地址  http://localhost:8080

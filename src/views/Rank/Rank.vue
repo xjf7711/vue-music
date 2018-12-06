@@ -52,7 +52,7 @@ export default {
       topList: []
     };
   },
-  created() {
+  mounted() {
     this._getRankList();
   },
   watch: {

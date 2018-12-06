@@ -27,7 +27,7 @@ export default {
       singers: []
     };
   },
-  created() {
+  mounted() {
     this._getSingerList();
   },
   methods: {

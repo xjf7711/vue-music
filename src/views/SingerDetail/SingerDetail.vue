@@ -33,7 +33,7 @@ export default {
       return this.singer.avatar;
     }
   },
-  created() {
+  mounted() {
     // console.log(this.singer)
     this._getSingerDetail();
   },

@@ -40,7 +40,7 @@ export default {
       // return this.singer.avatar;
     }
   },
-  created() {
+  mounted() {
     this._getSongList();
   },
   methods: {

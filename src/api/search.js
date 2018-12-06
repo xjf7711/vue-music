@@ -3,7 +3,7 @@ import jsonp from "src/assets/js/jsonp";
 import { commonParams, options, baseURL } from "./config";
 // import axios from "axios";
 import request from "src/assets/js/request";
-import { parseJsonp } from "src/assets/js/utils";
+// import { parseJsonp } from "src/assets/js/utils";
 
 /**
  * jsonp 抓取热门搜索数据

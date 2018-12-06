@@ -36,7 +36,7 @@ export default {
       }
     }
   },
-  created() {
+  mounted() {
     this._getRankDetail();
   },
   methods: {

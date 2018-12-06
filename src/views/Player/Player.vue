@@ -235,7 +235,6 @@ export default {
           this._getLyric();
         }, 1000);
       });
-
     },
     // 播放 or 暂停
     playing(newVal) {
@@ -498,7 +497,7 @@ export default {
           const vkey = res.data.items[0].vkey;
           // http://dl.stream.qqmusic.qq.com/C400003mAan70zUy5O.m4a?guid=4505128350&vkey=3EACF87057A04A4E590AE357FB4C51AB8F5FFEA5B68DE2E2C5D7976D8F04BFD8CB2E0D7ACD834004F9A9E00CEECFDD412A768A63623822C5&uin=0&fromtag=3&r=18235195520833347
           const url = `http://dl.stream.qqmusic.qq.com/C400${mid}.m4a?guid=1472133172&vkey=${vkey}&uin=0&fromtag=38`;
-          return Promise.resolve(url)
+          return Promise.resolve(url);
           // this.$set(this.currentSong, "url", url);
           // this.$refs.audioRef.play();
           // this._getLyric();
