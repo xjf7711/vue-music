@@ -113,11 +113,10 @@
     Sass(Scss)：css 预编译处理器
     ES6：ECMAScript 新一代语法，模块化、解构赋值、Promise、Class 等方法非常好用
 
-#### 【后端】
+#### 【手机APP端】
 
-    Node.js：利用 Express 起一个本地测试服务器
-    jsonp：服务端通讯。抓取 QQ音乐(移动端)数据
-    axios：服务端通讯。结合 Node.js 代理后端请求，抓取 QQ音乐(PC端)数据
+    使用cordova打包工具，生成手机APP。
+    cordova-plugin-http：替代axios直接请求QQ音乐数据。因为QQ音乐有些接口做了refer处理，需要用代理才能请求到数据。
     
 #### 【自动化构建及其他工具】
     
@@ -278,10 +277,11 @@
 ## 数据来源
 
 ```
-所有数据都来自于QQ音乐，抓取自QQ的接口，大部分接口都是JSONP，抓取比较容易，其中一些接口限制了host，
-不能直接抓取，采用的方法是用axios代理，设置header，以此绕过host的限制。 
+所有数据都来自于QQ音乐，抓取自QQ的接口，采用的方法是用proxy代理，设置header，以此绕过host的限制。
+手机APP端使用cordova-plugin-http进行请求。 
 
-PS：具体代码请看vue.config.js文件中dev-serve中proxy.
+PS：具体代理代码请看vue.config.js文件中dev-serve中proxy。
+   手机APP端代码查看src/assets/js/request.js文件。
 
 ```
 
@@ -295,14 +295,16 @@ PS：具体代码请看vue.config.js文件中dev-serve中proxy.
 
 ```
 通过调用QQ音乐的JSONP接口，获取的数据并不能直接拿来用，需要做进一步的规格化，
-达到我们使用的要求，所以在这方面单独封装了一个class来处理这方面的数据，具体请看src/assets/js/song.js。
+达到我们使用的要求，所以在这方面单独封装了一个class来处理这方面的数据，具体请看src/assets/js/SongClass.js。
 
-在请求JSONP的时候，用到了一个JSONP库，这个库代码十分简短，只有几十行，有兴趣的同学可以学习下。
+原来的代码中，在请求JSONP的时候，用一个JSONP库，这个库代码十分简短，只有几十行，有兴趣的同学可以学习下。
 
 使用时，就是将请求的参数拼接在请求url上，然后调用这个库的jsonp方法。
 
 所以，在此封装了两个函数，一个是将参数拼接在url上，另一个是将库里面的jsonp方法Promise化，
 方便我们使用，具体请查看src/assets/js/jsonp.js。
+
+现在，全部改为axios，使用proxy代理。在APP中，使用cordova-plugin-http插件进行jsonp的请求。
 
 将请求的数据格式化后再通过Vuex传递，组件间共享，实现歌曲的播放切换等。
 ```
@@ -312,6 +314,7 @@ PS：具体代码请看vue.config.js文件中dev-serve中proxy.
 ```
 该项目的很多地方都涉及到滚动，包括下拉滚动，下拉滚动刷新等。
 这里面用到了一个库(better-scroll)，来实现所有涉及到的滚动，建议学习下它的API。
+（注：由于better-scroll版本的更新，原来代码中的slide.vue有问题，现在已改为最新的版本引用方式）
 
 其他动画包括了Vue的transition动画，路由之间切换时的简单动画，播放器打开时的动画，这个地方比较难，也比较好玩。
 
@@ -364,7 +367,6 @@ npm run build 项目打包
 > 4、重新引用了幻灯片播放组件。之前的组件是基于老版本的better-scroll写的，有问题。
 >   引用地址：https://github.com/ustbhuangyi/better-scroll/blob/master/example/components/slide/slide.vue
 > 
-> 5、添加cordova-plugin-http插件。手机APP中使用该方法进行ajax请求。因为headers中的
->   referer无法在前端修改。必须通过插件的方式实现。
+> 5、添加cordova-plugin-http插件。手机APP中使用该方法进行ajax请求。因为headers中的referer无法在前端修改。必须通过插件的方式实现。
 
 
