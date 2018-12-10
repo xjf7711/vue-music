@@ -1,6 +1,5 @@
-import jsonp from "src/assets/js/jsonp";
 // import { commonParams, options } from "@/api/common-query.js";
-import { commonParams, options, baseURL } from "./config";
+import { commonParams, baseURL } from "./config";
 // import axios from "axios";
 import request from "src/assets/js/request";
 // import { parseJsonp } from "src/assets/js/utils";
@@ -11,14 +10,30 @@ import request from "src/assets/js/request";
  * 提供方：https://m.y.qq.com/#search
  */
 export function getHotKey() {
-  let url = "https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg";
-  let data = Object.assign({}, commonParams, {
+  let url =
+    process.env.NODE_ENV === "production"
+      ? "/splcloud/fcgi-bin/gethotkey.fcg"
+      : "/api/getHotKey";
+  const params = Object.assign({}, commonParams, {
     uin: 0,
     format: "json",
     platform: "h5",
     needNewCode: 1
   });
-  return jsonp(url, data, options);
+  // return jsonp(url, data, options);
+  return request({
+    method: "get",
+    baseURL,
+    url,
+    params
+  })
+    .then(response => {
+      console.log("api search response.data is ", typeof response.data);
+      return Promise.resolve(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
 }
 
 /**
@@ -57,9 +72,9 @@ export function search(query, page, perpage, zhida) {
   //     params: data
   //   })
   return request({
+    method: "get",
     baseURL,
     url,
-    method: "get",
     params: data
   })
     .then(response => {

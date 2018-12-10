@@ -26,7 +26,6 @@
     "fastclick": "^1.0.6",
     "good-storage": "^1.1.0",
     "js-base64": "^2.4.9",
-    "jsonp": "^0.2.1",
     "lint-staged": "^7.2.2",
     "lyric-parser": "^1.0.1",
     "node-sass": "^4.9.0",
