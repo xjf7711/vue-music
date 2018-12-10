@@ -138,6 +138,12 @@ module.exports = {
    * 有些值像 publicPath 和 historyApiFallback 不应该被修改，因为它们需要和开发服务器的 baseUrl 同步以保障正常的工作。
    * */
   devServer: {
+    /*eslint-disable-next-line*/
+    // /*eslint-disable no-unused-vars*/
+    after: function(app, server) { // eslint-disable-line
+      // do fancy stuff
+    },
+    // before: app => {}
     // open: process.platform === 'darwin',
     // host: '0.0.0.0',
     // port: 8080,
@@ -180,13 +186,6 @@ module.exports = {
       }
     }
 
-    // open: process.platform === "darwin",
-    // host: "0.0.0.0",
-    // port: 8080,
-    // https: false,
-    // hotOnly: false,
-    //
-    // before: app => {}
   },
   /**
    * 是否为 Babel 或 TypeScript 使用 thread-loader。
